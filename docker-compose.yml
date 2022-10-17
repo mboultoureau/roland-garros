@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  # Spring Boot
+  backend:
+    build: ./backend
+    ports:
+      - 8000:8080
+
+  # MySQL
+  database:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  # phpMyAdmin
+  database-explorer:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=database
+      - PMA_USER=root
+      - PMA_PASSWORD=root

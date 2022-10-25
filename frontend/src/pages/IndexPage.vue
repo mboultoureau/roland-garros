@@ -1,12 +1,7 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
-  </q-page>
+  <h1 class="text-5xl font-bold underline hover:underline-offset-4">
+    Hello world!
+  </h1>
 </template>
 
 <script setup lang="ts">

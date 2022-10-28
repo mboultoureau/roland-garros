@@ -21,6 +21,15 @@ const routes: RouteRecordRaw[] = [
       requireAuth: true,
     },
   },
+  {
+    path: '/player',
+    children: [
+      {
+        path: '/new-player',
+        component: () => import('pages/player/NewPlayer.vue'),
+      },
+    ],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

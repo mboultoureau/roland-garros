@@ -1,6 +1,6 @@
 export interface Player extends Person {
   ranking: number;
-  hand: 'Gauche' | 'Droite';
+  hand: 'right' | 'left';
   'career-start': string;
   coach: Player;
 }

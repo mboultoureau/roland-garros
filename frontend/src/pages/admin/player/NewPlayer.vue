@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import NewPlayerForm from 'src/components/player/NewPlayerForm.vue';
 import { defineComponent } from 'vue'
+import NewPlayerForm from '../../../components/admin/player/NewPlayerForm.vue';
 export default defineComponent({
     components: { NewPlayerForm }
 })

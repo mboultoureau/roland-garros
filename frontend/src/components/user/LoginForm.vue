@@ -36,7 +36,10 @@
 import { useAuthStore } from 'src/stores/auth';
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute()
+const router = useRouter()
 const authStore = useAuthStore()
 const { t } = useI18n()
 
@@ -48,7 +51,13 @@ const onSubmit = async () => {
     username: username.value,
     password: password.value
   })
+  goNext(route.query.redirect as string)
 }
+
+const goNext = (path: string) => {
+  if(path) router.push({ path:  path})
+  else router.push({ path: '/' })
+} 
 
 const onReset = () => {
   username.value = ''

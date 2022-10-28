@@ -13,30 +13,10 @@ const api = axios.create({
 });
 
 const authApi = axios.create({
-  baseURL: 'http://localhost:8000/',
-  withCredentials: true,
+  baseURL: 'http://localhost:8000/auth',
 });
 
 authApi.defaults.headers.common['Content-Type'] = 'application/json';
-
-/**
- * Incterceptor
- */
-authApi.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    const originalRequest = error.config;
-    const errMessage = error.response.data.message as string;
-    if (errMessage.includes('not logged in') && !originalRequest._retry) {
-      originalRequest._retry = true;
-      await refreshToken();
-      return authApi(originalRequest);
-    }
-    return Promise.reject(error);
-  }
-);
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

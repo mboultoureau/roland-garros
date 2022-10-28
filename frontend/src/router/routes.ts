@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/login',
+    name: 'login',
     component: () => import('pages/user/Login.vue'),
   },
   {
@@ -16,6 +17,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/admin',
+    name: 'admin',
     children: [{ path: '', component: () => import('pages/admin/Admin.vue') }],
     meta: {
       requireAuth: true,

@@ -4,14 +4,20 @@ services:
   backend:
     build: ./backend
     ports:
-      - 8000:8080
+      - 8000:8000
 
   # MySQL
   database:
     image: mysql:8.0
     restart: always
+    # Remove ports in prod
+    ports:
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=rolandgarros
 
   # phpMyAdmin
   database-explorer:

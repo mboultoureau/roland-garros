@@ -1,13 +1,13 @@
 ## —— Project 🎾 ———————————————————————————————————————————————————————————————
 
-start: # Install and start the server
+start: ## Install and start the server
 	@docker compose down
 	@docker compose build
 	@docker compose up -d
 	@echo "Application : http://localhost:8000"
 	@echo "PhpMyAdmin : http://localhost:8001"
 
-stop: # Stop the server
+stop: ## Stop the server
 	@docker compose down
 
 .PHONY: start

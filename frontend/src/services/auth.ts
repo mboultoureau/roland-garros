@@ -1,21 +1,25 @@
-import axios, { api } from "src/boot/axios";
-import { User } from "src/models/user";
+import { authApi } from 'src/boot/axios';
+import { User } from 'src/models/user';
 
-import useToken from 'src/helpers/auth-guard'
+import { useToken } from 'src/helpers/auth-guard';
 
-const { saveToken, deleteToken } = useToken()
+const { saveToken, deleteToken } = useToken();
+
+export async function refreshToken() {
+  const response = await authApi.get('auth/token');
+  return response.data;
+}
 
 export async function login(user: User) {
-  console.log(user)
-  // const response = await api.post('auth/login', user)
-  // saveToken(response.data.payload.token)
+  const response = await authApi.post('auth/login', user);
+  saveToken(response.data.payload.token);
 }
 
 export async function register(user: User) {
-  console.log(user)
-  //const response = await api.post('')
+  const response = await authApi.post('auth/register', user);
+  saveToken(response.data);
 }
 
 export function logout() {
-  deleteToken()
+  deleteToken();
 }

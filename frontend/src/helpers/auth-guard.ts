@@ -1,22 +1,27 @@
 import { LocalStorage } from 'quasar';
 
 export function authGuard() {
-  const token = LocalStorage.getItem('token')
+  const token = LocalStorage.getItem('token');
 
-  if(token) {
-    return true
+  if (token) {
+    return true;
   } else {
-    return false
+    return false;
   }
 }
 
-export default function useToken() {
-  const saveToken = (token: string) => LocalStorage.set('token', token)
+export function useToken() {
+  const saveToken = (token: string) => LocalStorage.set('token', token);
 
-  const deleteToken = () => LocalStorage.remove('token')
+  const deleteToken = () => LocalStorage.remove('token');
 
   return {
     saveToken,
-    deleteToken
-  }
-} 
+    deleteToken,
+  };
+}
+
+export default {
+  authGuard,
+  useToken,
+};

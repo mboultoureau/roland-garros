@@ -10,10 +10,15 @@
           aria-label="Menu"
         />
 
+
         <q-toolbar-title>
           Rolland-Garos 
         </q-toolbar-title>
 
+        <q-btn
+          flat
+          dense
+        >Login</q-btn>
       </q-toolbar>
     </q-header>
 

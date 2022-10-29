@@ -1,11 +1,23 @@
 <template>
-  <NewPlayerForm></NewPlayerForm>
+  <PlayerForm v-model:player="formCopy" @submit="submit"></PlayerForm>
 </template>
+<script lang="ts" setup>
+import PlayerForm from 'src/components/admin/player/components/PlayerForm.vue';
+import { ref } from 'vue'
+import { Player } from 'src/models/person';
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import NewPlayerForm from '../../../components/admin/player/NewPlayerForm.vue';
-export default defineComponent({
-    components: { NewPlayerForm }
-})
+const formCopy = ref({
+  firstname: 'First name',
+  lastname: 'Last name',
+  birthday: '',
+  birthplace: '',
+  hand: 'right',
+  height: 0,
+  weight: 0,
+  'career-start': '',
+  coach: {} as Player,
+  nationality: '',
+} as Player)
+
+const submit = () => console.log(formCopy.value)
 </script>

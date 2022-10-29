@@ -5,6 +5,6 @@
 import Index from 'src/components/admin/player/Index.vue'
 export default {
   components: { Index },
-  name: 'AdminPage'
+  name: 'AdminPlayerPage'
 }
 </script>

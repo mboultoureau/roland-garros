@@ -19,5 +19,7 @@ export default {
   'input.firstname': 'Prénom *',
   'input.ranking': 'Classement mondial *',
   'input.career.start': 'Date début de carrière *',
+  'input.upload.player': 'Importer des joueurs',
+  'input.upload.hint.format': 'format .csv',
   'field.empty': 'Aucun(e) {object}',
 };

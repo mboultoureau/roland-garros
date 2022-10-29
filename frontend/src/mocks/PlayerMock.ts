@@ -52,3 +52,14 @@ export const store = async (player: Player): Promise<Api> => {
     payload: {},
   };
 };
+
+export const mockDelete = async (id: number): Promise<Api> => {
+  const isFind = listPlayer.findIndex((player: Player) => player.id === id);
+  listPlayer.splice(isFind, 1);
+  await new Promise((s) => setTimeout(s, 2000));
+
+  return {
+    success: isFind === undefined ? false : true,
+    payload: {},
+  };
+};

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { Player } from 'src/models/person';
-import { fetch, store } from 'src/services/player';
+import { fetch, store, destroy } from 'src/services/player';
 
 export const usePlayerStore = defineStore('player', {
   state: () => ({
@@ -13,6 +13,9 @@ export const usePlayerStore = defineStore('player', {
     },
     async store(player: Player) {
       await store(player);
+    },
+    async delete(id: number) {
+      await destroy(id);
     },
   },
 });

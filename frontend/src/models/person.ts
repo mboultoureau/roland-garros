@@ -6,6 +6,7 @@ export interface Player extends Person {
 }
 
 export interface Person {
+  id: number;
   firstname: string;
   lastname: string;
   birthday: string;

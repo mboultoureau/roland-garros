@@ -1,10 +1,11 @@
 import { api } from 'boot/axios';
 import { Player } from 'src/models/person';
+import { mockFetch } from 'src/mocks/PlayerMock';
 
 export async function fetch() {
   try {
-    const response = await api.get('player');
-    return response.data.payload;
+    const response = await mockFetch();
+    return response.payload;
   } catch (error) {}
 }
 

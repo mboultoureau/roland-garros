@@ -1,0 +1,54 @@
+import { Api } from 'src/models/api';
+import { Player } from 'src/models/person';
+
+/**
+ * Create list player
+ */
+const listPlayer = [] as Player[];
+
+for (let i = 0; i < 10; i++) {
+  const player = {
+    id: i,
+    firstname: 'First name ' + i,
+    lastname: 'Last name ' + i,
+    birthday: i + '/01/2000',
+    birthplace: 'FRANCE',
+    hand: 'right',
+    height: i,
+    weight: i * 100,
+    'career-start': '12/09/2012',
+    coach: {} as Player,
+    nationality: 'FRANCE',
+  } as Player;
+  listPlayer.push(player);
+}
+
+export const mockFetch = async (): Promise<Api> => {
+  await new Promise((s) => setTimeout(s, 2000));
+
+  return {
+    success: true,
+    payload: listPlayer,
+  };
+};
+
+export const show = async (id: number): Promise<Api> => {
+  const player = listPlayer.find((player: Player) => player.id === id);
+
+  await new Promise((s) => setTimeout(s, 2000));
+
+  return {
+    success: player === undefined ? false : true,
+    payload: player === undefined ? {} : player,
+  };
+};
+
+export const store = async (player: Player): Promise<Api> => {
+  listPlayer.push(player);
+  await new Promise((s) => setTimeout(s, 2000));
+
+  return {
+    success: true,
+    payload: {},
+  };
+};

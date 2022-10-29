@@ -1,6 +1,5 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import { refreshToken } from 'src/services/auth';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

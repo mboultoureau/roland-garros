@@ -10,7 +10,7 @@
           <q-input
             filled
             v-model="lastName"
-            :label="t('auth.input.lastname')"
+            :label="t('input.lastname')"
             lazy-rules
             :rules="[ val => val && val.length > 0 || t('field.required')]"
           />
@@ -18,7 +18,7 @@
           <q-input
             filled
             v-model="firstName"
-            :label="t('auth.input.firstname')"
+            :label="t('input.firstname')"
             lazy-rules
             :rules="[ val => val && val.length > 0 || t('field.required')]"
           />

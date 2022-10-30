@@ -58,11 +58,11 @@ public class Person {
         return lastname;
     }
 
-    public Date getbirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public String getbirthPlace() {
+    public String getBirthPlace() {
         return birthPlace;
     }
 
@@ -78,11 +78,11 @@ public class Person {
         this.gender = gender;
     }
 
-    public void setbirthDate(Date birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
-    public void setbirthPlace(String birthPlace) {
+    public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
     }
 

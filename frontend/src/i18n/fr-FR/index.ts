@@ -8,6 +8,8 @@ export default {
   'btn.back': 'Retour',
   'btn.save': 'Enregistrer',
   'btn.register': "S'inscrire",
+  'btn.confirm': 'Confirmer',
+  'btn.cancel': 'Annuler',
   'input.birthday': 'Date de naissance *',
   'input.birthplace': 'Lieu de naissance *',
   'input.hand': 'Main dominante *',
@@ -20,4 +22,6 @@ export default {
   'input.ranking': 'Classement mondial *',
   'input.career.start': 'Date début de carrière *',
   'field.empty': 'Aucun(e) {object}',
+  'dialog.confirm.delete': 'Êtes-vous de vouloir supprimer {type}',
+  'dialog.confirm.edit': 'Êtes-vous sur de vouloir modifier {type}',
 };

@@ -19,13 +19,21 @@ const routes: RouteRecordRaw[] = [
     path: '/admin',
     name: 'admin',
     children: [
-      { path: '', component: () => import('pages/admin/Admin.vue') },
+      {
+        path: '',
+        component: () => import('pages/admin/Admin.vue'),
+      },
       {
         path: 'player',
         children: [
           {
             path: 'new-player',
             component: () => import('pages/admin/player/NewPlayer.vue'),
+          },
+          {
+            path: 'edit/:id',
+            name: 'edit',
+            component: () => import('pages/admin/player/UpdatePlayer.vue'),
           },
         ],
       },

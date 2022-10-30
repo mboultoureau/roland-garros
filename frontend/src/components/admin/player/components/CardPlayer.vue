@@ -9,7 +9,7 @@
 
     <q-card-actions align="around">
       <q-btn flat icon="visibility"></q-btn>
-      <q-btn flat icon="edit"></q-btn>
+      <q-btn flat icon="edit" @click="handleEdit"></q-btn>
       <q-btn flat class="text-red-600" icon="delete"></q-btn>
     </q-card-actions>
   </q-card>
@@ -20,4 +20,11 @@ import { Player } from 'src/models/person';
 const props = defineProps<{
   player: Player
 }>()
+
+const emit = defineEmits<{
+  (name: 'handle-edit', value: Player): Player
+}>()
+
+const handleEdit = () => emit('handle-edit', props.player)
+
 </script>

@@ -10,8 +10,9 @@ public class Person {
     private Integer id;
 
     @NotBlank
-    @Size(max = 20)
-    private String sex;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ESex gender;
 
     @NotBlank
     @Size(max = 50)
@@ -23,11 +24,11 @@ public class Person {
 
     @NotBlank
     @Size(max = 50)
-    private Date birth_date;
+    private Date birthDate;
 
     @NotBlank
     @Size(max = 50)
-    private String birth_place;
+    private String birthPlace;
 
     @NotBlank
     private Integer weight;
@@ -45,8 +46,8 @@ public class Person {
         return id;
     }
 
-    public String getSex() {
-        return sex;
+    public ESex getGender() {
+        return gender;
     }
 
     public String getFirstname() {
@@ -57,12 +58,12 @@ public class Person {
         return lastname;
     }
 
-    public Date getBirth_date() {
-        return birth_date;
+    public Date getbirthDate() {
+        return birthDate;
     }
 
-    public String getBirth_place() {
-        return birth_place;
+    public String getbirthPlace() {
+        return birthPlace;
     }
 
     public Integer getWeight() {
@@ -73,12 +74,16 @@ public class Person {
         return height;
     }
 
-    public void setBirth_date(Date birth_date) {
-        this.birth_date = birth_date;
+    public void setGender(ESex gender) {
+        this.gender = gender;
     }
 
-    public void setBirth_place(String birth_place) {
-        this.birth_place = birth_place;
+    public void setbirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setbirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
     public void setFirstname(String firstname) {

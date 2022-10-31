@@ -21,6 +21,11 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/admin/Admin.vue') },
       {
+        path: 'calendar',
+        name: 'calendar',
+        component: () => import('pages/admin/Calendar.vue'),
+      },
+      {
         path: 'player',
         children: [
           {

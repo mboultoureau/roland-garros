@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  # Spring Boot
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev

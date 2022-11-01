@@ -43,8 +43,10 @@ export const show = async (id: number): Promise<Api> => {
   };
 };
 
-export const store = async (player: Player): Promise<Api> => {
-  listPlayer.push(player);
+export const mockStore = async (player: Player): Promise<Api> => {
+  const lastId = listPlayer.length;
+
+  listPlayer.push({ ...player, id: lastId });
   await new Promise((s) => setTimeout(s, 2000));
 
   return {
@@ -56,6 +58,7 @@ export const store = async (player: Player): Promise<Api> => {
 export const mockDelete = async (id: number): Promise<Api> => {
   const isFind = listPlayer.findIndex((player: Player) => player.id === id);
   listPlayer.splice(isFind, 1);
+
   await new Promise((s) => setTimeout(s, 2000));
 
   return {

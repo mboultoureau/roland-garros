@@ -1,6 +1,6 @@
-import { api } from 'boot/axios';
 import { Player } from 'src/models/person';
-import { mockFetch, mockDelete } from 'src/mocks/PlayerMock';
+
+import { mockDelete, mockFetch, mockStore } from 'src/mocks/PlayerMock';
 
 export async function fetch() {
   try {
@@ -11,7 +11,13 @@ export async function fetch() {
 
 export async function store(player: Player) {
   try {
-    const response = api.post('player', player);
+    await mockStore(player);
+  } catch (error) {}
+}
+
+export async function destroy(id: number) {
+  try {
+    await mockDelete(id);
   } catch (error) {}
 }
 

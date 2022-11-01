@@ -6,13 +6,16 @@
     <div class="list-player flex justify-center">
       <ListPlayer></ListPlayer>
     </div>
+    <ButtonAddPlayer></ButtonAddPlayer>
   </div>
 </template>
 <script lang="ts">
 export default {
-  name: 'IndexAdmin'
+    name: 'IndexAdmin',
+    components: { ButtonAddPlayer }
 }
 </script>
 <script lang="ts" setup>
 import ListPlayer from './components/ListPlayers.vue'
+import ButtonAddPlayer from './components/ButtonAddPlayer.vue';
 </script>

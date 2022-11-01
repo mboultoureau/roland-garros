@@ -9,8 +9,8 @@
 
     <q-card-actions align="around">
       <q-btn flat icon="visibility"></q-btn>
-      <q-btn flat icon="edit"></q-btn>
-      <q-btn flat class="text-red-600" icon="delete" @click="handleDelete"></q-btn>
+      <q-btn flat icon="edit" @click="handleEdit"></q-btn>
+      <q-btn flat class="text-red-600" @click="handleDelete" icon="delete"></q-btn>
     </q-card-actions>
   </q-card>
 </template>
@@ -18,7 +18,8 @@
 import { Player } from 'src/models/person';
 
 const emit = defineEmits<{
-  (name: 'handle-delete', value: Player): Player
+  (name: 'handle-delete', value: Player): Player,
+  (name: 'handle-edit', value: Player): Player
 }>()
 
 const props = defineProps<{
@@ -26,4 +27,7 @@ const props = defineProps<{
 }>()
 
 const handleDelete = () => emit('handle-delete', props.player)
+
+const handleEdit = () => emit('handle-edit', props.player)
+
 </script>

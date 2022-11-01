@@ -19,6 +19,7 @@ for (let i = 0; i < 10; i++) {
     'career-start': '12/09/2012',
     coach: {} as Player,
     nationality: 'FRANCE',
+    ranking: 5,
   } as Player;
   listPlayer.push(player);
 }
@@ -58,6 +59,21 @@ export const mockStore = async (player: Player): Promise<Api> => {
 export const mockDelete = async (id: number): Promise<Api> => {
   const isFind = listPlayer.findIndex((player: Player) => player.id === id);
   listPlayer.splice(isFind, 1);
+
+  await new Promise((s) => setTimeout(s, 2000));
+
+  return {
+    success: isFind === undefined ? false : true,
+    payload: {},
+  };
+};
+
+export const mockEdit = async (editPlayer: Player): Promise<Api> => {
+  const isFind = listPlayer.findIndex(
+    (player: Player) => player.id === editPlayer.id
+  );
+  listPlayer.splice(isFind, 1);
+  listPlayer.splice(isFind, 0, editPlayer);
 
   await new Promise((s) => setTimeout(s, 2000));
 

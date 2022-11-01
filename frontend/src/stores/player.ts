@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia';
 import { Player } from 'src/models/person';
-import { fetch, store, destroy } from 'src/services/player';
+import { fetch, store, edit, destroy } from 'src/services/player';
 
 export const usePlayerStore = defineStore('player', {
   state: () => ({
     player: {} as Player,
     listPlayer: [] as Player[],
   }),
+  getters: {
+    getById: (state) => (id: number) =>
+      state.listPlayer.find((player: Player) => player.id === id),
+  },
   actions: {
     async fetch() {
       this.listPlayer = await fetch();
@@ -16,6 +20,9 @@ export const usePlayerStore = defineStore('player', {
     },
     async delete(id: number) {
       await destroy(id);
+    },
+    async edit(player: Player) {
+      await edit(player);
     },
   },
 });

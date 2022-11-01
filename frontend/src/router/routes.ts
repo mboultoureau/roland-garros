@@ -34,6 +34,11 @@ const routes: RouteRecordRaw[] = [
             name: 'new-player',
             component: () => import('pages/admin/player/NewPlayer.vue'),
           },
+          {
+            path: 'edit/:id',
+            name: 'edit',
+            component: () => import('pages/admin/player/UpdatePlayer.vue'),
+          },
         ],
       },
     ],

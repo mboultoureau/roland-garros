@@ -23,4 +23,5 @@ export default {
   'input.career.start': 'Date début de carrière *',
   'field.empty': 'Aucun(e) {object}',
   'dialog.confirm.delete': 'Êtes-vous de vouloir supprimer {type}',
+  'dialog.confirm.edit': 'Êtes-vous sur de vouloir modifier {type}',
 };

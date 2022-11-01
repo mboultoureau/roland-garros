@@ -1,7 +1,7 @@
 <template>
   <div class="card-list bg-gray-100 rounded-xl p-8 m-8 w-fit grid gap-4 lg:grid-cols-3 md:grid-cols-2 xs:grid-cols-1">
     <div class="player m-2 cursor-pointer" v-for="player in listComputed" :key="player.id">
-      <CardPlayer :player="player" @handle-delete="handleDelete"></CardPlayer>
+      <CardPlayer :player="player" @handle-edit="handleEdit" @handle-delete="handleDelete"></CardPlayer>
     </div>
     <SkeletonCard v-if="showSkeleton"></SkeletonCard>
     <SkeletonCard v-if="showSkeleton"></SkeletonCard>
@@ -10,14 +10,15 @@
   <dialogDeletePlayer v-model:show="showDialog" :loading-btn="loadingBtn" @handle-confirm="confirmDelete"></dialogDeletePlayer>
 </template>
 <script lang="ts" setup>
+import { Player } from 'src/models/person';
 import { usePlayerStore } from 'src/stores/player';
 import { computed, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import CardPlayer from './CardPlayer.vue';
 import SkeletonCard from './SkeletonCard.vue';
 import DialogDeletePlayer from './DialogDeletePlayer.vue';
-import { Player } from 'src/models/person';
 
-
+const router = useRouter()
 const playerStore = usePlayerStore()
 
 const listComputed = computed(() => playerStore.listPlayer)
@@ -39,6 +40,7 @@ const confirmDelete = async () => {
   showDialog.value = false
   loadingBtn.value = false
 }
+const handleEdit = (player: Player) => router.push({ name: 'edit', params: { id: player.id }})
 
 onMounted(async () => await playerStore.fetch())
 </script>

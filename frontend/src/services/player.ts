@@ -1,6 +1,11 @@
 import { Player } from 'src/models/person';
 
-import { mockDelete, mockFetch, mockStore } from 'src/mocks/PlayerMock';
+import {
+  mockDelete,
+  mockFetch,
+  mockStore,
+  mockEdit,
+} from 'src/mocks/PlayerMock';
 
 export async function fetch() {
   try {
@@ -21,8 +26,8 @@ export async function destroy(id: number) {
   } catch (error) {}
 }
 
-export async function destroy(id: number) {
+export async function edit(player: Player) {
   try {
-    await mockDelete(id);
+    await mockEdit(player);
   } catch (error) {}
 }

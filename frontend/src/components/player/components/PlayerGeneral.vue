@@ -9,7 +9,7 @@
       </div>
       <div class="height px-4">
         <div>{{ t('player.show.height') }}</div>
-        <div class="font-bold">{{ player?.height }}</div>
+        <div class="font-bold">{{ player?.height }} cm</div>
       </div>
       <div class="start-career px-4">
         <div>{{ t('player.show.start.career') }}</div>
@@ -17,14 +17,14 @@
       </div>
       <div class="weight px-4">
         <div>{{ t('player.show.weight') }}</div>
-        <div class="font-bold">{{ player?.weight }}</div>
+        <div class="font-bold">{{ player?.weight }} kg</div>
       </div>
       <div class="coach px-4">
         <div>{{ t('player.show.coach') }}</div>
       </div>
       <div class="hand px-4">
         <div>{{ t('player.show.hand') }}</div>
-        <div class="font-bold">{{ player?.hand }}</div>
+        <div class="font-bold">{{ t(`player.show.hand.${player?.hand}`) }}</div>
       </div>
     </div>
   </div>

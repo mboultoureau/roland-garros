@@ -35,4 +35,6 @@ export default {
   'player.show.coach': 'Coach :',
   'player.show.hand': 'Main :',
   'player.show.individual.ranking': 'Classement individuel',
+  'player.show.hand.right': 'Droitier',
+  'player.show.hand.left': 'Gaucher',
 };

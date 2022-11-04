@@ -5,6 +5,7 @@ import {
   mockFetch,
   mockStore,
   mockEdit,
+  mockShow,
 } from 'src/mocks/PlayerMock';
 
 export async function fetch() {
@@ -29,5 +30,12 @@ export async function destroy(id: number) {
 export async function edit(player: Player) {
   try {
     await mockEdit(player);
+  } catch (error) {}
+}
+
+export async function show(id: number) {
+  try {
+    const response = await mockShow(id);
+    return response.payload as Player;
   } catch (error) {}
 }

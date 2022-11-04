@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { Player } from 'src/models/person';
-import { fetch, store, edit, destroy } from 'src/services/player';
+import { fetch, store, edit, destroy, show } from 'src/services/player';
 
 export const usePlayerStore = defineStore('player', {
   state: () => ({
@@ -23,6 +23,9 @@ export const usePlayerStore = defineStore('player', {
     },
     async edit(player: Player) {
       await edit(player);
+    },
+    async show(id: number) {
+      this.player = await show(id);
     },
   },
 });

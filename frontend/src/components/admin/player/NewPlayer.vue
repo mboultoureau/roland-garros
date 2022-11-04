@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-200 p-8 rounded-lg w-fit mx-auto m-16">
-    <PlayerForm v-model:player="formCopy" @submit="submit"></PlayerForm>
+    <PlayerForm v-model:player="formCopy" @submit="submit" @cancel="cancel"></PlayerForm>
   </div>
 </template>
 <script lang="ts" setup>
@@ -30,4 +30,6 @@ const submit = () => {
   playerStore.store(formCopy.value)
   router.push({ name: 'players' })
 }
+
+const cancel = () => router.push({ name: 'players' })
 </script>

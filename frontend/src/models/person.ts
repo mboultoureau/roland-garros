@@ -14,4 +14,6 @@ export interface Person {
   nationality: string;
   height: number;
   weight: number;
+  url: string;
+  flag: string;
 }

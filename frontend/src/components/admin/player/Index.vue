@@ -1,7 +1,7 @@
 <template>
   <div class="administration">
     <div class="text-2xl text-center m-8">
-      Administration
+      Administration Joueur
     </div>
     <div class="list-player flex justify-center">
       <ListPlayer></ListPlayer>

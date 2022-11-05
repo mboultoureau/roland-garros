@@ -1,11 +1,13 @@
 <template>
-  <PlayerForm v-model:player="editPlayer" @submit="submit" @cancel="goBack"></PlayerForm>
+  <div class="xl:mx-96 lg:mx-68">
+    <PlayerForm v-model:player="editPlayer" @submit="submit" @cancel="goBack"></PlayerForm>
+  </div>
   <dialogConfirm v-model:show="showConfirm" :loading-btn="loadingBtn" :label="t('dialog.confirm.edit', { type: 'ce joueur'})" @handle-confirm="confirmEdit"></dialogConfirm>
 </template>
 <script lang="ts" setup>
 import PlayerForm from './components/PlayerForm.vue';
 import DialogConfirm from './components/DialogConfirm.vue';
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { usePlayerStore } from 'src/stores/player';
 import { useRoute, useRouter } from 'vue-router';
 import { Player } from 'src/models/person';

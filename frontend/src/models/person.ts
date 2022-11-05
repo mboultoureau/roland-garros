@@ -17,3 +17,9 @@ export interface Person {
   url: string;
   flag: string;
 }
+
+export interface FilterPlayer {
+  sexe: 'men' | 'woman';
+  filter: null | string;
+  sort: null | 'asc' | 'desc';
+}

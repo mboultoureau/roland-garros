@@ -3,7 +3,7 @@
     greedy
     @submit="onSubmit"
     @reset="onReset"
-    class="w-fit"
+    class="w-full"
   >
     <div class="container">
       <div class="lastname">

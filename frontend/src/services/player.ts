@@ -1,4 +1,4 @@
-import { Player } from 'src/models/person';
+import { FilterPlayer, Player } from 'src/models/person';
 
 import {
   mockDelete,
@@ -7,8 +7,13 @@ import {
   mockEdit,
   mockShow,
 } from 'src/mocks/PlayerMock';
+import { api } from 'src/boot/axios';
 
-export async function fetch() {
+export async function fetch(filter: FilterPlayer) {
+  try {
+    await api.get('player', { params: filter });
+  } catch (error) {}
+
   try {
     const response = await mockFetch();
     return response.payload;

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 p-8 rounded-lg w-fit mx-auto m-16">
+  <div class="xl:mx-96 lg:mx-68">
     <PlayerForm v-model:player="formCopy" @submit="submit" @cancel="cancel"></PlayerForm>
   </div>
 </template>

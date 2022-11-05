@@ -6,6 +6,7 @@ export interface Player extends Person {
 }
 
 export interface Person {
+  id: number;
   firstname: string;
   lastname: string;
   birthday: string;
@@ -13,4 +14,12 @@ export interface Person {
   nationality: string;
   height: number;
   weight: number;
+  url: string;
+  flag: string;
+}
+
+export interface FilterPlayer {
+  sexe: 'men' | 'woman';
+  filter: null | string;
+  sort: null | 'asc' | 'desc';
 }

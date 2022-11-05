@@ -6,12 +6,22 @@ import { Player } from 'src/models/person';
  */
 const listPlayer = [] as Player[];
 
+const tabFlag = ['ARE', 'AD', 'AND', 'AFG', 'ATG', 'AIA', 'ALB', 'ARM', 'AGO'];
+const url = [
+  'https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
+  'https://images.prismic.io/fft-rg-site/6bbfe32a-28dd-4c05-9499-fd96dd1b10d0_20200119_PJ_TsitsipasStephanos_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
+  'https://images.prismic.io/fft-rg-site/0d0bedfb-6ff3-442d-adda-05796c81df8b_20190113_PJ_DjokovicNovak_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
+  'https://images.prismic.io/fft-rg-site/b176471a-ad08-44ab-9619-ced4ce74a0b6_20220310_PJ_AugerAliassimeFelix_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
+  'https://images.prismic.io/fft-rg-site/f042ee8b-8b20-4e36-9ee7-e1018210759e_20220307_PJ_HurkaczHubert_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
+];
+
 for (let i = 0; i < 10; i++) {
+  const rand = Math.floor(Math.random() * 8);
   const player = {
     id: i,
-    firstname: 'First name ' + i,
-    lastname: 'Last name ' + i,
-    birthday: i + '/01/2000',
+    firstname: 'Carlos',
+    lastname: 'Alcaraz',
+    birthday: i + 1 + '/01/2000',
     birthplace: 'FRANCE',
     hand: 'right',
     height: i,
@@ -19,7 +29,9 @@ for (let i = 0; i < 10; i++) {
     'career-start': '12/09/2012',
     coach: {} as Player,
     nationality: 'FRANCE',
-    ranking: 5,
+    ranking: i + 1,
+    flag: tabFlag[rand],
+    url: url[i % 5],
   } as Player;
   listPlayer.push(player);
 }
@@ -33,7 +45,7 @@ export const mockFetch = async (): Promise<Api> => {
   };
 };
 
-export const show = async (id: number): Promise<Api> => {
+export const mockShow = async (id: number): Promise<Api> => {
   const player = listPlayer.find((player: Player) => player.id === id);
 
   await new Promise((s) => setTimeout(s, 2000));

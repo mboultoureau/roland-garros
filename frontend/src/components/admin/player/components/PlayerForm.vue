@@ -3,7 +3,7 @@
     greedy
     @submit="onSubmit"
     @reset="onReset"
-    class="m-16"
+    class="w-full"
   >
     <div class="container">
       <div class="lastname">
@@ -61,7 +61,7 @@
         </q-input>
       </div>
       <div class="coach">
-        <q-select filled v-model="formComputed.coach" :options="[]" :label="t('input.coach')">
+        <q-select filled v-model="formComputed.coach" :options="[]" :label="t('input.coach')" :option-label="item => item.firstname" map-options>
           <template v-slot:no-option>
             <div class="p-4 text-gray-500">
               {{ t('field.empty', { object: 'coach'}) }}

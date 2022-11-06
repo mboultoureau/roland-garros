@@ -56,11 +56,13 @@ const onSubmit = async () => {
 
 const goNext = (path: string) => {
   if(path) router.push({ path:  path})
-  else router.push({ path: '/' })
-} 
+}
+
+const goBack = () => router.push({ path: '/'})
 
 const onReset = () => {
   username.value = ''
   password.value = ''
+  goBack()
 }
 </script>

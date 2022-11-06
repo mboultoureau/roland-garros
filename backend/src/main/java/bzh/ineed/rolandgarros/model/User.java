@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "user",
+@Table(name = "users",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")

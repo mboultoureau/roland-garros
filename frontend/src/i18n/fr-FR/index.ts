@@ -37,4 +37,11 @@ export default {
   'player.show.individual.ranking': 'Classement individuel',
   'player.show.hand.right': 'Droitier',
   'player.show.hand.left': 'Gaucher',
+  'match.index.round.1': '1er Tour',
+  'match.index.round.2': '2ème Tour',
+  'match.index.round.3': '3ème Tour',
+  'match.index.round.8': '1/8 Finale',
+  'match.index.round.4': '1/4 Finale',
+  'match.index.round.half': '1/2 Finale',
+  'match.index.round.finale': 'Finale',
 };

@@ -7,7 +7,7 @@ DELETE FROM players;
 
 INSERT INTO players (firstname, lastname, gender, birth_date,
     birth_place, nationality, weight, height) VALUES
-    ("Iga", "Swiatek", 0, "20010531", "Varsosie, Pologne", "Polonaise", null, 175),
-    ("Carlos", "Alcaraz", 1, "20030505", "El Palmar, Murcia, Espagne", "Espagnol", 74, 182),
-    ("Ons", "Jabeur", 0, "19940828", "Ksar Hellal, Tunisie", "Tunisiaine", 66, 167),
-    ("Rafael", "Nadal", 1, "19860603", "Manacor, Espagne", "Espagnol", 84, 185);
+    ("Iga", "Swiatek", 0, "20010531", "Varsosie, Pologne", "POL", null, 175),
+    ("Carlos", "Alcaraz", 1, "20030505", "El Palmar, Murcia, Espagne", "ESP", 74, 182),
+    ("Ons", "Jabeur", 0, "19940828", "Ksar Hellal, Tunisie", "TUN", 66, 167),
+    ("Rafael", "Nadal", 1, "19860603", "Manacor, Espagne", "ESP", 84, 185);

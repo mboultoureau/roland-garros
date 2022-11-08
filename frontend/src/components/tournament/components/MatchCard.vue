@@ -6,7 +6,7 @@
           <div class="border-2 border-gray-200 rounded-full overflow-hidden">
             <img class="w-12 h-12" src="https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400"/>
           </div>
-          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" src="https://countryflagsapi.com/svg/FRA" />
+          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/NOR.svg" />
         </div>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
           R.Nadal (1)
@@ -27,7 +27,7 @@
           <div class="border-2 border-gray-200 rounded-full overflow-hidden">
             <img class="w-12 h-12" src="https://images.prismic.io/fft-rg-site/3fc68463-a645-45c3-9dd2-c639e724c7e2_20220309_PJ_RuudCasper_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400"/>
           </div>
-          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" src="https://countryflagsapi.com/svg/BEL" />
+          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/AND.svg" />
         </div>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': false}">
           R.Nadal (1)

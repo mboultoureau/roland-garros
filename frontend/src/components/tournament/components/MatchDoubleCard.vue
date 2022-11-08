@@ -10,14 +10,14 @@
             <img class="w-12 h-12" src="https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400"/>
           </div>
         </div>
-        <div class="flex flex-col">
-          <div class="flex" >
+        <div class="flex flex-col gap-1">
+          <div class="flex gap-1" >
             <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">R.Nadal (1)</div>
-            <img class="rounded-sm w-8 h-6" src="https://countryflagsapi.com/svg/BEL" />
+            <img class="rounded-sm w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/AND.svg" />
           </div>
-          <div class="flex" >
+          <div class="flex gap-1" >
             <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">R.Nadal (1)</div>
-            <img class="rounded-sm w-8 h-6" src="https://countryflagsapi.com/svg/BEL" />
+            <img class="rounded-sm w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/BEL.svg" />
           </div>
         </div>
       </div>
@@ -40,14 +40,14 @@
             <img class="w-12 h-12" src="https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400"/>
           </div>
         </div>
-        <div class="flex flex-col">
-          <div class="flex" >
+        <div class="flex flex-col gap-1">
+          <div class="flex gap-1" >
             <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">R.Nadal (1)</div>
-            <img class="rounded-sm w-8 h-6" src="https://countryflagsapi.com/svg/BEL" />
+            <img class="rounded-sm w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/FRA.svg" />
           </div>
-          <div class="flex" >
+          <div class="flex gap-1" >
             <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">R.Nadal (1)</div>
-            <img class="rounded-sm w-8 h-6" src="https://countryflagsapi.com/svg/BEL" />
+            <img class="rounded-sm w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/FRA.svg" />
           </div>
         </div>
       </div>

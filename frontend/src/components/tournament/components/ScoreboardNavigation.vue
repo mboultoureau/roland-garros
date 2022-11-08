@@ -1,35 +1,35 @@
 <template>
   <div class="scoreboard-navigation">
     <div class="container">
-      <div class="title-1 text-gray-400">{{ t('match.index.round.1') }}</div>
+      <div class="title-1 text-gray-400">{{ t('match.round.FIRST_ROUND') }}</div>
       <div class="first-tour">
         <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 1" @click="handleSelectedRect(1)"/>
         <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 2" @click="handleSelectedRect(2)"/>
         <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 3" @click="handleSelectedRect(3)"/>
         <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 4" @click="handleSelectedRect(4)"/>
       </div>
-      <div class="title-2 text-gray-400">{{ t('match.index.round.2') }}</div>
+      <div class="title-2 text-gray-400">{{ t('match.round.SECOND_ROUND') }}</div>
       <div class="second-tour">
         <RectangleWithLine :nb-line="6" :is-selected="nbRectSelected === 5" @click="handleSelectedRect(5)"/>
         <RectangleWithLine :nb-line="6" :is-selected="nbRectSelected === 6" @click="handleSelectedRect(6)"/>
       </div>
-      <div class="title-3 text-gray-400">{{ t('match.index.round.3') }}</div>
+      <div class="title-3 text-gray-400">{{ t('match.round.THIRD_ROUND') }}</div>
       <div class="third-tour">
         <RectangleWithLine :nb-line="10" :nb-rectangle="1" :is-selected="nbRectSelected === 7" @click="handleSelectedRect(7)"/>
       </div>
-      <div class="title-8 text-gray-400">{{ t('match.index.round.8') }}</div>
+      <div class="title-8 text-gray-400">{{ t('match.round.SIXTEENTH_ROUND') }}</div>
       <div class="round-16">
         <RectangleWithLine :nb-line="8" :nb-rectangle="1" :is-selected="nbRectSelected === 8" @click="handleSelectedRect(8)"/>
       </div>
-      <div class="title-4 text-gray-400">{{ t('match.index.round.4') }}</div>
+      <div class="title-4 text-gray-400">{{ t('match.round.QUARTER_FINAL') }}</div>
       <div class="quarter-final">
         <RectangleWithLine :nb-line="4" :nb-rectangle="1" :is-selected="nbRectSelected === 9" @click="handleSelectedRect(9)"/>
       </div>
-      <div class="title-half text-gray-400">{{ t('match.index.round.half') }}</div>
+      <div class="title-half text-gray-400">{{ t('match.round.SEMI_FINAL') }}</div>
       <div class="half-final">
         <RectangleWithLine :nb-line="2" :nb-rectangle="1" :is-selected="nbRectSelected === 10" @click="handleSelectedRect(10)"/>
       </div>
-      <div class="title-final text-gray-400">{{ t('match.index.round.finale') }}</div>
+      <div class="title-final text-gray-400">{{ t('match.round.FINAL_ROUND') }}</div>
       <div class="final">
         <RectangleWithLine :nb-line="1" :nb-rectangle="1" :is-selected="nbRectSelected === 11" @click="handleSelectedRect(11)"/>
       </div>

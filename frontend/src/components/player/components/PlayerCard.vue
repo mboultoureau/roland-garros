@@ -7,7 +7,7 @@
         <div class="text-gray-400 text-xl">{{ age }} ans</div>
       </div>
       <div class="flex items-center gap-8 font-bold text-gray-400">
-        <img class="rounded-md w-16" :src="`https://countryflagsapi.com/svg/${player.flag}`"/>
+        <img class="rounded-md w-12" :src="`https://www.rolandgarros.com/img/flags-svg/${player.flag}.svg`"/>
         <span>{{ player.nationality }}</span>
       </div>
       <div class="flex gap-2">

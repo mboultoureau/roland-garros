@@ -6,7 +6,7 @@ import { Player } from 'src/models/person';
  */
 export const listPlayer = [] as Player[];
 
-const tabFlag = ['ARE', 'AD', 'AND', 'AFG', 'ATG', 'AIA', 'ALB', 'ARM', 'AGO'];
+const tabFlag = ['ARG', 'AUS', 'FRA', 'NOR', 'TPE', 'ITA'];
 const url = [
   'https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
   'https://images.prismic.io/fft-rg-site/6bbfe32a-28dd-4c05-9499-fd96dd1b10d0_20200119_PJ_TsitsipasStephanos_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',

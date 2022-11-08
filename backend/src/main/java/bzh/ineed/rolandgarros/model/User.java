@@ -42,6 +42,12 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne
+    @JoinTable(name = "user_person",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id"))
+    private Set<User> Roles = new HashSet<>();
+
     public User() {
 
     }

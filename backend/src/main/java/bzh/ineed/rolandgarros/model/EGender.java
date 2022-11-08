@@ -1,7 +1,8 @@
 package bzh.ineed.rolandgarros.model;
 
 public enum EGender {
-    MEN,
-    WOMAN,
-    OTHER
-}
+    FEMALE,
+    MALE,
+    OTHER,
+    AT_AT
+};

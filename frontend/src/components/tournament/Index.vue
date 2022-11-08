@@ -6,7 +6,7 @@
         <!--<MatchCard v-for="(match, index) in nbMatch" :key="index" :class="{ 'mb-16': ((index+1) % 2 === 0 && (index+1) != nbMatch) }" />-->
         <MatchDoubleCard />
       </div>
-      <div class="lg:hidden xl:flex flex-col justify-around ">
+      <div class="flex flex-col justify-around mobile-match-card">
         <MatchCard v-for="(match, index) in nbMatch2" :key="index" />
       </div>
     </div>
@@ -28,3 +28,14 @@ export default {
 const nbMatch = 8
 const nbMatch2 = 4
 </script>
+<style lang="scss" scoped>
+.mobile-match-card  {
+  display: block;
+}
+@media screen and (max-width: 1280px) {
+  .mobile-match-card  {
+    display: none;
+  } 
+}
+
+</style>

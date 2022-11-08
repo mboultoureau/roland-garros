@@ -2,7 +2,7 @@
   <Index></Index>
 </template>
 <script>
-import Index from 'src/components/match/Index.vue';
+import Index from 'src/components/tournament/Index.vue';
 export default {
   name: 'IndexMachPage',
   components: {

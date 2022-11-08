@@ -23,13 +23,14 @@ public class Player {
 
     private String birthPlace;
 
-    private String nationality;
-
     private Integer weight;
 
     private Integer height;
 
     private String picture;
+
+    @ManyToOne
+    private Country nationality;
 
     public Integer getId() {
         return id;
@@ -79,14 +80,6 @@ public class Player {
         this.birthPlace = birthPlace;
     }
 
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
     public Integer getWeight() {
         return weight;
     }
@@ -109,5 +102,13 @@ public class Player {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Country getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(Country nationality) {
+        this.nationality = nationality;
     }
 }

@@ -1,6 +1,16 @@
 package bzh.ineed.rolandgarros.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.Date;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "person")
@@ -12,7 +22,7 @@ public class Person {
     @NotBlank
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ESex gender;
+    private ESex sex;
 
     @NotBlank
     @Size(max = 50)
@@ -36,18 +46,36 @@ public class Person {
     @NotBlank
     private Integer height;
 
-    public Person(String sex, String firstname, String lastname){
+    public Person(ESex sex, String firstname, String lastname){
         this.sex = sex;
         this.firstname = firstname;
         this.lastname = lastname;
     }
 
+    @OneToOne
+    @JoinTable(name = "person_user",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> userSet = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "person_nationality",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "nationality_id"))
+    private Set<Nationality> nationalitySet = new HashSet<>();
+
+    @ManyToOne
+    @JoinTable(name = "person_sex",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "sex_id"))
+    private Set<ESex> sexSet = new HashSet<>();
+
     public Integer getId() {
         return id;
     }
 
-    public ESex getGender() {
-        return gender;
+    public ESex getSex() {
+        return sex;
     }
 
     public String getFirstname() {
@@ -74,8 +102,8 @@ public class Person {
         return height;
     }
 
-    public void setGender(ESex gender) {
-        this.gender = gender;
+    public void setSex(ESex sex) {
+        this.sex = sex;
     }
 
     public void setBirthDate(Date birthDate) {
@@ -98,11 +126,11 @@ public class Person {
         this.lastname = lastname;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
     public void setWeight(Integer weight) {
         this.weight = weight;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -67,7 +67,7 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/tournament',
+    path: '/tournaments',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {

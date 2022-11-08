@@ -4,7 +4,7 @@ import { Player } from 'src/models/person';
 /**
  * Create list player
  */
-const listPlayer = [] as Player[];
+export const listPlayer = [] as Player[];
 
 const tabFlag = ['ARE', 'AD', 'AND', 'AFG', 'ATG', 'AIA', 'ALB', 'ARM', 'AGO'];
 const url = [

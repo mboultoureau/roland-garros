@@ -14,7 +14,7 @@ const tournaments = [
   {
     id: 1,
     year: 2020,
-    types: [TournamentType.DOUBLE_MEN, TournamentType.DOUBLE_WOMAN],
+    types: [TournamentType.SIMPLE_MEN, TournamentType.DOUBLE_WOMAN],
   },
   {
     id: 2,

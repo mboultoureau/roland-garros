@@ -1,11 +1,11 @@
 import { Person } from './person';
 
 export enum TournamentType {
-  SIMPLE_MEN,
-  SIMPLE_WOMAN,
-  DOUBLE_MEN,
-  DOUBLE_WOMAN,
-  MIXED,
+  SIMPLE_MEN = 'SIMPLE_MEN',
+  SIMPLE_WOMAN = 'SIMPLE_WOMAN',
+  DOUBLE_MEN = 'DOUBLE_MEN',
+  DOUBLE_WOMAN = 'DOUBLE_WOMAN',
+  MIXED = 'MIXED',
 }
 
 export enum Status {

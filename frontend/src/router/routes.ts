@@ -46,6 +46,21 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: 'tournaments',
+        children: [
+          {
+            path: '',
+            component: () => import('pages/admin/tournament/Index.vue'),
+          },
+          {
+            path: ':id',
+            name: 'show-tournament-admin',
+            component: () =>
+              import('pages/admin/tournament/ShowTournament.vue'),
+          },
+        ],
+      },
     ],
     meta: {
       requireAuth: true,

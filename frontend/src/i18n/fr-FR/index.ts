@@ -53,4 +53,5 @@ export default {
   'tournament.type.DOUBLE_MEN': 'Double Homme',
   'tournament.type.DOUBLE_WOMAN': 'Double Femme',
   'tournament.type.MIXED': 'Mixte',
+  'tournament.index.title': 'Les Tournois',
 };

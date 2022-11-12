@@ -13,6 +13,7 @@ export const useTournamentStore = defineStore('tournament', {
     },
     async store(tournament: Tournament) {
       await store(tournament);
+      await this.fetch();
     },
     async delete(id: number) {
       await destroy(id);

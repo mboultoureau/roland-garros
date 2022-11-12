@@ -54,4 +54,8 @@ export default {
   'tournament.type.DOUBLE_WOMAN': 'Double Femme',
   'tournament.type.MIXED': 'Mixte',
   'tournament.index.title': 'Les Tournois',
+  'tournament.dialog.create.title': 'Créer un tournoi',
+  'tournament.dialog.select.type': 'Sélectionner le(s) type(s)',
+  'tournament.dialog.select.year': "Sélectionner l'année",
+  'tournament.index.btn.create': 'Créer un tournois',
 };

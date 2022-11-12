@@ -8,6 +8,24 @@ export enum TournamentType {
   MIXED = 'MIXED',
 }
 
+export const optionsTournamentTypes = [
+  {
+    value: TournamentType.SIMPLE_MEN,
+  },
+  {
+    value: TournamentType.SIMPLE_WOMAN,
+  },
+  {
+    value: TournamentType.DOUBLE_MEN,
+  },
+  {
+    value: TournamentType.DOUBLE_WOMAN,
+  },
+  {
+    value: TournamentType.MIXED,
+  },
+];
+
 export enum Status {
   IN_PROGRESS,
   PLANNED,
@@ -26,7 +44,7 @@ export enum Round {
 }
 
 export interface Team {
-  id: number;
+  id: number | string;
   personA: Person;
   personB?: Person;
 }
@@ -43,8 +61,15 @@ export interface Court {
   name: string;
 }
 
-export interface Match {
+export interface Score {
   id: number;
+  set: number;
+  scoreTeamA: number;
+  scoreTeamB: number;
+}
+
+export interface Match {
+  id: number | string;
   tournamentId: number;
   type: TournamentType;
   status: Status;
@@ -53,6 +78,7 @@ export interface Match {
   teamB: Team;
   date: string;
   court: Court;
+  scores: Score[];
 }
 
 export interface Training {

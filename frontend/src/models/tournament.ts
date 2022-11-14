@@ -1,4 +1,4 @@
-import { Person } from './person';
+import { Match } from './match';
 
 export enum TournamentType {
   SIMPLE_MEN = 'SIMPLE_MEN',
@@ -26,27 +26,14 @@ export const optionsTournamentTypes = [
   },
 ];
 
-export enum Status {
-  IN_PROGRESS,
-  PLANNED,
-  UNDEFINED,
-  FINISH,
-}
-
 export enum Round {
-  FIRST_ROUND,
-  SECOND_ROUND,
-  THIRD_ROUND,
-  SIXTEENTH_ROUND,
-  QUARTER_FINAL,
-  SEMI_FINAL,
-  FINAL_ROUND,
-}
-
-export interface Team {
-  id: number | string;
-  personA: Person;
-  personB?: Person;
+  FIRST_ROUND = 'FIRST_ROUND',
+  SECOND_ROUND = 'SECOND_ROUND',
+  THIRD_ROUND = 'THIRD_ROUND',
+  SIXTEENTH_ROUND = 'SIXTEENTH_ROUND',
+  QUARTER_FINAL = 'QUARTER_FINAL',
+  SEMI_FINAL = 'SEMI_FINAL',
+  FINAL_ROUND = 'FINAL_ROUND',
 }
 
 export interface Tournament {
@@ -54,42 +41,4 @@ export interface Tournament {
   year: number;
   types: TournamentType[];
   matchs?: Match[];
-}
-
-export interface Court {
-  id: number;
-  name: string;
-}
-
-export interface Score {
-  id: number;
-  set: number;
-  scoreTeamA: number;
-  scoreTeamB: number;
-}
-
-export interface Match {
-  id: number | string;
-  tournamentId: number;
-  type: TournamentType;
-  status: Status;
-  round: Round;
-  teamA: Team;
-  teamB: Team;
-  date: string;
-  court: Court;
-  scores: Score[];
-}
-
-export interface Training {
-  id: number;
-  player: Person;
-  startDate: string;
-  endDate: string;
-  court: Court;
-  details: string;
-}
-
-export interface TournamentFilter {
-  type: TournamentType;
 }

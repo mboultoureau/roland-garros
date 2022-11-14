@@ -33,7 +33,7 @@ const disableSelect = computed(() => optionsType.value?.length === 0)
 
 watch(
   selectType,
-  () => emit('handleSelectType', selectType.value)
+  () => emit('handleSelectType', selectType.value?.value)
 )
 
 watch(

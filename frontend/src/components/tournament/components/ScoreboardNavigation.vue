@@ -3,55 +3,56 @@
     <div class="container">
       <div class="title-1 text-gray-400">{{ t('match.round.FIRST_ROUND') }}</div>
       <div class="first-tour">
-        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 1" @click="handleSelectedRect(1)"/>
-        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 2" @click="handleSelectedRect(2)"/>
-        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 3" @click="handleSelectedRect(3)"/>
-        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 4" @click="handleSelectedRect(4)"/>
+        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 1" @click="handleSelectedRect(1, Round.FIRST_ROUND)"/>
+        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 2" @click="handleSelectedRect(2, Round.FIRST_ROUND)"/>
+        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 3" @click="handleSelectedRect(3, Round.FIRST_ROUND)"/>
+        <RectangleWithLine :nb-line="4" :is-selected="nbRectSelected === 4" @click="handleSelectedRect(4, Round.FIRST_ROUND)"/>
       </div>
       <div class="title-2 text-gray-400">{{ t('match.round.SECOND_ROUND') }}</div>
       <div class="second-tour">
-        <RectangleWithLine :nb-line="6" :is-selected="nbRectSelected === 5" @click="handleSelectedRect(5)"/>
-        <RectangleWithLine :nb-line="6" :is-selected="nbRectSelected === 6" @click="handleSelectedRect(6)"/>
+        <RectangleWithLine :nb-line="6" :is-selected="nbRectSelected === 5" @click="handleSelectedRect(5, Round.SECOND_ROUND)"/>
+        <RectangleWithLine :nb-line="6" :is-selected="nbRectSelected === 6" @click="handleSelectedRect(6, Round.SECOND_ROUND)"/>
       </div>
       <div class="title-3 text-gray-400">{{ t('match.round.THIRD_ROUND') }}</div>
       <div class="third-tour">
-        <RectangleWithLine :nb-line="10" :nb-rectangle="1" :is-selected="nbRectSelected === 7" @click="handleSelectedRect(7)"/>
+        <RectangleWithLine :nb-line="10" :nb-rectangle="1" :is-selected="nbRectSelected === 7" @click="handleSelectedRect(7, Round.THIRD_ROUND)"/>
       </div>
       <div class="title-8 text-gray-400">{{ t('match.round.SIXTEENTH_ROUND') }}</div>
       <div class="round-16">
-        <RectangleWithLine :nb-line="8" :nb-rectangle="1" :is-selected="nbRectSelected === 8" @click="handleSelectedRect(8)"/>
+        <RectangleWithLine :nb-line="8" :nb-rectangle="1" :is-selected="nbRectSelected === 8" @click="handleSelectedRect(8, Round.SIXTEENTH_ROUND)"/>
       </div>
       <div class="title-4 text-gray-400">{{ t('match.round.QUARTER_FINAL') }}</div>
       <div class="quarter-final">
-        <RectangleWithLine :nb-line="4" :nb-rectangle="1" :is-selected="nbRectSelected === 9" @click="handleSelectedRect(9)"/>
+        <RectangleWithLine :nb-line="4" :nb-rectangle="1" :is-selected="nbRectSelected === 9" @click="handleSelectedRect(9, Round.QUARTER_FINAL)"/>
       </div>
       <div class="title-half text-gray-400">{{ t('match.round.SEMI_FINAL') }}</div>
       <div class="half-final">
-        <RectangleWithLine :nb-line="2" :nb-rectangle="1" :is-selected="nbRectSelected === 10" @click="handleSelectedRect(10)"/>
+        <RectangleWithLine :nb-line="2" :nb-rectangle="1" :is-selected="nbRectSelected === 10" @click="handleSelectedRect(10, Round.SEMI_FINAL)"/>
       </div>
       <div class="title-final text-gray-400">{{ t('match.round.FINAL_ROUND') }}</div>
       <div class="final">
-        <RectangleWithLine :nb-line="1" :nb-rectangle="1" :is-selected="nbRectSelected === 11" @click="handleSelectedRect(11)"/>
+        <RectangleWithLine :nb-line="1" :nb-rectangle="1" :is-selected="nbRectSelected === 11" @click="handleSelectedRect(11, Round.FINAL_ROUND)"/>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { Round } from 'src/models/tournament';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import RectangleWithLine from './RectangleWithLine.vue';
 
 const emit = defineEmits<{
-  (name: 'handleSelectRound', value: number): number
+  (name: 'handleSelectRound', value: Round): Round
 }>();
 
 const { t } = useI18n()
 
 const nbRectSelected = ref(0)
 
-const handleSelectedRect = (number: number) => {
+const handleSelectedRect = (number: number, round: Round) => {
   nbRectSelected.value = number
-  emit('handleSelectRound', number)
+  emit('handleSelectRound', round)
 }
 </script>
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <div class="match-card w-96 my-2 rounded-md bg-gray-100">
-    <div class="team-A flex items-center justify-between p-2">
+    <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
         <div class="relative">
           <div class="border-2 border-gray-200 rounded-full overflow-hidden">
@@ -13,15 +13,16 @@
         </div>
       </div>
           
-      <div class="sets flex">
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">v</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">6</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': false}">4</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">6</div>
+      <div class="sets flex gap-4">
+        <div class="font-bold"><q-badge color="green" rounded /></div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': true}">6</div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': false}">4</div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': true}">6</div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': true}">6</div>
       </div>
     </div>
     <hr class="mx-4 border-gray-300">
-    <div class="team-A flex items-center justify-between p-2">
+    <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
         <div class="relative">
           <div class="border-2 border-gray-200 rounded-full overflow-hidden">
@@ -33,10 +34,11 @@
           R.Nadal (1)
         </div>
       </div>
-      <div class="sets flex">
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': false}">4</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">6</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': false}">4</div>
+      <div class="sets flex gap-4">
+        <div class="font-bold text-tertiary" :class="{'text-secondary': false}">4</div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': true}">6</div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': false}">4</div>
+        <div class="font-bold text-tertiary" :class="{'text-secondary': false}">4</div>
       </div>
     </div>
   </div>

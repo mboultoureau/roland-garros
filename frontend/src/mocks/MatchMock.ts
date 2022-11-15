@@ -32,9 +32,21 @@ export async function indexMock(filter: MatchFilter) {
       m.type === filter.type
   );
 
+  await new Promise((s) => setTimeout(s, 2000));
+
   return {
     success: true,
     payload: matchFIltered,
+  };
+}
+
+export async function showMock(id: string) {
+  await new Promise((s) => setTimeout(s, 2000));
+  const match = matchs.find((m) => m.id === id);
+
+  return {
+    success: match ? true : false,
+    payload: match,
   };
 }
 
@@ -51,10 +63,11 @@ export function addMatch(tournament: Tournament) {
         personA: listPlayer[2],
       } as Team;
       if (
-        tournament.types === TournamentType.DOUBLE_MEN ||
-        tournament.types === TournamentType.DOUBLE_WOMAN
+        type === TournamentType.DOUBLE_MEN ||
+        type === TournamentType.DOUBLE_WOMAN
       ) {
-        (teamA.personB = listPlayer[3]), (teamB.personB = listPlayer[4]);
+        teamA.personB = listPlayer[2];
+        teamB.personB = listPlayer[1];
       }
       createMatch(
         tournament,

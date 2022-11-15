@@ -13,13 +13,13 @@
     <div class="flex-col items-center justify-center gap-16">
       <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
       <div class="flex flex-col justify-center items-center">
-        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" />
+        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" @click="handleShowMatch(match)" class="cursor-pointer"/>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { MatchFilter } from 'src/models/match';
+import { Match, MatchFilter } from 'src/models/match';
 import { Round, Tournament, TournamentType } from 'src/models/tournament';
 import { useMatchStore } from 'src/stores/match';
 import { useTournamentStore } from 'src/stores/tournament';
@@ -31,6 +31,7 @@ import FilterByYears from './components/FilterByYears.vue';
 import MatchCard from './components/MatchCard.vue';
 import MatchDoubleCard from './components/MatchDoubleCard.vue';
 import ScoreboardNavigation from './components/ScoreboardNavigation.vue';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'IndexMatch',
@@ -42,6 +43,7 @@ const { t } = useI18n()
 
 const tournamentStore = useTournamentStore()
 const matchStore = useMatchStore()
+const router = useRouter()
 
 const listTournament = computed(() => tournamentStore.listTournament)
 const listMatch = computed(() => matchStore.listMatch)
@@ -60,6 +62,7 @@ const handleSelectTournament = (tournament: Tournament | null) => {
 }
 const handleSelectType = (type: TournamentType | null) => matchFiltre.value.type = type
 const handleSelectRound = (round: Round) => matchFiltre.value.round = round
+const handleShowMatch = (match: Match) => router.push({ name: 'show-match', params: { idT: tournamentSelect.value?.id, idM: match.id }})
 
 const matchComponent = computed(() => {
   let component = ''

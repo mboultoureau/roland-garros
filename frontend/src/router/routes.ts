@@ -59,6 +59,12 @@ const routes: RouteRecordRaw[] = [
             component: () =>
               import('pages/admin/tournament/ShowTournament.vue'),
           },
+          {
+            path: ':id/edit',
+            name: 'edit-tournament',
+            component: () =>
+              import('pages/admin/tournament/ShowTournament.vue'),
+          },
         ],
       },
     ],
@@ -88,6 +94,11 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: () => import('pages/tournament/Index.vue'),
+      },
+      {
+        path: ':idT/matchs/:idM',
+        name: 'show-match',
+        component: () => import('pages/match/Index.vue'),
       },
     ],
   },

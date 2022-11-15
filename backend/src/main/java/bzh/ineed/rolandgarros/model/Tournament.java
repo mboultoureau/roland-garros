@@ -1,5 +1,6 @@
 package bzh.ineed.rolandgarros.model;
 
+
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,10 +23,11 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(max = 20)
     private Integer year;
 
+    public Tournament(){
+
+    }
     public Tournament(Integer year) {
         this.year = year;
     }

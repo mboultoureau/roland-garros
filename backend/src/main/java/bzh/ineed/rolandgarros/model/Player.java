@@ -17,6 +17,7 @@ public class Player {
 
     private String lastname;
 
+
     private EGender gender;
 
     private Date birthDate;

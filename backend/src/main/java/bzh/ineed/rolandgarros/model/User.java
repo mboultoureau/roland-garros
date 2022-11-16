@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +38,9 @@ public class User implements UserDetails {
     @OneToOne
     private Person person;
 
+    @ManyToMany
+    private Set<Role> roles;
+
     public User() {
 
     }
@@ -46,8 +50,6 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
     }
-
-
 
     public Long getId() {
         return id;
@@ -104,5 +106,26 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return username + " (" + email + ")";
     }
 }

@@ -1,28 +1,25 @@
 package bzh.ineed.rolandgarros.model;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Set;
-import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "person")
+@Table(name = "persons")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ESex sex;
+    private EGender gender;
+
+    @ManyToOne
+    private Country nationality;
 
     @NotBlank
     @Size(max = 50)
@@ -32,105 +29,168 @@ public class Person {
     @Size(max = 50)
     private String lastname;
 
-    @NotBlank
-    @Size(max = 50)
-    private Date birthDate;
+    private LocalDate birthDate;
 
-    @NotBlank
-    @Size(max = 50)
     private String birthPlace;
 
-    @NotBlank
     private Integer weight;
 
-    @NotBlank
     private Integer height;
 
-    public Person(ESex sex, String firstname, String lastname){
-        this.sex = sex;
+    private String picture;
+
+    private boolean isPlayer;
+
+    private boolean isCoach;
+
+    @ManyToOne
+    private Person coach;
+
+    private Integer ranking;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private EHand hand;
+
+    private LocalDate earlyCareer;
+
+    public Person() {}
+
+    public Person(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
     }
 
-    @OneToOne
-    @JoinTable(name = "person_user",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> userSet = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "person_nationality",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "nationality_id"))
-    private Set<Nationality> nationalitySet = new HashSet<>();
-
-    @ManyToOne
-    @JoinTable(name = "person_sex",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "sex_id"))
-    private Set<ESex> sexSet = new HashSet<>();
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public ESex getSex() {
-        return sex;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public EGender getGender() {
+        return gender;
+    }
+
+    public void setGender(EGender gender) {
+        this.gender = gender;
+    }
+
+    public Country getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(Country nationality) {
+        this.nationality = nationality;
     }
 
     public String getFirstname() {
         return firstname;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public String getBirthPlace() {
-        return birthPlace;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setSex(ESex sex) {
-        this.sex = sex;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setBirthPlace(String birthPlace) {
-        this.birthPlace = birthPlace;
-    }
-
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public void setHeight(Integer height) {
-        this.height = height;
+    public String getLastname() {
+        return lastname;
     }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
     public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public boolean getIsPlayer() {
+        return isPlayer;
+    }
+
+    public void setIsPlayer(boolean player) {
+        isPlayer = player;
+    }
+
+    public boolean getIsCoach() {
+        return isCoach;
+    }
+
+    public void setIsCoach(boolean coach) {
+        isCoach = coach;
+    }
+
+    public Person getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Person coach) {
+        this.coach = coach;
+    }
+
+    public Integer getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
+    }
+
+    public EHand getHand() {
+        return hand;
+    }
+
+    public void setHand(EHand hand) {
+        this.hand = hand;
+    }
+
+    public LocalDate getEarlyCareer() {
+        return earlyCareer;
+    }
+
+    public void setEarlyCareer(LocalDate earlyCareer) {
+        this.earlyCareer = earlyCareer;
+    }
+
+    @Override
+    public String toString() {
+        return this.firstname + " " + this.lastname;
     }
 }

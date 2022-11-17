@@ -17,6 +17,7 @@
       </div>
     </div>
   </div>
+  <Loader v-model:show="showLoader" />
 </template>
 <script lang="ts">
 import { Match, MatchFilter } from 'src/models/match';
@@ -32,10 +33,11 @@ import MatchCard from '../match/components/MatchCard.vue';
 import MatchDoubleCard from '../match/components/MatchDoubleCard.vue';
 import ScoreboardNavigation from './components/ScoreboardNavigation.vue';
 import { useRouter } from 'vue-router';
+import Loader from '../shared/Loader.vue';
 
 export default {
     name: 'IndexMatch',
-    components: { ScoreboardNavigation, MatchCard, MatchDoubleCard, FilterByYears, FourCercle, FilterByType }
+    components: { ScoreboardNavigation, MatchCard, MatchDoubleCard, FilterByYears, FourCercle, FilterByType, Loader }
 }
 </script>
 <script setup lang="ts">
@@ -44,6 +46,8 @@ const { t } = useI18n()
 const tournamentStore = useTournamentStore()
 const matchStore = useMatchStore()
 const router = useRouter()
+
+const showLoader = ref(false)
 
 const listTournament = computed(() => tournamentStore.listTournament)
 const listMatch = computed(() => matchStore.listMatch)
@@ -78,12 +82,17 @@ const matchComponent = computed(() => {
 
 watch(
   matchFiltre.value,
-  async () => await matchStore.fetch({
-    tournamentId: 1,
-    round: matchFiltre.value.round,
-    type: matchFiltre.value.type
-  })
-)
+  async () => {
+    showLoader.value = true
+    if(matchFiltre.value.round && matchFiltre.value.type && matchFiltre.value.tournamentId > 0) {
+      await matchStore.fetch({
+        tournamentId: matchFiltre.value.tournamentId,
+        round: matchFiltre.value.round,
+        type: matchFiltre.value.type
+      })
+    }
+    showLoader.value = false
+})
 
 onMounted(async () => await tournamentStore.fetch())
 

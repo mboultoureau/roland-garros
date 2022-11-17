@@ -12,8 +12,9 @@
 </template>
 <script setup lang="ts">
 import { Match } from 'src/models/match';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import MatchPlayerImg from './MatchPlayerImg.vue';
 import ScoreMatch from './ScoreMatch.vue';
 
@@ -23,5 +24,12 @@ const props = defineProps<{
   match: Match
 }>()
 
+const router = useRouter()
+
 const matchComp = computed(() => props.match)
+
+watch(
+  matchComp,
+  () => { if(matchComp.value === undefined) router.push({name: 'list-match'})}
+)
 </script>

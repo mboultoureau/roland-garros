@@ -93,6 +93,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
+        name: 'list-match',
         component: () => import('pages/tournament/Index.vue'),
       },
       {

@@ -22,11 +22,9 @@
         </div>
       </div>
           
-      <div class="sets flex">
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">v</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">6</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': false}">4</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">6</div>
+      <div class="sets flex gap-3">
+        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}"><q-badge color="green" rounded></q-badge></div>
+        <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamA >= 6}">{{ score.scoreTeamA }}</div>
       </div>
     </div>
     <hr class="mx-4 border-gray-300">
@@ -42,19 +40,17 @@
         </div>
         <div class="flex flex-col gap-1">
           <div class="flex gap-1" >
-            <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">R.Nadal (1)</div>
-            <img class="rounded-sm w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/FRA.svg" />
+            <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamB.personA?.firstname, match?.teamB?.personA?.lastname) }}</div>
+            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamB.personA?.flag}.svg`" />
           </div>
           <div class="flex gap-1" >
-            <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">R.Nadal (1)</div>
-            <img class="rounded-sm w-8 h-6" src="https://www.rolandgarros.com/img/flags-svg/FRA.svg" />
+            <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamB.personB?.firstname, match?.teamB?.personB?.lastname) }}</div>
+            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamB.personB?.flag}.svg`" />
           </div>
         </div>
       </div>
-      <div class="sets flex">
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': false}">4</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}">6</div>
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': false}">4</div>
+      <div class="sets flex gap-3">
+        <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamB >= 6}">{{ score.scoreTeamB }}</div>
       </div>
     </div>
   </div>

@@ -9,6 +9,7 @@ export const useMatchStore = defineStore('match', {
   }),
   actions: {
     async fetch(filter: MatchFilter) {
+      console.log(filter);
       this.listMatch = await fetch(filter);
     },
     async show(id: string) {

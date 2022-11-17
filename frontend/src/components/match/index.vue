@@ -1,5 +1,5 @@
 <template>
-  <MatchCard class="mx-48 my-16 rounded-md" :match="matchComputed" />
+  <MatchResult class="mx-48 my-16 rounded-md" :match="matchComputed" />
 </template>
 <script lang="ts">
 import { computed, onMounted } from 'vue';
@@ -10,7 +10,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import MatchCard from './components/MatchCard.vue';
+import MatchResult from './components/MatchResult.vue';
 
 const route = useRoute()
 const matchStore = useMatchStore()

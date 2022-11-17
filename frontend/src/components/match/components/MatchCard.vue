@@ -1,27 +1,50 @@
 <template>
-  <div class="p-8 border-2 border-gray-200">
-    <div class="flex">
-      <MatchPlayerImg class="flex-1" :team="match?.teamA" />
-      <div class="flex flex-col items-center justify-around flex-1">
-        <div class="text-4xl uppercase text-primary font-bold italic">{{ t(`match.round.${match?.round}`) }}</div>
-        <ScoreMatch :team-a="matchComp?.teamA" :team-b="matchComp?.teamB" :scores="matchComp?.scores" />
+  <div class="match-card w-96 my-2 rounded-md bg-gray-100">
+    <div class="team-A flex items-center justify-between py-2 px-4">
+      <div class="flex items-center">
+        <div class="relative">
+          <div class="border-2 border-gray-200 rounded-full overflow-hidden">
+            <img class="w-12 h-12" :src="match?.teamA.personA.url"/>
+          </div>
+          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamA.personA.flag}.svg`" />
+        </div>
+        <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
+          {{ reduceNamePlayer(match?.teamA?.personA.firstname, match?.teamA?.personA.lastname) }}
+        </div>
       </div>
-      <MatchPlayerImg class="flex-1" :team="match?.teamB" />
+          
+      <div class="sets flex gap-4">
+        <div class="font-bold"><q-badge color="green" rounded /></div>
+        <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamA >= 6}">{{ score.scoreTeamA }}</div>
+      </div>
+    </div>
+    <hr class="mx-4 border-gray-300">
+    <div class="team-A flex items-center justify-between py-2 px-4">
+      <div class="flex items-center">
+        <div class="relative">
+          <div class="border-2 border-gray-200 rounded-full overflow-hidden">
+            <img class="w-12 h-12" :src="match?.teamB.personA.url"/>
+          </div>
+          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamB.personA.flag}.svg`" />
+        </div>
+        <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': false}">
+          {{ reduceNamePlayer(match?.teamB?.personA.firstname, match?.teamB?.personA.lastname) }}
+        </div>
+      </div>
+      <div class="sets flex gap-4">
+        <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamB >= 6}">{{ score.scoreTeamB }}</div>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { Match } from 'src/models/match';
-import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import MatchPlayerImg from './MatchPlayerImg.vue';
-import ScoreMatch from './ScoreMatch.vue';
-
-const { t } = useI18n()
+import { Match } from 'src/models/match'
+import { useMatchCard } from '../functions/match';
 
 const props = defineProps<{
-  match: Match
+  match: Match,
 }>()
 
-const matchComp = computed(() => props.match)
+const { reduceNamePlayer } = useMatchCard()
+
 </script>

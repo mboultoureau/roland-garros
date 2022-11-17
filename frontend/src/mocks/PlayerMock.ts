@@ -7,6 +7,8 @@ import { Player } from 'src/models/person';
 export const listPlayer = [] as Player[];
 
 const tabFlag = ['ARG', 'AUS', 'FRA', 'NOR', 'TPE', 'ITA'];
+const tabFN = ['Léane', 'Mathis', 'Sylvain', 'Paul'];
+const tabLN = ['Diraison', 'Boultoureau', 'Mestre', 'Breton'];
 const url = [
   'https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
   'https://images.prismic.io/fft-rg-site/6bbfe32a-28dd-4c05-9499-fd96dd1b10d0_20200119_PJ_TsitsipasStephanos_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400',
@@ -16,11 +18,10 @@ const url = [
 ];
 
 for (let i = 0; i < 10; i++) {
-  const rand = Math.floor(Math.random() * 8);
   const player = {
     id: i,
-    firstname: 'Carlos',
-    lastname: 'Alcaraz',
+    firstname: tabFN[i % 4],
+    lastname: tabLN[i % 4],
     birthday: i + 1 + '/01/2000',
     birthplace: 'FRANCE',
     hand: 'right',
@@ -30,7 +31,7 @@ for (let i = 0; i < 10; i++) {
     coach: {} as Player,
     nationality: 'FRANCE',
     ranking: i + 1,
-    flag: tabFlag[rand],
+    flag: tabFlag[i % 6],
     url: url[i % 5],
   } as Player;
   listPlayer.push(player);

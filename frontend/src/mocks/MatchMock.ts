@@ -1,4 +1,11 @@
-import { MatchFilter, Match, Team, Court, Status } from 'src/models/match';
+import {
+  MatchFilter,
+  Match,
+  Team,
+  Court,
+  Status,
+  Score,
+} from 'src/models/match';
 import { Tournament, TournamentType, Round } from 'src/models/tournament';
 import { listPlayer } from './PlayerMock';
 import { uid } from 'quasar';
@@ -53,29 +60,59 @@ export async function showMock(id: string) {
 export function addMatch(tournament: Tournament) {
   // 1er T => 64 matchs
   tournament.types.forEach((type) => {
+    const score = [
+      {
+        id: uid(),
+        set: 1,
+        scoreTeamA: 4,
+        scoreTeamB: 6,
+      },
+      {
+        id: uid(),
+        set: 2,
+        scoreTeamA: 4,
+        scoreTeamB: 6,
+      },
+      {
+        id: uid(),
+        set: 3,
+        scoreTeamA: 6,
+        scoreTeamB: 4,
+      },
+      {
+        id: uid(),
+        set: 4,
+        scoreTeamA: 4,
+        scoreTeamB: 6,
+      },
+    ] as Score[];
+
+    const randA = Math.floor(Math.random() * 4);
+    const randB = Math.floor(Math.random() * 4);
+    const teamA = {
+      id: uid(),
+      personA: listPlayer[randA],
+    } as Team;
+    const teamB = {
+      id: uid(),
+      personA: listPlayer[randB],
+    } as Team;
+    if (
+      type === TournamentType.DOUBLE_MEN ||
+      type === TournamentType.DOUBLE_WOMAN
+    ) {
+      teamA.personB = listPlayer[3];
+      teamB.personB = listPlayer[4];
+    }
     for (let i = 1; i <= 64; i++) {
-      const teamA = {
-        id: uid(),
-        personA: listPlayer[1],
-      } as Team;
-      const teamB = {
-        id: uid(),
-        personA: listPlayer[2],
-      } as Team;
-      if (
-        type === TournamentType.DOUBLE_MEN ||
-        type === TournamentType.DOUBLE_WOMAN
-      ) {
-        teamA.personB = listPlayer[2];
-        teamB.personB = listPlayer[1];
-      }
       createMatch(
         tournament,
         type,
         Round.FIRST_ROUND,
         Status.PLANNED,
         teamA,
-        teamB
+        teamB,
+        score
       );
     }
     // 2eme tour
@@ -85,8 +122,9 @@ export function addMatch(tournament: Tournament) {
         type,
         Round.SECOND_ROUND,
         Status.UNDEFINED,
-        null,
-        null
+        teamA,
+        teamB,
+        score
       );
     }
     // 3eme tour
@@ -96,8 +134,9 @@ export function addMatch(tournament: Tournament) {
         type,
         Round.THIRD_ROUND,
         Status.UNDEFINED,
-        null,
-        null
+        teamA,
+        teamB,
+        score
       );
     }
     // 1/8 final
@@ -107,8 +146,9 @@ export function addMatch(tournament: Tournament) {
         type,
         Round.SIXTEENTH_ROUND,
         Status.UNDEFINED,
-        null,
-        null
+        teamA,
+        teamB,
+        score
       );
     }
     // 1/4 final
@@ -118,8 +158,9 @@ export function addMatch(tournament: Tournament) {
         type,
         Round.QUARTER_FINAL,
         Status.UNDEFINED,
-        null,
-        null
+        teamA,
+        teamB,
+        score
       );
     }
     // 1/2 final
@@ -129,8 +170,9 @@ export function addMatch(tournament: Tournament) {
         type,
         Round.SEMI_FINAL,
         Status.UNDEFINED,
-        null,
-        null
+        teamA,
+        teamB,
+        score
       );
     }
     // finale
@@ -139,8 +181,9 @@ export function addMatch(tournament: Tournament) {
       type,
       Round.FINAL_ROUND,
       Status.UNDEFINED,
-      null,
-      null
+      teamA,
+      teamB,
+      score
     );
   });
 }
@@ -151,7 +194,8 @@ function createMatch(
   round: Round,
   status: Status,
   teamA: Team | null,
-  teamB: Team | null
+  teamB: Team | null,
+  score: Score[]
 ) {
   const nbCourt = Math.floor(Math.random() * 4);
   matchs.push({
@@ -164,6 +208,6 @@ function createMatch(
     teamB: teamB,
     tournamentId: tournament.id,
     type: type,
-    scores: [],
+    scores: score,
   } as Match);
 }

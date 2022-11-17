@@ -13,7 +13,7 @@
     <div class="flex-col items-center justify-center gap-16">
       <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
       <div class="flex flex-col justify-center items-center">
-        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" @click="handleShowMatch(match)" class="cursor-pointer"/>
+        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
       </div>
     </div>
   </div>
@@ -28,8 +28,8 @@ import { useI18n } from 'vue-i18n';
 import FourCercle from '../shared/FourCercle.vue';
 import FilterByType from './components/FilterByType.vue';
 import FilterByYears from './components/FilterByYears.vue';
-import MatchCard from './components/MatchCard.vue';
-import MatchDoubleCard from './components/MatchDoubleCard.vue';
+import MatchCard from '../match/components/MatchCard.vue';
+import MatchDoubleCard from '../match/components/MatchDoubleCard.vue';
 import ScoreboardNavigation from './components/ScoreboardNavigation.vue';
 import { useRouter } from 'vue-router';
 

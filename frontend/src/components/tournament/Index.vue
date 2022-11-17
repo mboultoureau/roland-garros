@@ -10,11 +10,19 @@
       </div>
     </div>
     <ScoreboardNavigation @handle-select-round="handleSelectRound"/>
-    <div class="flex-col items-center justify-center gap-16">
-      <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
-      <div class="flex flex-col justify-center items-center">
-        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
+    <div class="flex justify-around gap-16" :class="{'flex-row-reverse': matchFiltre.round === Round.FINAL_ROUND}">
+      <div class="flex flex-col">
+        <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
+        <div class="flex flex-1 flex-col justify-center items-center">
+          <component :is="matchComponent" v-for="match in listMatch" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
+        </div>
       </div>
+      <div class="flex flex-col">
+        <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${getNextOrPreviousRound(matchFiltre.round)}`) }}</div>
+        <div class="flex flex-1 flex-col justify-around">
+          <component :is="matchComponent" v-for="match in listMatchNextOrPrevious" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
+        </div>
+      </div> 
     </div>
   </div>
   <Loader v-model:show="showLoader" />
@@ -51,6 +59,7 @@ const showLoader = ref(false)
 
 const listTournament = computed(() => tournamentStore.listTournament)
 const listMatch = computed(() => matchStore.listMatch)
+const listMatchNextOrPrevious = computed(() => matchStore.listMatchNextOrPrevious)
 
 const tournamentSelect = ref(null as Tournament | null)
 
@@ -90,9 +99,33 @@ watch(
         round: matchFiltre.value.round,
         type: matchFiltre.value.type
       })
+      await matchStore.fetch({
+        tournamentId: matchFiltre.value.tournamentId,
+        round: getNextOrPreviousRound(matchFiltre.value.round),
+        type: matchFiltre.value.type
+      }, true)
     }
     showLoader.value = false
 })
+
+const getNextOrPreviousRound = (round: Round): Round => {
+  switch(round) {
+    case Round.FIRST_ROUND: return Round.SECOND_ROUND;
+    break;
+    case Round.SECOND_ROUND: return Round.THIRD_ROUND;
+    break;
+    case Round.THIRD_ROUND: return Round.SIXTEENTH_ROUND;
+    break;
+    case Round.SIXTEENTH_ROUND: return Round.QUARTER_FINAL;
+    break;
+    case Round.QUARTER_FINAL: return Round.SEMI_FINAL;
+    break;
+    case Round.SEMI_FINAL: return Round.FINAL_ROUND;
+    break;
+    case Round.FINAL_ROUND: return Round.SEMI_FINAL;
+    break;
+  }
+}
 
 onMounted(async () => await tournamentStore.fetch())
 
@@ -106,5 +139,4 @@ onMounted(async () => await tournamentStore.fetch())
     display: none;
   } 
 }
-
 </style>

@@ -2,12 +2,7 @@
   <div class="match-card w-96 my-2 rounded-md bg-gray-100">
     <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
-        <div class="relative">
-          <div class="border-2 border-gray-200 rounded-full overflow-hidden">
-            <img class="w-12 h-12" :src="match?.teamA.personA.url"/>
-          </div>
-          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamA.personA.flag}.svg`" />
-        </div>
+        <PlayerImgFlag :nationality="{alpha3code: match?.teamA.personA.flag}" :picture="match?.teamA.personA.url"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
           {{ reduceNamePlayer(match?.teamA?.personA.firstname, match?.teamA?.personA.lastname) }}
         </div>
@@ -21,12 +16,7 @@
     <hr class="mx-4 border-gray-300">
     <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
-        <div class="relative">
-          <div class="border-2 border-gray-200 rounded-full overflow-hidden">
-            <img class="w-12 h-12" :src="match?.teamB.personA.url"/>
-          </div>
-          <img class="rounded-sm absolute bottom-0 -right-4 w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamB.personA.flag}.svg`" />
-        </div>
+        <PlayerImgFlag :nationality="{alpha3code: match?.teamB.personA.flag}" :picture="match?.teamB.personA.url"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': false}">
           {{ reduceNamePlayer(match?.teamB?.personA.firstname, match?.teamB?.personA.lastname) }}
         </div>
@@ -40,6 +30,7 @@
 <script setup lang="ts">
 import { Match } from 'src/models/match'
 import { useMatchCard } from '../functions/match';
+import PlayerImgFlag from 'src/components/shared/PlayerImgFlag.vue';
 
 const props = defineProps<{
   match: Match,

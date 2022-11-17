@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-2">
-    <div v-for="match in listMatch" :key="match.id"></div>
+  <div class="flex flex-col gap-4 mt-8">
+    <MatchAdminCard v-for="match in listMatch" :key="match.id" :match="match"></MatchAdminCard>
   </div>
 </template>
 <script setup lang="ts">
@@ -8,6 +8,7 @@ import { Match } from 'src/models/match';
 import { Round, TournamentType } from 'src/models/tournament'
 import { useTournamentStore } from 'src/stores/tournament';
 import { computed, ref, watch } from 'vue';
+import MatchAdminCard from './MatchAdminCard.vue';
 
 const tournamentStore = useTournamentStore()
 

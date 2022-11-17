@@ -18,6 +18,13 @@ export interface Person {
   flag: string;
 }
 
+export interface Nationality {
+  id?: number;
+  name?: string;
+  alpha2code?: string;
+  alpha3code: string;
+}
+
 export interface FilterPlayer {
   sexe: 'men' | 'woman';
   filter: null | string;

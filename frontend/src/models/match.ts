@@ -7,10 +7,10 @@ export interface Court {
 }
 
 export enum Status {
-  IN_PROGRESS,
-  PLANNED,
-  UNDEFINED,
-  FINISH,
+  IN_PROGRESS = 'IN_PROGRESS',
+  PLANNED = 'PLANNED',
+  UNDEFINED = 'UNDEFINED',
+  FINISH = 'FINISH',
 }
 
 export interface Score {
@@ -26,11 +26,11 @@ export interface Match {
   type: TournamentType;
   status: Status;
   round: Round;
-  teamA: Team;
-  teamB: Team;
-  date: string;
-  court: Court;
-  scores: Score[];
+  teamA?: Team;
+  teamB?: Team;
+  date?: string;
+  court?: Court;
+  scores?: Score[];
 }
 
 export interface Training {

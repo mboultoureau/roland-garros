@@ -21,7 +21,6 @@ public class RolandGarrosApplication {
 		SpringApplication.run(RolandGarrosApplication.class, args);
 	}
 
-	/*
 	// Toutes les requêtes du serveur localhost:9000 vers /api sont autorisés
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
@@ -33,10 +32,4 @@ public class RolandGarrosApplication {
 			}
 		};
 	}
-
-	@GetMapping("/api/welcome")
-	public String hello(@RequestParam(value = "name", defaultValue = "") String name) {
-		return String.format("Welcome %s to the 🎾 Roland Garros website!", name);
-	}
-	 */
 }

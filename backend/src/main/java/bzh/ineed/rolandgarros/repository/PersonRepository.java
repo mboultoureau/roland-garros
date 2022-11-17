@@ -13,5 +13,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Page<Person> findByIsPlayerTrue(Pageable pageable);
 
+    Page<Person> findByIsCoachTrue(Pageable pageable);
+
     Page<Person> findByIsPlayerTrueAndGenderEquals(EGender gender, Pageable pageable);
 }

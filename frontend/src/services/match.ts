@@ -8,7 +8,7 @@ export async function fetch(filter: MatchFilter) {
   } catch (error) {}
 }
 
-export async function show(id: string) {
+export async function show(id: string | number) {
   try {
     const response = await showMock(id);
     return response.payload;

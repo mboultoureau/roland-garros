@@ -12,7 +12,7 @@ export const usePlayerStore = defineStore('player', {
       state.listPlayer.find((player: Player) => player.id === id),
   },
   actions: {
-    async fetch(filter: FilterPlayer) {
+    async fetch(filter?: FilterPlayer) {
       this.listPlayer = await fetch(filter);
     },
     async store(player: Player) {

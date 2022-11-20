@@ -60,10 +60,9 @@ const routes: RouteRecordRaw[] = [
               import('pages/admin/tournament/ShowTournament.vue'),
           },
           {
-            path: ':id/edit',
-            name: 'edit-tournament',
-            component: () =>
-              import('pages/admin/tournament/ShowTournament.vue'),
+            path: ':idT/edit/:idM',
+            name: 'edit-match-tournament',
+            component: () => import('pages/admin/tournament/EditMatch.vue'),
           },
         ],
       },

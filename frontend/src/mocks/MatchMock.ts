@@ -47,9 +47,9 @@ export async function indexMock(filter: MatchFilter) {
   };
 }
 
-export async function showMock(id: string) {
+export async function showMock(id: string | number) {
   await new Promise((s) => setTimeout(s, 2000));
-  const match = matchs.find((m) => m.id === id);
+  const match = matchs.find((m) => m.id == id);
 
   return {
     success: match ? true : false,
@@ -62,25 +62,25 @@ export function addMatch(tournament: Tournament) {
   tournament.types.forEach((type) => {
     const score = [
       {
-        id: uid(),
+        id: 1,
         set: 1,
         scoreTeamA: 4,
         scoreTeamB: 6,
       },
       {
-        id: uid(),
+        id: 2,
         set: 2,
         scoreTeamA: 4,
         scoreTeamB: 6,
       },
       {
-        id: uid(),
+        id: 3,
         set: 3,
         scoreTeamA: 6,
         scoreTeamB: 4,
       },
       {
-        id: uid(),
+        id: 4,
         set: 4,
         scoreTeamA: 4,
         scoreTeamB: 6,

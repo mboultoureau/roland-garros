@@ -1,17 +1,16 @@
 <template>
-  <div class="bg-gray-100 p-8 rounded-md">
-    <div class="flex items-center"><FourCercle />
-      <div class="m-auto text-2xl font-bold">{{ t('tournament.index.title') }}</div>
-    </div>
-    <div class="flex gap-4 mt-16">
-      <q-select filled v-model="typeSelected" label="Sélectionnez type" :options="optionsType" class="flex-1"></q-select>
-      <q-select filled v-model="phaseSelected" label="Sélectionnez phase" :options="optionsPhase" class="flex-1"></q-select>
-    </div>
-  </div>
+  <Header :title="t('tournament.index.title')">
+    <template v-slot:default>
+      <div class="flex gap-4 mt-16">
+        <q-select filled v-model="typeSelected" :label="t('tournament.index.filtre.type')" :options="optionsType" class="flex-1"></q-select>
+        <q-select filled v-model="phaseSelected" :label="t('tournament.index.filtre.round')" :options="optionsPhase" class="flex-1"></q-select>
+      </div>
+    </template>
+  </Header>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import FourCercle from 'src/components/shared/FourCercle.vue';
+import Header from 'src/components/shared/Header.vue';
 import { computed, ref, watch } from 'vue';
 import { Round, Tournament, TournamentType } from 'src/models/tournament';
 

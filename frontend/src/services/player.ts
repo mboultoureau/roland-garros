@@ -9,7 +9,7 @@ import {
 } from 'src/mocks/PlayerMock';
 import { api } from 'src/boot/axios';
 
-export async function fetch(filter: FilterPlayer) {
+export async function fetch(filter?: FilterPlayer) {
   try {
     await api.get('player', { params: filter });
   } catch (error) {}

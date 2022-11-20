@@ -16,8 +16,14 @@ export const useMatchStore = defineStore('match', {
         this.listMatch = await fetch(filter);
       }
     },
-    async show(id: string) {
+    async show(id: string | number) {
       this.match = await show(id);
+    },
+    async edit(match: Match) {
+      console.log(match);
+    },
+    set(match: Match) {
+      this.match = match;
     },
   },
 });

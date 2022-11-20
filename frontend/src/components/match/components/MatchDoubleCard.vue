@@ -2,14 +2,7 @@
   <div class="match-card w-96 my-2 rounded-md bg-gray-100">
     <div class="team-A flex items-center justify-between p-2">
       <div class="flex items-center">
-        <div class="relative w-24 h-12">
-          <div class="absolute top-0 left-0 bg-gray-100 border-2 border-gray-200 rounded-full overflow-hidden">
-            <img class="w-12 h-12" :src="match?.teamA.personA.url"/>
-          </div>
-          <div class="absolute top-0 left-10 bg-gray-100 border-2 border-gray-200 rounded-full overflow-hidden">
-            <img class="w-12 h-12" :src="match?.teamA.personB?.url"/>
-          </div>
-        </div>
+        <PlayerImgFlag :team="match.teamB" /> 
         <div class="flex flex-col gap-1">
           <div class="flex gap-1" >
             <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">{{ reduceNamePlayer(match?.teamA.personA.firstname, match?.teamA.personA.lastname) }}</div>
@@ -30,14 +23,7 @@
     <hr class="mx-4 border-gray-300">
     <div class="team-B flex items-center justify-between p-2">
       <div class="flex items-center">
-        <div class="relative w-24 h-12">
-          <div class="absolute top-0 left-0 bg-gray-100 border-2 border-gray-200 rounded-full overflow-hidden">
-            <img class="w-12 h-12" src="https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400"/>
-          </div>
-          <div class="absolute top-0 left-10 bg-gray-100 border-2 border-gray-200 rounded-full overflow-hidden">
-            <img class="w-12 h-12" src="https://images.prismic.io/fft-rg-site/29bcebad-30f5-46c2-a7dd-e648518dea74_20220310_PJ_NadalRafael_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400"/>
-          </div>
-        </div>
+        <PlayerImgFlag :team="match.teamB" /> 
         <div class="flex flex-col gap-1">
           <div class="flex gap-1" >
             <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamB.personA?.firstname, match?.teamB?.personA?.lastname) }}</div>
@@ -58,6 +44,7 @@
 <script setup lang="ts">
 import { Match } from 'src/models/match'
 import { useMatchCard } from '../functions/match'
+import PlayerImgFlag from 'src/components/shared/PlayerImgFlag.vue';
 
 const props = defineProps<{
   match: Match

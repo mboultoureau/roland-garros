@@ -30,6 +30,7 @@ export function initMatchTournament() {
 initMatchTournament();
 
 export async function storeMock(tournament: Tournament) {
+  tournament.id = tournaments.length;
   addMatch(tournament);
   await new Promise((s) => setTimeout(s, 2000));
 

@@ -58,4 +58,11 @@ export default {
   'tournament.dialog.select.type': 'Sélectionner le(s) type(s)',
   'tournament.dialog.select.year': "Sélectionner l'année",
   'tournament.index.btn.create': 'Créer un tournois',
+  'tournament.index.filtre.type': 'Sélectionner Type',
+  'tournament.index.filtre.round': 'Sélectionner Phase',
+  'tournament.edit.match.title': 'Modification match',
+  'tournament.edit.match.select.team': 'Sélectionner Joueur(s)',
+  'tournament.edit.match.select.date': 'Sélectionner Date',
+  'tournament.edit.match.select.time': 'Sélectionner Heure',
+  'tournament.edit.match.select.court': 'Sélectionner Court',
 };

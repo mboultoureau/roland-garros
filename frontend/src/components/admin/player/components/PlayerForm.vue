@@ -13,18 +13,7 @@
         <q-input filled v-model="formComputed.firstname" lazy-rules :label="t('input.firstname')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
       </div>
       <div class="birthday">
-        <q-input filled v-model="formComputed.birthday" lazy-rules :label="t('input.birthday')" :rules="[ val => val && val.length > 0 || t('field.required')]">
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy>
-                <q-date
-                v-model="formComputed.birthday"
-                :locale="localeDatePicker"
-                mask="DD/MM/YYYY"></q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
+        <InputDate v-model="formComputed.birthday" :label="t('input.birthday')"></InputDate>
       </div>
       <div class="nationality">
         <q-input filled v-model="formComputed.nationality" lazy-rules autocapitalize :label="t('input.nationality')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
@@ -46,19 +35,7 @@
         <q-radio class="left" v-model="formComputed.hand" lazy-rules val="left" label="Gauche" />
       </div>
       <div class="start-career">
-        <q-input filled v-model="formComputed['career-start']" lazy-rules :label="t('input.career.start')" :rules="[ val => val && val.length > 0 || t('field.required')]">
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy>
-                <q-date
-                  v-model="formComputed['career-start']"
-                  mask="DD/MM/YYYY"
-                  :locale="localeDatePicker"
-                ></q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
+        <InputDate v-model="formComputed['career-start']" :label="t('input.career.start')" ></InputDate>
       </div>
       <div class="coach">
         <q-select filled v-model="formComputed.coach" :options="[]" :label="t('input.coach')" :option-label="item => item.firstname" map-options>
@@ -81,6 +58,7 @@
 import { Player } from 'src/models/person';
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import InputDate from 'src/components/shared/InputDate.vue';
 
 const { t } = useI18n()
 
@@ -124,12 +102,7 @@ for(let i=0; i<100; i++) {
   optionsRanking.push(i)
 }
 
-const localeDatePicker = ref({
-  days: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
-  daysShort: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
-  months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-  monthsShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
-})
+
 
 </script>
 <style lang="scss">

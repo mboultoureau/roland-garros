@@ -2,7 +2,7 @@
   <div class="match-card w-96 my-2 rounded-md bg-gray-100">
     <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
-        <PlayerImgFlag :nationality="{alpha3code: match?.teamA.personA.flag}" :picture="match?.teamA.personA.url"></PlayerImgFlag>
+        <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
           {{ reduceNamePlayer(match?.teamA?.personA.firstname, match?.teamA?.personA.lastname) }}
         </div>
@@ -16,7 +16,7 @@
     <hr class="mx-4 border-gray-300">
     <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
-        <PlayerImgFlag :nationality="{alpha3code: match?.teamB.personA.flag}" :picture="match?.teamB.personA.url"></PlayerImgFlag>
+        <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': false}">
           {{ reduceNamePlayer(match?.teamB?.personA.firstname, match?.teamB?.personA.lastname) }}
         </div>

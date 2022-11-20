@@ -1,5 +1,5 @@
-import { indexMock, showMock } from 'src/mocks/MatchMock';
-import { MatchFilter } from 'src/models/match';
+import { indexMock, showMock, editMock } from 'src/mocks/MatchMock';
+import { MatchEditFilter, MatchFilter } from 'src/models/match';
 
 export async function fetch(filter: MatchFilter) {
   try {
@@ -12,5 +12,12 @@ export async function show(id: string | number) {
   try {
     const response = await showMock(id);
     return response.payload;
+  } catch (error) {}
+}
+
+export async function edit(matchEdit: MatchEditFilter) {
+  try {
+    const response = await editMock(matchEdit);
+    return response.success;
   } catch (error) {}
 }

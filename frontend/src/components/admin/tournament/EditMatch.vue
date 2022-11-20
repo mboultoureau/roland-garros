@@ -13,6 +13,9 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Notify } from 'quasar';
+import { CommonError, ErrorNotify } from 'src/helpers/notify';
+import { MatchEditFilter } from 'src/models/match';
 import { TournamentType } from 'src/models/tournament';
 import { useMatchStore } from 'src/stores/match';
 import { ref, onMounted, watch, computed } from 'vue';
@@ -37,14 +40,28 @@ const showLoaderBtn = ref(false)
 
 const handleSubmit = async () => {
   showLoaderBtn.value = true
-  //TODO: update match
-  await new Promise((s) => setTimeout(s, 2000));
+  const success = await matchStore.edit({
+    matchId: matchId,
+    teamA: teamAId.value,
+    teamB: teamBId.value,
+    court: court.value,
+    date: date.value,
+    time: time.value,
+  } as MatchEditFilter)
+
   showLoaderBtn.value = false
+
+  console.log(success)
+  if(success) {
+    router.back()
+  } else {
+    //TODO: mettre notif dans le service
+    CommonError()
+  }
 }
 
 onMounted(async () => {
   if(Object?.entries(matchStore.match)?.length === 0) {
-    console.log('show match')
     await matchStore.show(matchId as string)
   }
 })

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { Match, MatchFilter } from 'src/models/match';
-import { fetch, show } from 'src/services/match';
+import { Match, MatchEditFilter, MatchFilter } from 'src/models/match';
+import { edit, fetch, show } from 'src/services/match';
 
 export const useMatchStore = defineStore('match', {
   state: () => ({
@@ -19,8 +19,9 @@ export const useMatchStore = defineStore('match', {
     async show(id: string | number) {
       this.match = await show(id);
     },
-    async edit(match: Match) {
-      console.log(match);
+    async edit(match: MatchEditFilter) {
+      const success = await edit(match);
+      return success;
     },
     set(match: Match) {
       this.match = match;

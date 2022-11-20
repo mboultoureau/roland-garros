@@ -5,6 +5,7 @@ import {
   Court,
   Status,
   Score,
+  MatchEditFilter,
 } from 'src/models/match';
 import { Tournament, TournamentType, Round } from 'src/models/tournament';
 import { listPlayer } from './PlayerMock';
@@ -54,6 +55,15 @@ export async function showMock(id: string | number) {
   return {
     success: match ? true : false,
     payload: match,
+  };
+}
+
+export async function editMock(matchEdit: MatchEditFilter) {
+  const matchFund = matchs.find((match) => match.id == matchEdit.matchId);
+  await new Promise((s) => setTimeout(s, 2000));
+  return {
+    success: matchFund === undefined ? false : true,
+    payload: null,
   };
 }
 

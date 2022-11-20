@@ -1,7 +1,7 @@
 <template>
   <Header :title="t('tournament.edit.match.title')">
     <template v-slot:btn>
-      <q-btn color="primary" :loading="showLoaderBtn" @click="submit">Enregistrer</q-btn>
+      <q-btn color="primary" :loading="showLoaderBtn" @click="submit">{{ t('btn.save') }}</q-btn>
     </template>
   </Header>
   <div class="formulaire mt-8">
@@ -83,7 +83,6 @@
 import { useMatchCard } from 'src/components/match/functions/match';
 import Header from 'src/components/shared/Header.vue';
 import InputDate from 'src/components/shared/InputDate.vue';
-import { Team } from 'src/models/match';
 import { useCourtStore } from 'src/stores/court';
 import { useMatchStore } from 'src/stores/match';
 import { usePlayerStore } from 'src/stores/player';
@@ -131,7 +130,10 @@ const court = computed({
   get: () => props.court,
   set: (value) => emit('update:court', value)
 })
-const date = ref()
+const date = computed({
+  get: () => props.date,
+  set: (value) => emit('update:date', value)
+})
 const time = ref()
 
 const loadingBtn = ref(false)

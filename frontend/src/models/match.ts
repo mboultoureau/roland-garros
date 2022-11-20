@@ -53,3 +53,12 @@ export interface MatchFilter {
   tournamentId: number;
   round: Round;
 }
+
+export interface MatchEditFilter {
+  matchId: number | string;
+  teamA: number | number[] | null;
+  teamB: number | number[] | null;
+  date: string | null;
+  time: string | null;
+  court: number | null;
+}

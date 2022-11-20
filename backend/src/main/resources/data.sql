@@ -2,10 +2,17 @@ DELETE FROM users;
 
 INSERT INTO users (email, password, username) VALUES
     ("admin@email.com", "$2a$10$iSa6.Wh9ZAghYsiL/xfR6u4mnw0UJ.Tc6nDSwo8OxxKZU8r/PQ27m", "admin");
-
+/*
 DELETE FROM countries;
 
 DELETE FROM tournaments;
+
+DELETE FROM matchs;*/
+
+/*
+INSERT INTO matchs(status, round) VALUES
+    ("1","1");
+*/
 
 
 INSERT INTO tournaments(year) VALUES
@@ -14,6 +21,8 @@ INSERT INTO tournaments(year) VALUES
     (2021),
     (2022);
 
+INSERT INTO matchs(tournament_id, status, round) VALUES
+    (1,"UNDEFINED","FIRST_ROUND");
 
 INSERT INTO countries (name, alpha2code, alpha3code) VALUES
     ('Afghanistan', 'AF', 'AFG'),

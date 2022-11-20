@@ -1,12 +1,10 @@
 <template>
-  <Index></Index>
+  <Index />
 </template>
 <script>
-import Index from 'src/components/match/Index.vue';
+import Index from 'src/components/match/index.vue'
 export default {
-  name: 'IndexMachPage',
-  components: {
-    Index
-  }
+  components: { Index },
+  name: 'IndexPageMatch'
 }
 </script>

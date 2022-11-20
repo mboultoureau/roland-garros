@@ -46,6 +46,26 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: 'tournaments',
+        children: [
+          {
+            path: '',
+            component: () => import('pages/admin/tournament/Index.vue'),
+          },
+          {
+            path: ':id',
+            name: 'show-tournament-admin',
+            component: () =>
+              import('pages/admin/tournament/ShowTournament.vue'),
+          },
+          {
+            path: ':idT/edit/:idM',
+            name: 'edit-match-tournament',
+            component: () => import('pages/admin/tournament/EditMatch.vue'),
+          },
+        ],
+      },
     ],
     meta: {
       requireAuth: true,
@@ -67,11 +87,17 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/match',
+    path: '/tournaments',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
+        name: 'list-match',
+        component: () => import('pages/tournament/Index.vue'),
+      },
+      {
+        path: ':idT/matchs/:idM',
+        name: 'show-match',
         component: () => import('pages/match/Index.vue'),
       },
     ],

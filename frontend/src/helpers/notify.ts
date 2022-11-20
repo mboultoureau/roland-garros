@@ -7,3 +7,11 @@ export function ErrorNotify() {
     position: 'top',
   });
 }
+
+export function CommonError() {
+  Notify.create({
+    message: 'Erreur est survenu',
+    color: 'red',
+    position: 'top-right',
+  });
+}

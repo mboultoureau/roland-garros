@@ -3,13 +3,12 @@
     <img class="h-fit max-w-fit object-cover w-full transition ease-in-out delay-150 hover:scale-110 duration-100" :src="player.url" />
     <div class="translate-y-full h-full bg-gray-50 group-hover:translate-y-0 duration-300 absolute left-0 bottom-0 right-0 z-50 flex flex-col justify-center items-center text-xl">
       <div class="name font-bold text-3xl uppercase italic">{{ player.firstname }} {{ player.lastname }}</div>
-      <div class="nationality text-gray-400 flex gap-x-4 mt-16"><img class="w-10" :src="`https://countryflagsapi.com/svg/${player.flag}`"/>{{ player.nationality }}</div>
+      <div class="nationality text-gray-400 flex gap-x-4 mt-16"><img class="w-10" :src="`https://www.rolandgarros.com/img/flags-svg/${player.flag}.svg`"/>{{ player.nationality }}</div>
       <div class="age-hand text-gray-400">{{ age }} ans - {{ t(`player.show.hand.${player?.hand}`) }}</div>
       <div class="show-more mt-8"><q-btn class="bg-primary text-white" @click="goShowPlayer">Voir plus</q-btn></div>
     </div>
     <div class="absolute top-0 right-0 m-8 text-4xl font-bold italic text-primary"># {{ player.ranking }}</div>
   </div>
-
   <q-inner-loading :showing="showLoader">
     <q-spinner size="50px" color="primary" />
   </q-inner-loading>

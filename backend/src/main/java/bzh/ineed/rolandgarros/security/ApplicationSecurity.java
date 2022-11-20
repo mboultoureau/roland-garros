@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -57,6 +58,9 @@ public class ApplicationSecurity {
 
 
         http.authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/api/players/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/coaches/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/persons/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 

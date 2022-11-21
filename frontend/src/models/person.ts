@@ -37,3 +37,4 @@ export interface FilterPlayer {
   filter?: null | string;
   sort?: null | 'asc' | 'desc';
 }
+

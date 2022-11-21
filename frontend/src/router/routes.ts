@@ -95,6 +95,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '',
+        name: 'all-players',
         component: () => import('pages/player/Index.vue'),
       },
     ],
@@ -105,7 +106,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        name: 'list-match',
+        name: 'all-tournaments',
         component: () => import('pages/tournament/Index.vue'),
       },
       {

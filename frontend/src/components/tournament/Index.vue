@@ -1,29 +1,27 @@
 <template>
-  <div class="lg:mx-80 md:mx-52 mx-8">
-    <div class="header my-8 px-4 py-8 bg-gray-100 rounded-md">
-      <div class="flex items-center text-xl font-bold mb-4"><FourCercle />
-        {{ t('tournament.index.title') }}
-      </div>
-      <div class="flex gap-4">
-        <FilterByYears class="flex-1" :tournaments="listTournament" @handle-select-tournament="handleSelectTournament"/>
-        <FilterByType class="flex-1" :tournament="tournamentSelect" @handle-select-type="handleSelectType"/>
+  <div class="header px-4 py-8 mb-8 bg-gray-100 rounded-md">
+    <div class="flex items-center text-xl font-bold mb-4"><FourCercle />
+      {{ t('tournament.index.title') }}
+    </div>
+    <div class="flex gap-4">
+      <FilterByYears class="flex-1" :tournaments="listTournament" @handle-select-tournament="handleSelectTournament"/>
+      <FilterByType class="flex-1" :tournament="tournamentSelect" @handle-select-type="handleSelectType"/>
+    </div>
+  </div>
+  <ScoreboardNavigation @handle-select-round="handleSelectRound"/>
+  <div class="flex justify-around gap-16" :class="{'flex-row-reverse': matchFiltre.round === Round.FINAL_ROUND}">
+    <div class="flex flex-col">
+      <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
+      <div class="flex flex-1 flex-col justify-center items-center">
+        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
       </div>
     </div>
-    <ScoreboardNavigation @handle-select-round="handleSelectRound"/>
-    <div class="flex justify-around gap-16" :class="{'flex-row-reverse': matchFiltre.round === Round.FINAL_ROUND}">
-      <div class="flex flex-col">
-        <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
-        <div class="flex flex-1 flex-col justify-center items-center">
-          <component :is="matchComponent" v-for="match in listMatch" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
-        </div>
+    <div class="flex flex-col">
+      <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${getNextOrPreviousRound(matchFiltre.round)}`) }}</div>
+      <div class="flex flex-1 flex-col justify-around">
+        <component :is="matchComponent" v-for="match in listMatchNextOrPrevious" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
       </div>
-      <div class="flex flex-col">
-        <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${getNextOrPreviousRound(matchFiltre.round)}`) }}</div>
-        <div class="flex flex-1 flex-col justify-around">
-          <component :is="matchComponent" v-for="match in listMatchNextOrPrevious" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
-        </div>
-      </div> 
-    </div>
+    </div> 
   </div>
   <Loader v-model:show="showLoader" />
 </template>

@@ -1,7 +1,7 @@
 <template>
   <q-inner-loading :showing="showComp" :class="{'hide-back': hideBack}">
     <q-spinner size="50px" color="primary" />
-  </q-inner-loading>>
+  </q-inner-loading>
 </template>
 <script lang="ts">
 export default{

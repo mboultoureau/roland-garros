@@ -1,5 +1,5 @@
 <template>
-  <MatchResult class="mx-48 my-16 rounded-md" :match="matchComputed" />
+  <MatchResult class="rounded-md" :match="matchComputed" />
   <Loader v-model:show="showLoader" hide-back></Loader>
 </template>
 <script lang="ts">

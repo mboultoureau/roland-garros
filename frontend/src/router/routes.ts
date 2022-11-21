@@ -102,6 +102,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/tournaments',
+    name: 'all-tournaments',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {

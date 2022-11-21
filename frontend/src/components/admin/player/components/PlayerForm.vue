@@ -13,13 +13,13 @@
         <q-input filled v-model="formComputed.firstname" lazy-rules :label="t('input.firstname')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
       </div>
       <div class="birthday">
-        <InputDate v-model="formComputed.birthday" :label="t('input.birthday')"></InputDate>
+        <InputDate v-model="formComputed.birthDate" :label="t('input.birthday')"></InputDate>
       </div>
       <div class="nationality">
-        <q-input filled v-model="formComputed.nationality" lazy-rules autocapitalize :label="t('input.nationality')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
+        <q-select :options="optionsNationality" option-label="name" option-value="id" emit-value map-options clearable filled v-model="formComputed.nationality" :label="t('input.nationality')" :rules="[ val => val || t('field.required')]"></q-select>
       </div>
       <div class="birthplace">
-        <q-input filled v-model="formComputed.birthplace" lazy-rules autocapitalize :label="t('input.birthplace')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
+        <q-select :options="optionsNationality" option-label="name" option-value="name" emit-value map-options clearable filled v-model="formComputed.birthPlace" lazy-rules autocapitalize :label="t('input.birthplace')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-select>
       </div>
       <div class="height">
         <q-input filled v-model="formComputed.height" lazy-rules suffix="cm" :label="t('input.height')" :rules="[ val => val && val > 0 || t('field.required')]"></q-input>
@@ -31,11 +31,11 @@
         <q-select filled v-model="formComputed.ranking" lazy-rules :options="optionsRanking" :label="t('input.ranking')" :rules="[ val => val && val > 0 || t('field.required')]"></q-select>
       </div>
       <div class="hand">
-        <q-radio class="right" v-model="formComputed.hand" lazy-rules val="right" label="Droite" />
-        <q-radio class="left" v-model="formComputed.hand" lazy-rules val="left" label="Gauche" />
+        <q-radio class="right" v-model="formComputed.hand" lazy-rules val="RIGHT" label="Droite" />
+        <q-radio class="left" v-model="formComputed.hand" lazy-rules val="LEFT" label="Gauche" />
       </div>
       <div class="start-career">
-        <InputDate v-model="formComputed['career-start']" :label="t('input.career.start')" ></InputDate>
+        <InputDate v-model="formComputed.earlyCareer" :label="t('input.career.start')"></InputDate>
       </div>
       <div class="coach">
         <q-select filled v-model="formComputed.coach" :options="[]" :label="t('input.coach')" :option-label="item => item.firstname" map-options>
@@ -46,6 +46,16 @@
           </template>
         </q-select>
       </div>
+      <div class="url">
+        <q-input filled v-model="formComputed.picture" lazy-rules :label="t('input.url')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
+      </div>
+      <div class="gender">
+        <q-select filled v-model="formComputed.gender" :options="optionsGender" map-options :label="t('select.gender')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-select>
+      </div>
+      <div class="isPlayer flex justify-around">
+        <q-checkbox v-model="formComputed.isCoach" label="Coach" />
+        <q-checkbox v-model="formComputed.isPlayer" label="Joueur" />
+      </div>
     </div>
     <div class="flex justify-center">
       <q-btn :label="t('btn.save')" type="submit" color="primary"/>
@@ -55,40 +65,66 @@
 </template>
 
 <script setup lang="ts">
-import { Player } from 'src/models/person';
+import { Gender, Person } from 'src/models/person';
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import InputDate from 'src/components/shared/InputDate.vue';
+import { useCountryStore } from 'src/stores/country';
+import { LocalStorage } from 'quasar';
 
 const { t } = useI18n()
 
 const emit = defineEmits<{
-  (name: 'update:player', value: Player): Player
+  (name: 'update:player', value: Person): Person
   (name: 'submit'): void
-  (name: 'cancel', value: Player): Player
+  (name: 'cancel', value: Person): Person
 }>()
 
 const props = defineProps<{
-  player: Player
+  player: Person
 }>()
 
 const formComputed = computed({
   get: () => props.player,
-  set: (player: Player) => emit('update:player', player)
+  set: (player: Person) => emit('update:player', player)
 })
 
 const formCopy = ref({
   firstname: '',
   lastname: '',
-  birthday: '',
-  birthplace: '',
-  hand: 'right',
+  birthDate: '',
+  birthPlace: '',
+  hand: 'RIGHT',
   height: 0,
   weight: 0,
-  'career-start': '',
-  coach: null as Player,
-  nationality: '',
-} as Player)
+  earlyCareer: '',
+  coach: null,
+  nationality: null,
+  picture: '',
+  isPlayer: true,
+  isCoach: false
+})
+
+const optionsNationality = LocalStorage.getItem('nationality')
+
+const optionsGender = [
+  {
+    label: t('admin.player.create.gender.MALE'),
+    value: Gender.MEN
+  },
+  {
+    label: t('admin.player.create.gender.FEMALE'),
+    value: Gender.WOMAN
+  },
+  {
+    label: t('admin.player.create.gender.AT_AT'),
+    value: Gender.AT_AT
+  },
+  {
+    label: t('admin.player.create.gender.OTHER'),
+    value: Gender.OTHER
+  }
+]
 
 const onSubmit = () => emit('submit')
 
@@ -98,12 +134,9 @@ const onReset = () => {
 }
 
 let optionsRanking = [] as []
-for(let i=0; i<100; i++) {
+for(let i=1; i<100; i++) {
   optionsRanking.push(i)
 }
-
-
-
 </script>
 <style lang="scss">
 .container {
@@ -111,7 +144,7 @@ for(let i=0; i<100; i++) {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-auto-rows: 1fr;
   gap: 2rem;
   grid-auto-flow: row;
@@ -123,10 +156,18 @@ for(let i=0; i<100; i++) {
     "height weight"
     "ranking hand"
     "start-career start-career"
-    "coach coach";
+    "coach coach"
+    "url url"
+    "gender isPlayer";
 }
 
 .lastname { grid-area: lastname; }
+
+.url { grid-area: url; }
+
+.gender { grid-area: gender; }
+
+.isPlayer { grid-area: isPlayer; }
 
 .firstname { grid-area: firstname; }
 

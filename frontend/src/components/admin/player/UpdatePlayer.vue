@@ -31,7 +31,7 @@ const submit = () => showConfirm.value = true
 
 const confirmEdit = async () => {
   loadingBtn.value = true
-  await playerStore.edit(editPlayer.value)
+  await playerStore.editP(editPlayer.value)
   showConfirm.value = false
   loadingBtn.value = false
   goBack()

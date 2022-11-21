@@ -54,6 +54,7 @@ public class ApplicationSecurity {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
@@ -61,6 +62,7 @@ public class ApplicationSecurity {
                 .antMatchers(HttpMethod.GET, "/api/players/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/coaches/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/persons/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/countries/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 

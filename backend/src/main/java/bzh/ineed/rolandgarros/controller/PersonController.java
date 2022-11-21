@@ -50,9 +50,9 @@ public class PersonController {
         @ParameterObject Pageable pageable,
         @RequestParam(defaultValue = "") String gender
     ) {
-        if (gender.equals("male")) {
+        if (gender.equals("MALE")) {
             return personRepository.findByIsPlayerTrueAndGenderEquals(EGender.MALE, pageable);
-        } else if (gender.equals("female")) {
+        } else if (gender.equals("FEMALE")) {
             return personRepository.findByIsPlayerTrueAndGenderEquals(EGender.FEMALE, pageable);
         } else {
             return personRepository.findByIsPlayerTrue(pageable);

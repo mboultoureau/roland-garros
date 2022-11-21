@@ -308,7 +308,7 @@ public class LoadDatabase {
             playerF1.setIsCoach(false);
             playerF1.setIsPlayer(true);
             playerF1.setHand(EHand.RIGHT);
-            playerF1.setPicture("https://images.prismic.io/fft-rg-site/1a1fe64f-69f1-429d-a6d2-1be8f110be47_20200308_PJ_SwiatekIga_US.png?auto=compress,format&rect=0,0,1080,1080&w=200&h=200");
+            playerF1.setPicture("https://images.prismic.io/fft-rg-site/1a1fe64f-69f1-429d-a6d2-1be8f110be47_20200308_PJ_SwiatekIga_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400");
             playerF1.setRanking(1);
             playerF1.setNationality(countryRepository.findByName("Poland"));
 
@@ -462,11 +462,26 @@ public class LoadDatabase {
 
             // USERS
             User admin = new User("admin", "admin@email.com", "$2a$10$iSa6.Wh9ZAghYsiL/xfR6u4mnw0UJ.Tc6nDSwo8OxxKZU8r/PQ27m");
-            HashSet<Role> adminRoles = new HashSet<>();
-            adminRoles.add(roleRepository.findByName(ERole.ROLE_ADMIN));
-            admin.setRoles(adminRoles);
+            HashSet<Role> adminRoles1 = new HashSet<>();
+            adminRoles1.add(roleRepository.findByName(ERole.ROLE_ADMIN));
+            admin.setRoles(adminRoles1);
+
+            User adminMatch = new User("admin-match", "admin1@email.com", "$2a$10$iSa6.Wh9ZAghYsiL/xfR6u4mnw0UJ.Tc6nDSwo8OxxKZU8r/PQ27m");
+            HashSet<Role> adminRoles2 = new HashSet<>();
+            adminRoles2.add(roleRepository.findByName(ERole.ROLE_EDITOR_MATCH));
+            adminMatch.setRoles(adminRoles2);
+
+            User adminPlayer = new User("admin-player", "admin2@email.com", "$2a$10$iSa6.Wh9ZAghYsiL/xfR6u4mnw0UJ.Tc6nDSwo8OxxKZU8r/PQ27m");
+            HashSet<Role> adminRoles3 = new HashSet<>();
+            adminRoles3.add(roleRepository.findByName(ERole.ROLE_EDITOR_PLAYER));
+            adminPlayer.setRoles(adminRoles3);
+
+            User adminNoRule = new User("admin-norole", "admin3@email.com", "$2a$10$iSa6.Wh9ZAghYsiL/xfR6u4mnw0UJ.Tc6nDSwo8OxxKZU8r/PQ27m");
 
             log.info("[USER] Preloading " + userRepository.save(admin));
+            log.info("[USER] Preloading " + userRepository.save(adminPlayer));
+            log.info("[USER] Preloading " + userRepository.save(adminMatch));
+            log.info("[USER] Preloading " + userRepository.save(adminNoRule));
         };
     }
 

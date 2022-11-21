@@ -1,30 +1,36 @@
 <template>
-  <div class="xl:mx-96 lg:mx-68">
-    <PlayerForm v-model:player="formCopy" @submit="submit" @cancel="cancel"></PlayerForm>
+  <div class="xl:mx-96 lg:mx-68 md:mx-48 sm:mx-16 mx-8 mt-8">
+    <Header :title="t('admin.player.create.title')"></Header>
+    <PlayerForm class="mt-8" v-model:player="formCopy" @submit="submit" @cancel="cancel"></PlayerForm>
   </div>
 </template>
 <script lang="ts" setup>
 import PlayerForm from './components/PlayerForm.vue';
+import Header from 'src/components/shared/Header.vue';
 import { ref } from 'vue'
-import { Player } from 'src/models/person';
 import { usePlayerStore } from 'src/stores/player';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n()
 const playerStore = usePlayerStore()
 const router = useRouter()
 
 const formCopy = ref({
   firstname: '',
   lastname: '',
-  birthday: '',
-  birthplace: '',
-  hand: 'right',
+  birthDate: '',
+  birthPlace: '',
+  hand: 'RIGHT',
   height: 0,
   weight: 0,
-  'career-start': '',
-  coach: {} as Player,
-  nationality: '',
-} as Player)
+  earlyCareer: '',
+  coach: null,
+  nationality: null,
+  picture: '',
+  isPlayer: true,
+  isCoach: false
+})
 
 const submit = () => {
   playerStore.store(formCopy.value)

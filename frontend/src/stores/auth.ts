@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     async login(user: User) {
-      await login(user);
+      return await login(user);
     },
     async register(user: User) {
       await register(user);

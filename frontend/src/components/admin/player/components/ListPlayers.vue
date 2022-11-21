@@ -1,7 +1,7 @@
 <template>
   <div class=" p-8 xl:mx-96 lg:mx-68">
     <div class="flex">
-      <q-select class="w-fit rounded-lg" outlined v-model="filtersComputed.sexe" map-options :options="optionsTab"></q-select>
+      <q-select class="w-fit rounded-lg" outlined v-model="filtersComputed.gender" map-options :options="optionsTab"></q-select>
       <div class="flex flex-nowrap gap-2 ml-auto">
         <q-select label="Filtre" class="rounded-lg w-48" outlined v-model="filtersComputed.filter" :options="optionsFilter" map-options>
           <template v-slot:prepend>
@@ -21,14 +21,13 @@
   <DialogDeletePlayer v-model:show="showDialog" :loading-btn="loadingBtn" @handle-confirm="confirmDelete"></DialogDeletePlayer>
 </template>
 <script lang="ts" setup>
-import { FilterPlayer, Player } from 'src/models/person';
+import { FilterPlayer, Person, Gender } from 'src/models/person';
 import { usePlayerStore } from 'src/stores/player';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import CardPlayer from './PlayerCardAdmin.vue';
 import SkeletonCard from './SkeletonCard.vue';
 import DialogDeletePlayer from './DialogDeletePlayer.vue';
-import { route } from 'quasar/wrappers';
 
 const props = defineProps<{
   filters: FilterPlayer
@@ -51,10 +50,10 @@ const listComputed = computed(() => playerStore.listPlayer)
 const showSkeleton = computed(() => listComputed.value?.length === 0)
 
 const showDialog = ref(false)
-const deletePlayer = ref({} as Player)
+const deletePlayer = ref({} as Person)
 const loadingBtn = ref(false)
 
-const handleDelete = (player: Player) => {
+const handleDelete = (player: Person) => {
   showDialog.value = true
   deletePlayer.value = player
 }
@@ -66,15 +65,15 @@ const confirmDelete = async () => {
   loadingBtn.value = false
 }
 
-const handleShow = (player: Player) => {
+const handleShow = (player: Person) => {
   router.push({ name: 'show-player', params: { id: player.id }})
 }
 
-const handleEdit = (player: Player) => router.push({ name: 'edit', params: { id: player.id }})
+const handleEdit = (player: Person) => router.push({ name: 'edit', params: { id: player.id }})
 
 const optionsTab = [
-  { label: 'Hommes', value: 'men' },
-  { label: 'Femmes', value: 'woman' },
+  { label: 'Hommes', value: Gender.MEN },
+  { label: 'Femmes', value: Gender.WOMAN },
 ]
 
 const optionsFilter = [

@@ -88,12 +88,35 @@
       </div>
     </q-footer>
   </q-layout>
+  <loader :show="loaderPage" hide-back></loader>
 </template>
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { LocalStorage } from 'quasar';
+import Loader from 'src/components/shared/Loader.vue'
+import { useCountryStore } from 'src/stores/country';
+import { onMounted, ref } from 'vue';
 
+const loaderPage = ref(false)
+const countryStore = useCountryStore()
 const router = useRouter();
 
+onMounted(async () => {
+  loaderPage.value = true
+  
+  //***************************** */
+  //TODO: fetch si role === admin
+  //await courtStore.fetch() 
+  //await playerStore.fetch()
+  if(!LocalStorage.has('nationality')) {
+    await countryStore.fetch()
+  }
+  //***************************** */
+
+  loaderPage.value = false
+})
+
 const handlePlayer = () => router.push({ name: 'all-players' });
+const handleTournament = () => router.push({name: 'all-tournaments'})
 </script>
 <style lang="scss"></style>

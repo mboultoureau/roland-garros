@@ -7,3 +7,19 @@ export function ErrorNotify() {
     position: 'top',
   });
 }
+
+export function CommonError() {
+  Notify.create({
+    message: 'Erreur est survenu',
+    color: 'red',
+    position: 'top-right',
+  });
+}
+
+export function AuthentificationError() {
+  Notify.create({
+    message: "Vous n'êtes pas autorisé",
+    color: 'red',
+    position: 'top-right',
+  });
+}

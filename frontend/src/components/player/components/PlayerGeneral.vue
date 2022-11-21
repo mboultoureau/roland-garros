@@ -5,7 +5,7 @@
       <div class="title-pro font-bold text-2xl flex items-center mb-8"><FourCercle /> {{ t('player.show.fiche.pro') }}</div>
       <div class="age px-4 pb-4">
         <div>{{ t('player.show.age') }}</div>
-        <div class="font-bold">{{ player?.birthday }}</div>
+        <div class="font-bold">{{ player?.birthDate }}</div>
       </div>
       <div class="height px-4">
         <div>{{ t('player.show.height') }}</div>
@@ -13,7 +13,7 @@
       </div>
       <div class="start-career px-4">
         <div>{{ t('player.show.start.career') }}</div>
-        <div class="font-bold">{{ player?.['career-start'] }}</div>
+        <div class="font-bold">{{ player?.earlyCareer }}</div>
       </div>
       <div class="weight px-4">
         <div>{{ t('player.show.weight') }}</div>
@@ -31,11 +31,11 @@
 </template>
 <script setup lang="ts">
 import FourCercle from 'src/components/shared/FourCercle.vue';
-import { Player } from 'src/models/person';
+import { Person } from 'src/models/person';
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
-  player: Player
+  player: Person
 }>()
 
 const { t } = useI18n()

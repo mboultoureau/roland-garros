@@ -10,10 +10,9 @@ import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 
 @Entity
-@Table(name = "user",
+@Table(name = "users",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
@@ -36,17 +35,11 @@ public class User implements UserDetails {
     @Size(max = 120)
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
-
     @OneToOne
-    @JoinTable(name = "user_person",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private Set<User> Roles = new HashSet<>();
+    private Person person;
+
+    @ManyToMany
+    private Set<Role> roles;
 
     public User() {
 
@@ -57,8 +50,6 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
     }
-
-
 
     public Long getId() {
         return id;
@@ -117,11 +108,24 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return username + " (" + email + ")";
     }
 }

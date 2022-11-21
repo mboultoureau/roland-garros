@@ -75,4 +75,8 @@ export default {
   'admin.player.create.gender.FEMALE': 'Femme',
   'admin.player.create.gender.OTHER': 'Autre',
   'admin.player.create.gender.AT_AT': 'At-at',
+  'admin.role.ROLE_ADMIN': 'Admin',
+  'admin.role.ROLE_EDITOR_MATCH': 'Editeur Match',
+  'admin.role.ROLE_EDITOR_PLAYER': 'Editeur Joueur',
+  'admin.role.ROLE_USER': 'Utilisateur',
 };

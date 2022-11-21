@@ -12,13 +12,13 @@
   
   <q-tab-panels v-model="currentTab" animated>
     <q-tab-panel :name="Gender.MEN">
-      <div class="grid gap-x-8 gap-y-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 items-center justify-center">
+      <div class="flex gap-8">
         <ItemList v-for="player in listPlayer" :key="player.id" :player="player" class="m-auto"></ItemList>
       </div>
     </q-tab-panel>
     <q-tab-panel :name="Gender.WOMAN">
-      <div class="grid gap-x-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-        <ItemList v-for="player in listPlayer" :key="player.id" :player="player" class="m-auto"></ItemList>
+      <div class="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1">
+        <ItemList v-for="player in listPlayer" :key="player.id" :player="player"></ItemList>
       </div>
     </q-tab-panel>
   </q-tab-panels>

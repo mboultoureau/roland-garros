@@ -1,12 +1,4 @@
 <template>
-  <head>
-  <meta charset="UTF-8">
-  <title>CodePen - Blog Cards</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700" rel="stylesheet">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'><link rel="stylesheet" href="./style.css">
-
-</head>
   <div class="relative overflow-hidden">
     <header class="flex flex-col justify-center">
       <div class="leading-none text_RG">ROLAND</div>
@@ -93,13 +85,6 @@
     </div>
   </div>
 </div>
-
-<div>
-
-
-
-</div>
-
 </template>
 
 <script setup lang="ts"></script>
@@ -107,9 +92,7 @@
 <style lang="scss" scoped>
 header {
   height: calc(100vh - 96px);
-  // background-image: url('https://lvdneng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2021/05/30/node_1015997/51487639/public/2021/05/30/B9727200220Z.1_20210530213127_000%2BGOEI7NVUF.3-0.jpg?itok=Xwj_jKwg1622403094');
   background-image: url('https://www.tweener.fr/wp-content/uploads/2022/06/diaporama_faq-04.jpg');
-  // background-image: url('https://www.tweener.fr/wp-content/uploads/2022/06/tweener-vue-terrain.jpg');
 
   clip-path: polygon(0% 0%, 45.9% 0%, 100% 100%, 0% 100%);
   background-repeat: no-repeat;

@@ -19,7 +19,8 @@ export default ({ router }) => {
           (to.meta.rolePermit.includes(Roles.ROLE_EDITOR_MATCH) &&
             (userStore.isEditorMatch || userStore.isAdmin)) ||
           (to.meta.rolePermit.includes(Roles.ROLE_EDITOR_PLAYER) &&
-            (userStore.isEditorPlayer || userStore.isAdmin))
+            (userStore.isEditorPlayer || userStore.isAdmin)) ||
+          (to.meta.rolePermit.includes(Roles.ROLE_ADMIN) && userStore.isAdmin)
         ) {
           next();
         } else {

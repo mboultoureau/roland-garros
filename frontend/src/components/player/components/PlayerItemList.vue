@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-8 w-fit relative border-2 rounded-lg overflow-hidden group">
-    <img class="h-fit max-w-fit object-cover w-full transition ease-in-out delay-150 hover:scale-110 duration-100" :src="player.picture" />
+  <div class="mt-8 w-72 m-auto relative border-2 rounded-lg overflow-hidden group">
+    <img class="h-fit object-cover w-full transition ease-in-out delay-150 hover:scale-110 duration-100" :src="player.picture" />
     <div class="translate-y-full h-full bg-gray-50 group-hover:translate-y-0 duration-300 absolute left-0 bottom-0 right-0 z-50 flex flex-col justify-center items-center text-xl">
       <div class="name font-bold text-3xl uppercase italic">{{ player.firstname }} {{ player.lastname }}</div>
       <div class="nationality text-gray-400 flex gap-x-4 mt-16"><img class="w-10 rounded-sm" :src="`https://www.rolandgarros.com/img/flags-svg/${player?.nationality.alpha3Code}.svg`"/>{{ player.nationality.name }}</div>

@@ -1,8 +1,6 @@
 <template>
-  <div class="xl:mx-96 lg:mx-68 md:mx-48 sm:mx-16 mx-8 mt-8">
-    <Header :title="t('admin.player.create.title')"></Header>
-    <PlayerForm class="mt-8" v-model:player="formCopy" @submit="submit" @cancel="cancel"></PlayerForm>
-  </div>
+  <Header :title="t('admin.player.create.title')"></Header>
+  <PlayerForm class="mt-8" v-model:player="formCopy" @submit="submit" @cancel="cancel"></PlayerForm>
 </template>
 <script lang="ts" setup>
 import PlayerForm from './components/PlayerForm.vue';

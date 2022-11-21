@@ -1,7 +1,5 @@
 <template>
-  <div class="xl:mx-96 lg:mx-68">
-    <PlayerForm v-model:player="editPlayer" @submit="submit" @cancel="goBack"></PlayerForm>
-  </div>
+  <PlayerForm v-model:player="editPlayer" @submit="submit" @cancel="goBack"></PlayerForm>
   <dialogConfirm v-model:show="showConfirm" :loading-btn="loadingBtn" :label="t('dialog.confirm.edit', { type: 'ce joueur'})" @handle-confirm="confirmEdit"></dialogConfirm>
 </template>
 <script lang="ts" setup>

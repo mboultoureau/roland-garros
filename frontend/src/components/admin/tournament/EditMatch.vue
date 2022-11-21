@@ -1,16 +1,14 @@
 <template>
-  <div class="xl:mx-96 lg:mx-68 md:mx-48 sm:mx-16 mx-8 mt-8">
-    <MatchAdminEdit 
-      :double="isDoubleMatch"
-      v-model:teamA="teamAId"
-      v-model:team-b="teamBId"
-      v-model:date="date"
-      v-model:court="court"
-      :time="time"
-      :show-loader-btn="showLoaderBtn"
-      @submit="handleSubmit"
-      ></MatchAdminEdit>
-  </div>
+  <MatchAdminEdit 
+    :double="isDoubleMatch"
+    v-model:teamA="teamAId"
+    v-model:team-b="teamBId"
+    v-model:date="date"
+    v-model:court="court"
+    :time="time"
+    :show-loader-btn="showLoaderBtn"
+    @submit="handleSubmit"
+    ></MatchAdminEdit>
 </template>
 <script setup lang="ts">
 import { Notify } from 'quasar';

@@ -1,5 +1,5 @@
 <template>
-  <div class="administration xl:mx-96 lg:mx-68 md:mx-48 sm:mx-16 mx-8 mt-8">
+  <div class="administration">
     <HeaderComponent :title="t('admin.player.index.title')">
       <template v-slot:default>
         <div class="flex mt-8">

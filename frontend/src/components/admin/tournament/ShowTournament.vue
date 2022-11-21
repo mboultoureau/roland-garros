@@ -1,9 +1,6 @@
 <template>
-  <div class="xl:mx-96 lg:mx-68 md:mx-48 sm:mx-16 mx-8 mt-8">
-    <HeaderFIlterTournament :tournament="tournament.tournament" @handle-select-round="handleSelectRound" @handle-select-type="handleSelectType"/>
-
-    <ListMatch :type="typeSelected" :round="roundSelected" :tournament-id="tournament?.tournament?.id"></ListMatch>
-  </div>
+  <HeaderFIlterTournament :tournament="tournament.tournament" @handle-select-round="handleSelectRound" @handle-select-type="handleSelectType"/>
+  <ListMatch :type="typeSelected" :round="roundSelected" :tournament-id="tournament?.tournament?.id"></ListMatch>
 </template>
 <script setup lang="ts">
 import { Match } from 'src/models/match';

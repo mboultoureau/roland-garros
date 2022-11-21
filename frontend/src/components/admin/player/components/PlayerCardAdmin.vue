@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-[auto_repeat(4,_1fr)_auto] items-center bg-gray-200 rounded-lg">
+  <div class="grid grid-cols-[auto_repeat(4,_1fr)_auto] items-center border-2 rounded-lg">
     <img :src="player.picture" class="w-24">
     <div class="text-center">{{ player.firstname }}</div>
     <div class="text-center">{{ player.lastname }}</div>

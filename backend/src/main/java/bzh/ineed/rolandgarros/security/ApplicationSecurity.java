@@ -62,7 +62,6 @@ public class ApplicationSecurity {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
@@ -72,15 +71,17 @@ public class ApplicationSecurity {
                 .antMatchers(HttpMethod.GET, "/api/countries/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/roles/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/courts/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
+
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class);
 
         http.exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
                 });
-
-        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

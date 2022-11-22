@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
     // Page<Person> findByGenderAndPlayer(EGender gender, boolean isPlayer, Pageable pagingSort);
@@ -16,4 +17,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Page<Person> findByIsCoachTrue(Pageable pageable);
 
     Page<Person> findByIsPlayerTrueAndGenderEquals(EGender gender, Pageable pageable);
+
+    Optional<Person> findByFirstnameAndLastname(String firstname, String lastname);
 }

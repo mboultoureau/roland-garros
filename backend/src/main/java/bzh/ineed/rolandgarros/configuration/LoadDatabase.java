@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 @Configuration
@@ -23,10 +24,14 @@ public class LoadDatabase {
             PersonRepository personRepository,
             RoleRepository roleRepository,
             UserRepository userRepository,
-            CourtRepository courtRepository
+            CourtRepository courtRepository,
+            TrainingRepository trainingRepository
     ) {
         return args -> {
             // DELETE ALL
+            log.info("[TRAINING] Delete all");
+            trainingRepository.deleteAll();
+
             log.info("[PERSON] Delete all");
             personRepository.deleteAll();
 
@@ -485,16 +490,46 @@ public class LoadDatabase {
             log.info("[USER] Preloading " + userRepository.save(adminMatch));
             log.info("[USER] Preloading " + userRepository.save(adminNoRule));
 
+            // COURTS
 
             Court court1 = new Court("Court Leane");
             Court court2 = new Court("Court Mathis");
             Court court3 = new Court("Court Sylvain");
             Court court4 = new Court("Court Paul");
 
-            log.info("[COURT] Peloading " + courtRepository.save(court1));
-            log.info("[COURT] Peloading " + courtRepository.save(court2));
-            log.info("[COURT] Peloading " + courtRepository.save(court3));
-            log.info("[COURT] Peloading " + courtRepository.save(court4));
+            log.info("[COURT] Preloading " + courtRepository.save(court1));
+            log.info("[COURT] Preloading " + courtRepository.save(court2));
+            log.info("[COURT] Preloading " + courtRepository.save(court3));
+            log.info("[COURT] Preloading " + courtRepository.save(court4));
+
+            // TRAININGS
+
+            Training training1 = new Training();
+            training1.setDetails("Entrainement du samedi matin");
+            training1.setDuration(2);
+            training1.setStartDate(LocalDateTime.parse("2022-11-26T10:00:00"));
+            training1.setPlayer(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
+            training1.setCourt(courtRepository.findByName("Court Leane").get());
+
+            log.info("[TRAINING] Preloading " + trainingRepository.save(training1));
+
+            Training training2 = new Training();
+            training2.setDetails("Entrainement du samedi midi");
+            training2.setDuration(2);
+            training2.setStartDate(LocalDateTime.parse("2022-11-26T12:00:00"));
+            training2.setPlayer(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            training2.setCourt(courtRepository.findByName("Court Leane").get());
+
+            log.info("[TRAINING] Preloading " + trainingRepository.save(training2));
+
+            Training training3 = new Training();
+            training3.setDetails("Entrainement du lundi soir");
+            training3.setDuration(2);
+            training3.setStartDate(LocalDateTime.parse("2022-11-28T12:00:00"));
+            training3.setPlayer(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            training3.setCourt(courtRepository.findByName("Court Leane").get());
+
+            log.info("[TRAINING] Preloading " + trainingRepository.save(training3));
         };
     }
 

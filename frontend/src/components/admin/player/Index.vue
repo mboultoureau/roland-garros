@@ -3,9 +3,9 @@
     <HeaderComponent :title="t('admin.player.index.title')">
       <template v-slot:default>
         <div class="flex mt-8">
-          <q-select class="w-fit rounded-lg" outlined v-model="filters.gender" map-options :options="optionsTab"></q-select>
+          <q-select class="w-fit rounded-lg" outlined v-model="filters.gender" emit-value map-options :options="optionsTab"></q-select>
           <div class="flex flex-nowrap gap-2 ml-auto">
-            <q-select label="Filtre" class="rounded-lg w-48" outlined v-model="filters.filter" :options="optionsFilter" map-options>
+            <q-select label="Filtre" class="rounded-lg w-48" outlined v-model="filters.sort" emit-value :options="optionsFilter" map-options>
               <template v-slot:prepend>
                 <q-icon name="filter_list" />
               </template>
@@ -42,8 +42,8 @@ const playerStore = usePlayerStore()
 
 const filters = ref({
   gender: Gender.MEN,
-  filter: null,
-  sort: null,
+  sortBy: 'asc',
+  sort: 'ranking',
 } as FilterPlayer)
 
 const loaderShow = ref(false)
@@ -58,15 +58,12 @@ const optionsTab = [
 const optionsFilter = [
   { label: 'Nom', value: 'lastname' },
   { label: 'Prénom', value: 'firstname' },
-  { label: 'Age', value: 'birthday' },
-  { label: 'Nationnalitée', value: 'nationnality' },
+  { label: 'Classement', value: 'ranking' },
 ]
 
 const iconComputed = computed(() => {
   let sortIcon = ''
-  switch(filters.value.sort) {
-    case null: sortIcon = 'swap_vert';
-    break;
+  switch(filters.value.sortBy) {
     case 'asc': sortIcon = 'arrow_upward';
     break
     case 'desc': sortIcon = 'arrow_downward'
@@ -76,18 +73,19 @@ const iconComputed = computed(() => {
 })
 
 const handleSort = () => {
-  if(filters.value.sort === null) filters.value.sort = 'asc'
-  else if(filters.value.sort === 'asc') filters.value.sort  = 'desc'
-  else filters.value.sort = null
+  if(filters.value.sortBy === null) filters.value.sortBy = 'asc'
+  else if(filters.value.sortBy === 'asc') filters.value.sortBy  = 'desc'
+  else if(filters.value.sortBy === 'desc') filters.value.sortBy  = 'asc'
 }
 watch(
   filters.value,
   async () => { 
   loaderShow.value = true
+  console.log(filters.value)
   await playerStore.fetch({
-    gender: filters.value.gender?.value,
-    filter: filters.value.filter?.value,
+    gender: filters.value.gender,
     sort: filters.value.sort,
+    sortBy: filters.value.sortBy,
   })
   loaderShow.value = false
 })

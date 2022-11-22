@@ -10,7 +10,16 @@ import { api } from 'src/boot/axios';
 
 export async function fetch(filter?: FilterPlayer) {
   try {
-    const response = await api.get('players', { params: filter });
+    let sortApi = '';
+    if (filter?.sort) {
+      sortApi = `&sort=${filter.sort}`;
+      if (filter.sortBy) {
+        sortApi = `&sort=${filter.sort},${filter.sortBy}`;
+      }
+    }
+    const response = await api.get(
+      `players?gender=${filter?.gender}${sortApi}`
+    );
     return response.data;
   } catch (error) {}
 }

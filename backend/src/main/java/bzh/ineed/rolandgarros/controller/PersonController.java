@@ -1,14 +1,18 @@
 package bzh.ineed.rolandgarros.controller;
 
+import bzh.ineed.rolandgarros.exception.BadRequestException;
 import bzh.ineed.rolandgarros.exception.NotFoundException;
 import bzh.ineed.rolandgarros.model.EGender;
 import bzh.ineed.rolandgarros.model.Person;
+import bzh.ineed.rolandgarros.repository.CountryRepository;
 import bzh.ineed.rolandgarros.repository.PersonRepository;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -17,6 +21,9 @@ public class PersonController {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    CountryRepository countryRepository;
 
     @GetMapping("/persons")
     public Page<Person> persons(
@@ -49,6 +56,25 @@ public class PersonController {
     // Create person
     @PostMapping("/persons")
     Person newPerson(@RequestBody Person newPerson) {
+        if (newPerson.getNationalityId() != null) {
+            try {
+                newPerson.setNationality(countryRepository.findById(newPerson.getNationalityId()).get());
+            } catch (NoSuchElementException e) {
+                throw new BadRequestException("Nationality not found");
+            }
+        }
+        if (newPerson.getCoachId() != null) {
+            Person coach = null;
+            try {
+                coach = personRepository.findById(newPerson.getCoachId()).get();
+                if (coach.getIsCoach() == false) {
+                    throw new BadRequestException("Selected person is not coach.");
+                }
+                newPerson.setCoach(coach);
+            } catch (NoSuchElementException e) {
+                throw new BadRequestException("Coach not found");
+            }
+        }
         return personRepository.save(newPerson);
     }
 
@@ -73,6 +99,27 @@ public class PersonController {
                 person.setPicture(newPerson.getPicture());
                 person.setIsPlayer(newPerson.getIsPlayer());
                 person.setIsCoach(newPerson.getIsCoach());
+
+                if (newPerson.getNationalityId() != null) {
+                    try {
+                        person.setNationality(countryRepository.findById(newPerson.getNationalityId()).get());
+                    } catch (NoSuchElementException e) {
+                        throw new BadRequestException("Nationality not found");
+                    }
+                }
+                if (newPerson.getCoachId() != null) {
+                    Person coach = null;
+                    try {
+                        coach = personRepository.findById(newPerson.getCoachId()).get();
+                        if (coach.getIsCoach() == false) {
+                            throw new BadRequestException("Selected person is not coach.");
+                        }
+                        person.setCoach(coach);
+                    } catch (NoSuchElementException e) {
+                        throw new BadRequestException("Coach not found");
+                    }
+                }
+
                 return personRepository.save(person);
             })
             .orElseGet(() -> {

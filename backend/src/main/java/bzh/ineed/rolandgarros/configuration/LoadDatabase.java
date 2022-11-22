@@ -306,6 +306,21 @@ public class LoadDatabase {
 
             // PERSONS
 
+            // Coachs
+            Person coach1 = new Person("Tomasz", "Wiktorowski");
+            coach1.setGender(EGender.MALE);
+            coach1.setIsCoach(true);
+            coach1.setIsPlayer(false);
+
+            log.info("[PERSON] Preloading " + personRepository.save(coach1));
+
+            Person coach2 = new Person("Issam", "Jellali");
+            coach2.setGender(EGender.MALE);
+            coach2.setIsCoach(true);
+            coach2.setIsPlayer(false);
+
+            log.info("[PERSON] Preloading " + personRepository.save(coach2));
+
             // Womans
             Person playerF1 = new Person("Iga", "Swiatek");
             playerF1.setGender(EGender.FEMALE);
@@ -318,6 +333,7 @@ public class LoadDatabase {
             playerF1.setPicture("https://images.prismic.io/fft-rg-site/1a1fe64f-69f1-429d-a6d2-1be8f110be47_20200308_PJ_SwiatekIga_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400");
             playerF1.setRanking(1);
             playerF1.setNationality(countryRepository.findByName("Poland"));
+            playerF1.setCoach(personRepository.findByFirstnameAndLastname("Tomasz", "Wiktorowski").get());
 
             Person playerF2 = new Person("Ons", "Jabeur");
             playerF2.setGender(EGender.FEMALE);
@@ -330,6 +346,7 @@ public class LoadDatabase {
             playerF2.setPicture("https://images.prismic.io/fft-rg-site/0942c177-cde4-4f29-8c11-5ec5a19df99e_20220427_PJ_JabeurOns_US.PNG?auto=compress,format&rect=0,0,1080,1080&w=400&h=400");
             playerF2.setRanking(2);
             playerF2.setNationality(countryRepository.findByName("Tunisia"));
+            playerF2.setCoach(personRepository.findByFirstnameAndLastname("Issam", "Jellali").get());
 
             Person playerF3 = new Person("Jessica", "Pegula");
             playerF3.setGender(EGender.FEMALE);
@@ -455,6 +472,7 @@ public class LoadDatabase {
             log.info("[PERSON] Preloading " + personRepository.save(playerF8));
             log.info("[PERSON] Preloading " + personRepository.save(playerM1));
             log.info("[PERSON] Preloading " + personRepository.save(playerM2));
+            log.info("[PERSON] Preloading " + personRepository.save(playerM3));
 
             // ROLES
             Role roleUser = new Role(ERole.ROLE_USER);

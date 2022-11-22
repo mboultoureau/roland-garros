@@ -21,6 +21,9 @@ public class Person {
     @ManyToOne
     private Country nationality;
 
+    @Transient
+    private Long nationalityId;
+
     @NotBlank
     @Size(max = 50)
     private String firstname;
@@ -45,6 +48,9 @@ public class Person {
 
     @ManyToOne
     private Person coach;
+
+    @Transient
+    private Long coachId;
 
     private Integer ranking;
 
@@ -83,6 +89,14 @@ public class Person {
 
     public void setNationality(Country nationality) {
         this.nationality = nationality;
+    }
+
+    public Long getNationalityId() {
+        return nationalityId;
+    }
+
+    public void setNationalityId(Long nationalityId) {
+        this.nationalityId = nationalityId;
     }
 
     public String getFirstname() {
@@ -163,6 +177,14 @@ public class Person {
 
     public void setCoach(Person coach) {
         this.coach = coach;
+    }
+
+    public Long getCoachId() {
+        return coachId;
+    }
+
+    public void setCoachId(Long coachId) {
+        this.coachId = coachId;
     }
 
     public Integer getRanking() {

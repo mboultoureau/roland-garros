@@ -1,4 +1,4 @@
-FROM node:19-alpine
+FROM node:18-alpine
 WORKDIR /app
-COPY package.json ./
-RUN yarn global add @quasar/cli
+RUN npm install -g @quasar/cli
+EXPOSE 4000

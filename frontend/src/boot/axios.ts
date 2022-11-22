@@ -8,11 +8,11 @@ declare module '@vue/runtime-core' {
 }
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: `http://${process.env.BACKEND_URL}/api`,
 });
 
 const authApi = axios.create({
-  baseURL: 'http://localhost:8000/auth',
+  baseURL: `http://${process.env.BACKEND_URL}/auth`,
 });
 
 authApi.defaults.headers.common['Content-Type'] = 'application/json';

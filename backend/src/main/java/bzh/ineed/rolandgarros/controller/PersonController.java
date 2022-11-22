@@ -26,6 +26,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:9000")
 public class PersonController {
 
     @Autowired

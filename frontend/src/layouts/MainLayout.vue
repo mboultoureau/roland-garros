@@ -138,6 +138,8 @@ onMounted(async () => {
   //TODO: fetch si role === admin
   //await courtStore.fetch() 
   //await playerStore.fetch()
+  await userStore.fetchRole()
+  
   if(!LocalStorage.has('nationality')) {
     await countryStore.fetch()
   }

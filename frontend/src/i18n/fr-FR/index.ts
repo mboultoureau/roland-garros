@@ -27,6 +27,7 @@ export default {
   'field.empty': 'Aucun(e) {object}',
   'dialog.confirm.delete': 'Êtes-vous de vouloir supprimer {type}',
   'dialog.confirm.edit': 'Êtes-vous sur de vouloir modifier {type}',
+  'player.index.title': 'Nos Joueurs',
   'player.index.tabs.label.man': 'Homme(s)',
   'player.index.tabs.label.woman': 'Femme(s)',
   'player.show.fiche.perso': 'Fiche Personnelle',
@@ -79,4 +80,5 @@ export default {
   'admin.role.ROLE_EDITOR_MATCH': 'Editeur Match',
   'admin.role.ROLE_EDITOR_PLAYER': 'Editeur Joueur',
   'admin.role.ROLE_USER': 'Utilisateur',
+  'admin.page.title': 'Administration Utilisateur',
 };

@@ -12,14 +12,11 @@
         <q-btn
           flat
           @click="handleTournament"
-          class="text-black mx-8 hover:font-bold"
-          >Tournois</q-btn
+          class="text-black mx-8 hover:font-bold">Tournois</q-btn
         >
-        <q-btn flat @click="handlePlayer" class="text-black hover:font-bold"
-          >Joueurs</q-btn
+        <q-btn flat @click="handlePlayer" class="text-black hover:font-bold">Joueurs</q-btn
         >
-        <q-btn flat class="text-black mx-8 hover:font-bold"
-          >Infos & Billets</q-btn
+        <q-btn flat @click="handleCourt" class="text-black mx-8 hover:font-bold">Courts</q-btn
         >
 
         <q-btn v-if="isAuth" push color="primary" label="Mon compte" class="mx-8">
@@ -116,6 +113,7 @@ const handleLogout = () => {
   userStore.logout()
   router.push({path: '/'})
 }
+const handleCourt = () => router.push({path: '/court'})
 const handleAdminPage = (role: Roles) => {
   switch(role) {
     case Roles.ROLE_ADMIN: router.push({path: '/admin'})

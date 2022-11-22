@@ -20,6 +20,7 @@ export async function login(user: User) {
     const response = await authApi.post('login', user);
     authStore.setToken(response.data.accessToken);
     saveToken(response.data.accessToken);
+    return response.data;
   } catch (error) {
     ErrorNotify();
   }

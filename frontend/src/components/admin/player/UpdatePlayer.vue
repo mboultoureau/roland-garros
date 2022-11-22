@@ -1,7 +1,5 @@
 <template>
-  <div class="xl:mx-96 lg:mx-68">
-    <PlayerForm v-model:player="editPlayer" @submit="submit" @cancel="goBack"></PlayerForm>
-  </div>
+  <PlayerForm v-model:player="editPlayer" @submit="submit" @cancel="goBack"></PlayerForm>
   <dialogConfirm v-model:show="showConfirm" :loading-btn="loadingBtn" :label="t('dialog.confirm.edit', { type: 'ce joueur'})" @handle-confirm="confirmEdit"></dialogConfirm>
 </template>
 <script lang="ts" setup>
@@ -31,7 +29,7 @@ const submit = () => showConfirm.value = true
 
 const confirmEdit = async () => {
   loadingBtn.value = true
-  await playerStore.edit(editPlayer.value)
+  await playerStore.editP(editPlayer.value)
   showConfirm.value = false
   loadingBtn.value = false
   goBack()

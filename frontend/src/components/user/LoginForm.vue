@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { useAuthStore } from 'src/stores/auth';
+import { useUserStore } from 'src/stores/user';
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -41,17 +42,28 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+const userStore = useUserStore()
 const { t } = useI18n()
 
 const username = ref('')
 const password = ref('')
 
 const onSubmit = async () => {
-  await authStore.login({
+  const user = await authStore.login({
     username: username.value,
     password: password.value
   })
-  goNext(route.query.redirect as string)
+  if(user?.success) {
+    userStore.setUser({
+      username: user.username,
+      roles: user.roles,
+    })
+  }
+  if(route.query.redirect && user?.success) {
+    goNext(route.query.redirect as string)
+  } else if(user?.success) {
+    goBack()
+  }
 }
 
 const goNext = (path: string) => {

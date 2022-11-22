@@ -15,3 +15,11 @@ export function CommonError() {
     position: 'top-right',
   });
 }
+
+export function AuthentificationError() {
+  Notify.create({
+    message: "Vous n'êtes pas autorisé",
+    color: 'red',
+    position: 'top-right',
+  });
+}

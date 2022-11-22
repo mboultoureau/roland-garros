@@ -1,5 +1,5 @@
 <template>
-  <div class="player xl:96 lg:mx-68 md:mx-48">
+  <div class="player">
     <PlayerCard :player="player"></PlayerCard>
     <PlayerGeneral :player="player"></PlayerGeneral>
   </div>

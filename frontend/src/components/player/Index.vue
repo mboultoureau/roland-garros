@@ -1,4 +1,5 @@
 <template>
+  <headerC :title="t('player.index.title')"></headerC>
   <q-tabs
     v-model="currentTab"
     narrow-indicator
@@ -30,7 +31,6 @@
 <script lang="ts">
 export default {
     name: 'IndexComposant',
-    components: { ItemList }
 }
 </script>
 <script setup lang="ts">
@@ -39,6 +39,7 @@ import { computed,ref, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ItemList from './components/PlayerItemList.vue';
 import { Gender } from 'src/models/person';
+import HeaderC from '../shared/Header.vue';
 
 const { t } = useI18n()
 

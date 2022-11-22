@@ -1,40 +1,29 @@
 <template>
-  <div class="container">
-    <div class="agenda p-2 border-2 border-gray-100" v-for="agenda in horaire" :key="agenda">
-      <div class="match w-full h-full bg-primary">{{ agenda }}</div>
-    </div>
+  <div class="h-screen">
+    <HeaderC :title="t('court.index.title')" class="mb-8">
+      <template v-slot:btn v-if="hasRole">
+        <q-btn color="primary">Réserver un entrainement</q-btn>
+      </template>
+    </HeaderC>
+    <Calendar></Calendar>
   </div>
 </template>
 <script setup lang="ts">
-  const horaire = 54
+import HeaderC from '../shared/Header.vue'
+import Calendar from './components/CalendarCourt.vue'
+import { useI18n } from 'vue-i18n'
+import { useUserStore } from 'src/stores/user'
+import { computed } from 'vue'
+
+const { t } = useI18n()
+const userStore = useUserStore()
+
+const hasRole = computed(() => userStore.isAuthenticated)
+
 </script>
 <script lang="ts">
 export default {
+  components: { HeaderC },
   name: 'IndexComponentCourt'
 }
 </script>
-<style lang="scss" scoped>
-.container {  
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-auto-columns: 1fr;
-  grid-auto-rows: 1fr;
-  gap: 0em 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    ". . . . . . . . ."
-    ". . . . . . . . ."
-    ". . . . . . . . ."
-    ". . . . . . . . ."
-    ". . . . . . . . ."
-    ". . . . . . . . .";
-
-    overflow-x: auto;
-
-    .agenda {
-      width: fit;
-      height: 4rem;
-    } 
-}
-</style>

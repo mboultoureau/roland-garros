@@ -63,6 +63,8 @@ public class ApplicationSecurity {
                 .antMatchers(HttpMethod.GET, "/api/coaches/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/persons/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/countries/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/roles/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 

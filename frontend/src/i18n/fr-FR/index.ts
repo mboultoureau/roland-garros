@@ -79,4 +79,5 @@ export default {
   'admin.role.ROLE_EDITOR_MATCH': 'Editeur Match',
   'admin.role.ROLE_EDITOR_PLAYER': 'Editeur Joueur',
   'admin.role.ROLE_USER': 'Utilisateur',
+  'admin.page.title': 'Administration Utilisateur',
 };

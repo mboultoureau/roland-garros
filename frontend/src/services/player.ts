@@ -1,28 +1,23 @@
-import { FilterPlayer, Player } from 'src/models/person';
+import { FilterPlayer, Person } from 'src/models/person';
 
 import {
   mockDelete,
-  mockFetch,
   mockStore,
   mockEdit,
   mockShow,
 } from 'src/mocks/PlayerMock';
 import { api } from 'src/boot/axios';
 
-export async function fetch(filter: FilterPlayer) {
+export async function fetch(filter?: FilterPlayer) {
   try {
-    await api.get('player', { params: filter });
-  } catch (error) {}
-
-  try {
-    const response = await mockFetch();
-    return response.payload;
+    const response = await api.get('players', { params: filter });
+    return response.data;
   } catch (error) {}
 }
 
-export async function store(player: Player) {
+export async function store(player: Person) {
   try {
-    await mockStore(player);
+    await api.post('persons', player);
   } catch (error) {}
 }
 
@@ -32,15 +27,16 @@ export async function destroy(id: number) {
   } catch (error) {}
 }
 
-export async function edit(player: Player) {
+export async function edit(player: Person) {
+  console.log(player);
   try {
-    await mockEdit(player);
+    await api.put(`persons/${player.id}`, player);
   } catch (error) {}
 }
 
 export async function show(id: number) {
   try {
-    const response = await mockShow(id);
-    return response.payload as Player;
+    const response = await api.get(`persons/${id}`);
+    return response.data;
   } catch (error) {}
 }

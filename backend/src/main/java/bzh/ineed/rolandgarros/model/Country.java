@@ -15,6 +15,14 @@ public class Country {
 
     private String alpha3Code;
 
+    public Country() {}
+
+    public Country(String name, String alpha2Code, String alpha3Code) {
+        this.name = name;
+        this.alpha2Code = alpha2Code;
+        this.alpha3Code = alpha3Code;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -45,5 +53,10 @@ public class Country {
 
     public void setAlpha3Code(String alpha3Code) {
         this.alpha3Code = alpha3Code;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

@@ -1,5 +1,4 @@
 import { route } from 'quasar/wrappers';
-import { useAuthStore } from 'src/stores/auth';
 import {
   createMemoryHistory,
   createRouter,
@@ -19,8 +18,6 @@ import routes from './routes';
  */
 
 export default route(function () {
-  const authStore = useAuthStore();
-
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'
@@ -37,15 +34,5 @@ export default route(function () {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  Router.beforeEach((to, from, next) => {
-    if (
-      to.matched.some((record) => record.meta.requireAuth) &&
-      !authStore.getToken
-    ) {
-      next({ name: 'login', query: { redirect: to.fullPath } });
-    } else {
-      next();
-    }
-  });
   return Router;
 });

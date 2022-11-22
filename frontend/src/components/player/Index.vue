@@ -1,4 +1,5 @@
 <template>
+  <headerC :title="t('player.index.title')"></headerC>
   <q-tabs
     v-model="currentTab"
     narrow-indicator
@@ -6,19 +7,19 @@
     align="justify"
     class="text-primary m-8"
   >
-    <q-tab :ripple="false" name="men" icon="face" :label="t('player.index.tabs.label.man')" />
-    <q-tab :ripple="false" name="woman" icon="face_3" :label="t('player.index.tabs.label.woman')" />
+    <q-tab :ripple="false" :name="Gender.MEN" icon="face" :label="t('player.index.tabs.label.man')" />
+    <q-tab :ripple="false" :name="Gender.WOMAN" icon="face_3" :label="t('player.index.tabs.label.woman')" />
   </q-tabs>
   
   <q-tab-panels v-model="currentTab" animated>
-    <q-tab-panel name="men">
-      <div class="grid gap-x-8 gap-y-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 items-center justify-center">
+    <q-tab-panel :name="Gender.MEN">
+      <div class="flex gap-8">
         <ItemList v-for="player in listPlayer" :key="player.id" :player="player" class="m-auto"></ItemList>
       </div>
     </q-tab-panel>
-    <q-tab-panel name="woman">
-      <div class="grid gap-x-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-        <ItemList v-for="player in listPlayer" :key="player.id" :player="player" class="m-auto"></ItemList>
+    <q-tab-panel :name="Gender.WOMAN">
+      <div class="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1">
+        <ItemList v-for="player in listPlayer" :key="player.id" :player="player"></ItemList>
       </div>
     </q-tab-panel>
   </q-tab-panels>
@@ -30,14 +31,15 @@
 <script lang="ts">
 export default {
     name: 'IndexComposant',
-    components: { ItemList }
 }
 </script>
 <script setup lang="ts">
 import { usePlayerStore } from 'src/stores/player';
-import { computed,ref, onMounted } from 'vue';
+import { computed,ref, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ItemList from './components/PlayerItemList.vue';
+import { Gender } from 'src/models/person';
+import HeaderC from '../shared/Header.vue';
 
 const { t } = useI18n()
 
@@ -46,7 +48,12 @@ const playerStore = usePlayerStore()
 const listPlayer = computed(() => playerStore.listPlayer)
 const showLoader = computed(() => listPlayer.value?.length === 0)
 
-onMounted(async () => await playerStore.fetch())
+onMounted(async () => await playerStore.fetch({ gender: Gender.MEN }))
 
-const currentTab = ref('men')
+const currentTab = ref(Gender.MEN)
+
+watch(
+  currentTab,
+  async () => await playerStore.fetch({ gender: currentTab.value })
+)
 </script>

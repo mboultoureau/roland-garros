@@ -1,3 +1,4 @@
+import { Roles } from 'src/models/user';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -20,7 +21,13 @@ const routes: RouteRecordRaw[] = [
     name: 'admin',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/admin/Index.vue') },
+      {
+        path: '',
+        component: () => import('pages/admin/Index.vue'),
+        meta: {
+          rolePermit: [Roles.ROLE_ADMIN],
+        },
+      },
       {
         path: 'player',
         children: [
@@ -45,6 +52,32 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/admin/player/ShowPlayer.vue'),
           },
         ],
+        meta: {
+          rolePermit: [Roles.ROLE_ADMIN, Roles.ROLE_EDITOR_PLAYER],
+        },
+      },
+      {
+        path: 'tournaments',
+        children: [
+          {
+            path: '',
+            component: () => import('pages/admin/tournament/Index.vue'),
+          },
+          {
+            path: ':id',
+            name: 'show-tournament-admin',
+            component: () =>
+              import('pages/admin/tournament/ShowTournament.vue'),
+          },
+          {
+            path: ':idT/edit/:idM',
+            name: 'edit-match-tournament',
+            component: () => import('pages/admin/tournament/EditMatch.vue'),
+          },
+        ],
+        meta: {
+          rolePermit: [Roles.ROLE_ADMIN, Roles.ROLE_EDITOR_MATCH],
+        },
       },
     ],
     meta: {
@@ -62,16 +95,23 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '',
+        name: 'all-players',
         component: () => import('pages/player/Index.vue'),
       },
     ],
   },
   {
-    path: '/match',
+    path: '/tournaments',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
+        name: 'all-tournaments',
+        component: () => import('pages/tournament/Index.vue'),
+      },
+      {
+        path: ':idT/matchs/:idM',
+        name: 'show-match',
         component: () => import('pages/match/Index.vue'),
       },
     ],

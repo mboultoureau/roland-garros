@@ -26,11 +26,6 @@ dev: ## Start the dev environment
 	@docker compose -f docker-compose.dev.yml up -d
 	@echo PhpMyAdmin : http://phpmyadmin.localhost
 
-setup: ## Set up the dev environment
-	@docker network create web
-	@docker build -t rolandgarros/front ./frontend
-	@docker build -t rolandgarros/back ./backend
-
 front: ## Launch frontend in dev environment
 	@export BACKEND_URL=localhost:8000 && cd frontend && quasar dev
 

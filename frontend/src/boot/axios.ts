@@ -12,7 +12,7 @@ const api = axios.create({
   baseURL: `http://${process.env.BACKEND_URL}/api`,
   withCredentials: false,
   headers: {
-    Autorization: `Bearer ${LocalStorage.getItem('token')}`,
+    Authorization: `Bearer ${LocalStorage.getItem('token')}`,
   },
 });
 

@@ -70,7 +70,9 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        BACKEND_URL: process.env.BACKEND_URL
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

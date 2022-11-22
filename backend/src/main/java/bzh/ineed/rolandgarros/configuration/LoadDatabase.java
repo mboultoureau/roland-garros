@@ -1,10 +1,8 @@
 package bzh.ineed.rolandgarros.configuration;
 
 import bzh.ineed.rolandgarros.model.*;
-import bzh.ineed.rolandgarros.repository.CountryRepository;
-import bzh.ineed.rolandgarros.repository.PersonRepository;
-import bzh.ineed.rolandgarros.repository.RoleRepository;
-import bzh.ineed.rolandgarros.repository.UserRepository;
+import bzh.ineed.rolandgarros.repository.*;
+import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +22,8 @@ public class LoadDatabase {
             CountryRepository countryRepository,
             PersonRepository personRepository,
             RoleRepository roleRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            CourtRepository courtRepository
     ) {
         return args -> {
             // DELETE ALL
@@ -39,6 +38,9 @@ public class LoadDatabase {
 
             log.info("[ROLE] Delete all");
             roleRepository.deleteAll();
+
+            log.info("[COURT] Delete all");
+            courtRepository.deleteAll();
 
             // COUNTRIES
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Afghanistan", "AF", "AFG")));
@@ -482,6 +484,17 @@ public class LoadDatabase {
             log.info("[USER] Preloading " + userRepository.save(adminPlayer));
             log.info("[USER] Preloading " + userRepository.save(adminMatch));
             log.info("[USER] Preloading " + userRepository.save(adminNoRule));
+
+
+            Court court1 = new Court("Court Leane");
+            Court court2 = new Court("Court Mathis");
+            Court court3 = new Court("Court Sylvain");
+            Court court4 = new Court("Court Paul");
+
+            log.info("[COURT] Peloading " + courtRepository.save(court1));
+            log.info("[COURT] Peloading " + courtRepository.save(court2));
+            log.info("[COURT] Peloading " + courtRepository.save(court3));
+            log.info("[COURT] Peloading " + courtRepository.save(court4));
         };
     }
 

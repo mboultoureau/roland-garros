@@ -18,10 +18,6 @@ public class Training {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @ManyToOne
-    @JoinColumn(name = "court_id")
-    private Court court;
-
     @Size(max = 250)
     private String details;
 
@@ -30,6 +26,8 @@ public class Training {
 
     @NotBlank
     private Timestamp start;
+
+    private int court_id;
 
     @NotBlank
     private int nbHours;
@@ -43,14 +41,6 @@ public class Training {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public Court getCourt() {
-        return court;
-    }
-
-    public void setCourt(Court court) {
-        this.court = court;
     }
 
     public Training() {}

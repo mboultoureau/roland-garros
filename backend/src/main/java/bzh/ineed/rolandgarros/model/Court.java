@@ -2,6 +2,8 @@ package bzh.ineed.rolandgarros.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "courts")
 public class Court {
@@ -10,6 +12,18 @@ public class Court {
     private Integer id;
     @Column(length = 20)
     private String name;
+
+    public List<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(List<Training> trainings) {
+        this.trainings = trainings;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "court_id")
+    private List<Training> trainings;
 
     public Court() {}
 

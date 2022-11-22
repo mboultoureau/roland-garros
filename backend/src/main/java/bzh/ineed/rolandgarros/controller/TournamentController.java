@@ -40,12 +40,23 @@ public class TournamentController {
 
     @GetMapping("/tournaments")
     public ResponseEntity<?> index(
-            @RequestParam(defaultValue = "2022") Integer year,
+            @RequestParam(defaultValue = "0") Integer id,
+            @RequestParam(defaultValue = "0") Integer year,
             @RequestParam(defaultValue = "id,desc") String sortBy[]
     ) {
         try{
             Map<String, Object> response = new HashMap<>();
-            response.put("tournament", tournamentRepository.findAll());
+            if(year!=0){
+                //find by year
+                response.put("year", tournamentRepository.findByYear(year));
+            }
+            else if(id!= 0){
+                //find by id
+                response.put("tournament", tournamentRepository.findAllById(id));
+            }
+            else {
+                response.put("tournament", tournamentRepository.findAll());
+            }
             response.put("success", true);
 
 

@@ -8,9 +8,7 @@
         {{ t('auth.title') }}
       </div>
       <q-form
-        @submit="onSubmit"
-        @reset="onReset"
-        class="q-gutter-md"
+        class="q-gutter-md z-50"
       >
         <q-input
           filled
@@ -30,8 +28,8 @@
         />
 
         <div class="flex justify-center mt-8">
-          <q-btn :label="t('btn.connection')" type="submit" color="primary"/>
-          <q-btn :label="t('btn.back')" type="reset" color="primary" flat class="q-ml-sm" />
+          <q-btn :label="t('btn.connection')" type="submit" color="primary" @click="onSubmit"></q-btn>
+          <q-btn :label="t('btn.back')" type="reset" color="primary" flat class="q-ml-sm" @click="onReset"></q-btn>
         </div>
       </q-form>
     </div>
@@ -82,6 +80,6 @@ const goBack = () => router.push({ path: '/'})
 const onReset = () => {
   username.value = ''
   password.value = ''
-  goBack()
+  router.back()
 }
 </script>

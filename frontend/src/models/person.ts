@@ -34,7 +34,6 @@ export interface Nationality {
 
 export interface FilterPlayer {
   gender?: Gender;
-  filter?: null | string;
-  sort?: null | 'asc' | 'desc';
+  sort?: null | string;
+  sortBy?: null | 'asc' | 'desc';
 }
-

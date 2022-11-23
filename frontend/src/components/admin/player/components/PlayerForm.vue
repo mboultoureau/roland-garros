@@ -50,7 +50,7 @@
         <q-input filled v-model="formComputed.picture" lazy-rules :label="t('input.url')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-input>
       </div>
       <div class="gender">
-        <q-select filled v-model="formComputed.gender" :options="optionsGender" map-options :label="t('select.gender')" :rules="[ val => val && val.length > 0 || t('field.required')]"></q-select>
+        <q-select filled v-model="formComputed.gender" :options="optionsGender" map-options emit-value :label="t('select.gender')" lazy-rules :rules="[ val => val && val.length > 0 || t('field.required')]"></q-select>
       </div>
       <div class="isPlayer flex justify-around">
         <q-checkbox v-model="formComputed.isCoach" label="Coach" />
@@ -69,7 +69,6 @@ import { Gender, Person } from 'src/models/person';
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import InputDate from 'src/components/shared/InputDate.vue';
-import { useCountryStore } from 'src/stores/country';
 import { LocalStorage } from 'quasar';
 
 const { t } = useI18n()

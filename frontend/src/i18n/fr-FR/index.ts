@@ -2,6 +2,7 @@ export default {
   'field.required': 'Ce champ est requis',
   'field.max.three': 'Maximum 3 chiffres',
   'auth.input.username': 'Nom utilisateur *',
+  'auth.title': 'Connexion',
   'auth.input.enter.same.password': 'Veuillez entrer le même mot de passe',
   'auth.input.confirm.password': 'Confirmation mot de passe *',
   'auth.input.password': 'Mot de passe *',

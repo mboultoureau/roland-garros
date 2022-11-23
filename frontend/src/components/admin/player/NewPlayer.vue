@@ -32,8 +32,8 @@ const formCopy = ref({
 
 const submit = async () => {
   await playerStore.store(formCopy.value)
-  router.push({ name: 'players' })
+  router.push({ name: 'admin-players' })
 }
 
-const cancel = () => router.push({ name: 'players' })
+const cancel = () => router.push({ name: 'admin-players' })
 </script>

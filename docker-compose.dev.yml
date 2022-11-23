@@ -38,3 +38,10 @@ services:
       - PMA_PASSWORD=root
     labels:
       - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
+<<<<<<< HEAD
+=======
+
+networks:
+  web:
+
+>>>>>>> feature/create-model-person

@@ -2,7 +2,7 @@ package bzh.ineed.rolandgarros.configuration;
 
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.repository.*;
-import org.apache.juli.logging.Log;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -25,12 +25,20 @@ public class LoadDatabase {
             RoleRepository roleRepository,
             UserRepository userRepository,
             CourtRepository courtRepository,
-            TrainingRepository trainingRepository
+            TrainingRepository trainingRepository,
+            TournamentRepository tournamentRepository,
+            MatchRepository matchRepository
     ) {
         return args -> {
             // DELETE ALL
             log.info("[TRAINING] Delete all");
             trainingRepository.deleteAll();
+            // DELETE ALL
+            log.info("[MATCH] Delete all");
+            matchRepository.deleteAll();
+
+            log.info("[TOURNAMENT] Delete all");
+            tournamentRepository.deleteAll();
 
             log.info("[PERSON] Delete all");
             personRepository.deleteAll();

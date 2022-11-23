@@ -6,7 +6,9 @@ import bzh.ineed.rolandgarros.model.Match;
 import bzh.ineed.rolandgarros.model.Tournament;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
@@ -25,4 +27,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findByTournamentIdAndTypeAndRound(Long id, EType type, ERound round);
 
     List<Match> findByTournament(Tournament tournament);
+
+    //@Query("SELECT m FROM Match m WHERE m.tournament = ?1")
+    @Query("SELECT DISTINCT m.type FROM Match m WHERE m.tournament = ?1")
+    Collection<String> findAllTypes(Tournament id);
 }

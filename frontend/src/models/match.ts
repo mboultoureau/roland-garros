@@ -1,10 +1,6 @@
 import { TournamentType, Round } from './tournament';
 import { Person } from './person';
-
-export interface Court {
-  id: number;
-  name: string;
-}
+import { Court } from './court';
 
 export enum Status {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -31,15 +27,6 @@ export interface Match {
   date?: string;
   court?: Court;
   scores?: Score[];
-}
-
-export interface Training {
-  id: number;
-  player: Person;
-  startDate: string;
-  endDate: string;
-  court: Court;
-  details: string;
 }
 
 export interface Team {

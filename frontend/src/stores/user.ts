@@ -5,7 +5,7 @@ import { fetch, fetchRole, editU } from 'src/services/user';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    isAuthenticated: 0,
+    isAuthenticated: false,
     user: {} as User,
     listUser: [] as User[],
     listRole: [],
@@ -29,10 +29,12 @@ export const useUserStore = defineStore('user', {
     },
     setUser(user: User) {
       this.user = user;
+      this.isAuthenticated = true;
       LocalStorage.set('user', user);
     },
     logout() {
       this.user = {};
+      this.isAuthenticated = false;
       LocalStorage.remove('user');
     },
   },

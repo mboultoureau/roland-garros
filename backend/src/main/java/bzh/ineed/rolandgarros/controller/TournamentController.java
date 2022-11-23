@@ -103,6 +103,43 @@ public class TournamentController {
         }
     }
 
+    @GetMapping("/tournament/{id}")
+    public ResponseEntity<?> index(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "id,desc") String sortBy[]
+    ) {
+        try {
+            ArrayList<Map<String, Object>> response = new ArrayList<>();
+            List<Tournament> tournaments = tournamentRepository.findAll();
+            List<Match> matches = matchRepository.findAll();
+
+            System.out.println(tournaments);
+            for (Tournament t : tournaments) {
+                Map<String, Object> tournamentResponse = new HashMap<>();
+                if(t.getId() != id){
+
+                }else{
+                    tournamentResponse.put("id", t.getId());
+                    tournamentResponse.put("year", t.getYear());
+                    tournamentResponse.put("types",matchRepository.findAllTypes(t));
+                    response.add(tournamentResponse);
+                }
+            }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (PropertyReferenceException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+            System.out.println(e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/tournaments")
     public ResponseEntity<?> index(
             @RequestParam(defaultValue = "") Integer year,

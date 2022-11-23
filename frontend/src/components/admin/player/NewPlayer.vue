@@ -23,15 +23,15 @@ const formCopy = ref({
   height: 0,
   weight: 0,
   earlyCareer: '',
-  coach: null,
+  coach: '',
   nationality: null,
   picture: '',
   isPlayer: true,
   isCoach: false
 })
 
-const submit = () => {
-  playerStore.store(formCopy.value)
+const submit = async () => {
+  await playerStore.store(formCopy.value)
   router.push({ name: 'players' })
 }
 

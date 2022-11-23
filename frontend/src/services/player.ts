@@ -24,9 +24,38 @@ export async function fetch(filter?: FilterPlayer) {
   } catch (error) {}
 }
 
-export async function store(player: Person) {
+export async function fetchCoach() {
   try {
-    await api.post('persons', player);
+    const response = await api.get('/coaches');
+    return response.data.content;
+  } catch (error) {}
+}
+
+export async function store(player: Person) {
+  const playerEdit = {
+    firstname: player.firstname,
+    lastname: player.lastname,
+    birthDate: player.birthDate,
+    birthPlace: player.birthPlace,
+    hand: player.hand,
+    height: parseInt(player.height),
+    weight: parseInt(player.weight),
+    earlyCareer: player.earlyCareer,
+    coachId: player.coach.id,
+    picture: player.picture,
+    isPlayer: player.isPlayer,
+    isCoach: player.isCoach,
+    gender: player.gender,
+    ranking: player.ranking,
+  };
+
+  if (typeof player.nationality === 'object') {
+    playerEdit.nationality = player.nationality;
+  } else {
+    playerEdit.nationalityId = player.nationality;
+  }
+  try {
+    await api.post('persons', playerEdit);
   } catch (error) {}
 }
 
@@ -37,9 +66,30 @@ export async function destroy(id: number) {
 }
 
 export async function edit(player: Person) {
-  console.log(player);
+  const playerEdit = {
+    firstname: player.firstname,
+    lastname: player.lastname,
+    birthDate: player.birthDate,
+    birthPlace: player.birthPlace,
+    hand: player.hand,
+    height: parseInt(player.height),
+    weight: parseInt(player.weight),
+    earlyCareer: player.earlyCareer,
+    coachId: player.coach.id,
+    picture: player.picture,
+    isPlayer: player.isPlayer,
+    isCoach: player.isCoach,
+    gender: player.gender,
+    ranking: player.ranking,
+  };
+
+  if (typeof player.nationality === 'object') {
+    playerEdit.nationality = player.nationality;
+  } else {
+    playerEdit.nationalityId = player.nationality;
+  }
   try {
-    await api.put(`persons/${player.id}`, player);
+    await api.put(`persons/${player.id}`, playerEdit);
   } catch (error) {}
 }
 

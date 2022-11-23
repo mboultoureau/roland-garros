@@ -13,9 +13,7 @@ export const useCountryStore = defineStore('country', {
   },
   actions: {
     async fetch() {
-      const response = await fetch();
-      this.listNationality = response;
-      LocalStorage.set('nationality', response);
+      this.listNationality = await fetch();
     },
   },
 });

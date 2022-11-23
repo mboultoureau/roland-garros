@@ -38,3 +38,7 @@ services:
       - PMA_PASSWORD=root
     labels:
       - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
+
+networks:
+  web:
+

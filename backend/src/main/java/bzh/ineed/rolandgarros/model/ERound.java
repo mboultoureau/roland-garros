@@ -5,7 +5,7 @@ public enum ERound {
     SECOND_ROUND,
     THIRD_ROUND,
     SIXTEENTH_ROUND,
-    QUART_FINAL_ROUND,
-    SEMI_FINAL_ROUND,
+    QUART_FINAL,
+    SEMI_FINAL,
     FINAL_ROUND
 }

@@ -25,12 +25,20 @@ public class LoadDatabase {
             RoleRepository roleRepository,
             UserRepository userRepository,
             CourtRepository courtRepository,
-            TrainingRepository trainingRepository
+            TrainingRepository trainingRepository,
+            TournamentRepository tournamentRepository,
+            MatchRepository matchRepository
     ) {
         return args -> {
             // DELETE ALL
             log.info("[TRAINING] Delete all");
             trainingRepository.deleteAll();
+
+            log.info("[MATCH] Delete all");
+            matchRepository.deleteAll();
+
+            log.info("[TOURNAMENT] Delete all");
+            tournamentRepository.deleteAll();
 
             log.info("[PERSON] Delete all");
             personRepository.deleteAll();

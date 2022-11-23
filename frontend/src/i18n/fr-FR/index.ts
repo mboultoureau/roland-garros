@@ -82,4 +82,5 @@ export default {
   'admin.role.ROLE_USER': 'Utilisateur',
   'admin.page.title': 'Administration Utilisateur',
   'court.index.title': 'Nos Courts',
+  'court.index.dialog.title': 'Créer un entraînement',
 };

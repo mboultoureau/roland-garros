@@ -1,12 +1,20 @@
 <template>
-  <div class="flex w-full my-4">
-    <div class="flex-1 text-center" :class="{'bg-primary rounded-lg': currentNbDay === getNbDay(day) }" v-for="day in nbDays" :key="day">{{ getNbDay(day) }}</div>
-  </div>
-  <div class="flex">
-    <div class="agenda flex-1" v-for="day in nbDays" :key="day">
-      <div class="match border-2 p-2 h-full" :class="{'bg-primary border-y-primary text-gray-50': hasEvent(getNbDay(day), horaire) }" v-for="(horaire, index) in ndHours" :key="index">{{ hasEvent(getNbDay(day), horaire) }}</div>
+  <div class="flex gap-4 w-full h-screen">
+    <div class="flex flex-col justify-around">
+      <div v-for="hour in nbHours" :key="hour">{{ hour }}h</div>
+    </div>
+    <div class="flex-1">
+      <div class="flex w-full my-4">
+        <div class="flex-1 text-center" :class="{'bg-primary rounded-lg text-white font-bold': currentNbDay === getNbDay(day) }" v-for="day in nbDays" :key="day">{{ getNbDay(day) }}</div>
+      </div>
+      <div class="flex-1 flex"> 
+        <div class="agenda flex-1" v-for="day in nbDays" :key="day">
+          <div class="match border-2 p-2 h-full" :class="{'bg-primary border-primary text-gray-50': hasEvent(getNbDay(day), horaire) }" v-for="(horaire, index) in nbHours" :key="index">{{ hasEvent(getNbDay(day), horaire) }}</div>
+        </div>
+      </div>
     </div>
   </div>
+  
 </template>
 <script setup lang="ts">
 import { addDays, addHours, startOfWeek  } from 'date-fns'  
@@ -20,7 +28,7 @@ const currentNbDay = curr.getDate()
 const firstDayOfWeek = startOfWeek(curr)
 
 const nbDays = 7
-const ndHours = [
+const nbHours = [
   8,
   9,
   10,

@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface TrainingRepository extends JpaRepository<Training, Long> {
     List<Training> findByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<Training> findAllByStartDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Training> findAllByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
 }

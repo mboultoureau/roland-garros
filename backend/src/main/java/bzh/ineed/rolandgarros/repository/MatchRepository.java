@@ -1,5 +1,6 @@
 package bzh.ineed.rolandgarros.repository;
 
+import bzh.ineed.rolandgarros.model.Court;
 import bzh.ineed.rolandgarros.model.ERound;
 import bzh.ineed.rolandgarros.model.EType;
 import bzh.ineed.rolandgarros.model.Match;
@@ -14,7 +15,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     List<Match> findByTournamentIdAndTypeAndRound(Long id, EType type, ERound round);
 
-    List<Match> findAllByStartDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Match> findAllByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
 
     Page<Match> findByRoundAndTypeAndTournamentId(ERound round, EType type, Long tournamentId, Pageable pageable);
 }

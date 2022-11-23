@@ -10,15 +10,15 @@ public class Team {
     private Long id;
 
     @ManyToOne
-    private Person person1;
+    private Person personA;
 
     @ManyToOne
-    private Person person2;
+    private Person personB;
 
     @Transient
-    private String person1Id;
+    private String personAId;
 
-    @Transient String person2Id;
+    @Transient String personBId;
 
     public Long getId() {
         return id;
@@ -28,35 +28,35 @@ public class Team {
         this.id = id;
     }
 
-    public Person getPerson1() {
-        return person1;
+    public Person getPersonA() {
+        return personA;
     }
 
-    public void setPerson1(Person person1) {
-        this.person1 = person1;
+    public void setPersonA(Person person1) {
+        this.personA = person1;
     }
 
-    public Person getPerson2() {
-        return person2;
+    public Person getPersonB() {
+        return personB;
     }
 
-    public void setPerson2(Person person2) {
-        this.person2 = person2;
+    public void setPersonB(Person person2) {
+        this.personB = person2;
     }
 
-    public String getPerson1Id() {
-        return person1Id;
+    public String getPersonAId() {
+        return personAId;
     }
 
-    public void setPerson1Id(String person1Id) {
-        this.person1Id = person1Id;
+    public void setPersonAId(String personAId) {
+        this.personAId = personAId;
     }
 
-    public String getPerson2Id() {
-        return person2Id;
+    public String getPersonBId() {
+        return personBId;
     }
 
-    public void setPerson2Id(String person2Id) {
-        this.person2Id = person2Id;
+    public void setPersonBId(String personBId) {
+        this.personBId = personBId;
     }
 }

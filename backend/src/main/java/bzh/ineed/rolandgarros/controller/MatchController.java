@@ -63,15 +63,15 @@ public class MatchController {
             return actualMatch;
         }
 
-        if (newMatch.getTeamA().getPerson1Id() == null || newMatch.getTeamA().getPerson1Id().equals("null")) {
+        if (newMatch.getTeamA().getPersonAId() == null || newMatch.getTeamA().getPersonAId().equals("null")) {
             return actualMatch;
         }
 
-        if (isDouble && (newMatch.getTeamA().getPerson2Id() == null || newMatch.getTeamA().getPerson2Id().equals("null"))) {
+        if (isDouble && (newMatch.getTeamA().getPersonBId() == null || newMatch.getTeamA().getPersonBId().equals("null"))) {
             return actualMatch;
         }
 
-        Long person1Id = Long.parseLong(newMatch.getTeamA().getPerson1Id());
+        Long person1Id = Long.parseLong(newMatch.getTeamA().getPersonAId());
         Person person1 = null;
         Person person2 = null;
 
@@ -83,7 +83,7 @@ public class MatchController {
         person1 = personRepository.findById(person1Id).get();
 
         if (isDouble) {
-            Long person2Id = Long.parseLong(newMatch.getTeamA().getPerson2Id());
+            Long person2Id = Long.parseLong(newMatch.getTeamA().getPersonBId());
             if (!personRepository.existsById(person2Id)) {
                 System.out.println("Player2 doesn't exists");
                 return actualMatch;
@@ -98,10 +98,10 @@ public class MatchController {
 
         // Create new team
         Team team = new Team();
-        team.setPerson1(person1);
+        team.setPersonA(person1);
 
         if (isDouble) {
-            team.setPerson2(person2);
+            team.setPersonB(person2);
         }
 
         teamRepository.save(team);
@@ -160,15 +160,15 @@ public class MatchController {
             return actualMatch;
         }
 
-        if (newMatch.getTeamB().getPerson1Id() == null || newMatch.getTeamB().getPerson1Id().equals("null")) {
+        if (newMatch.getTeamB().getPersonAId() == null || newMatch.getTeamB().getPersonAId().equals("null")) {
             return actualMatch;
         }
 
-        if (isDouble && (newMatch.getTeamB().getPerson2Id() == null || newMatch.getTeamB().getPerson2Id().equals("null"))) {
+        if (isDouble && (newMatch.getTeamB().getPersonBId() == null || newMatch.getTeamB().getPersonBId().equals("null"))) {
             return actualMatch;
         }
 
-        Long person1Id = Long.parseLong(newMatch.getTeamB().getPerson1Id());
+        Long person1Id = Long.parseLong(newMatch.getTeamB().getPersonAId());
         Person person1 = null;
         Person person2 = null;
 
@@ -180,7 +180,7 @@ public class MatchController {
         person1 = personRepository.findById(person1Id).get();
 
         if (isDouble) {
-            Long person2Id = Long.parseLong(newMatch.getTeamB().getPerson2Id());
+            Long person2Id = Long.parseLong(newMatch.getTeamB().getPersonBId());
             if (!personRepository.existsById(person2Id)) {
                 System.out.println("Player2 doesn't exists");
                 return actualMatch;
@@ -195,10 +195,10 @@ public class MatchController {
 
         // Create new team
         Team team = new Team();
-        team.setPerson1(person1);
+        team.setPersonA(person1);
 
         if (isDouble) {
-            team.setPerson2(person2);
+            team.setPersonB(person2);
         }
 
         teamRepository.save(team);

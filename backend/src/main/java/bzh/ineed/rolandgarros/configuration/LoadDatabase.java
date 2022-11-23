@@ -609,11 +609,11 @@ public class LoadDatabase {
 
             finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_MEN, ERound.FINAL_ROUND).get(0);
             Team teamA = new Team();
-            teamA.setPerson1(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
+            teamA.setPersonA(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
 
 
             Team teamB = new Team();
-            teamB.setPerson1(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            teamB.setPersonA(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
 
 
 

@@ -23,6 +23,13 @@ export async function show(id: number, type: TournamentType | null) {
   } catch (error) {}
 }
 
+export async function getTournamentTypes(id: number) {
+  try {
+    const response = await api.get(`tournament/${id}`);
+    return response.data[0];
+  } catch (error) {}
+}
+
 export async function destroy(id: number) {
   try {
     await destroyMock(id);

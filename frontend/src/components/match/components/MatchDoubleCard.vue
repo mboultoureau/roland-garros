@@ -16,7 +16,7 @@
       </div>
           
       <div class="sets flex gap-3">
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}"><q-badge color="green" rounded></q-badge></div>
+        <!--<div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}"><q-badge color="green" rounded></q-badge></div>-->
         <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamA >= 6}">{{ score.scoreTeamA }}</div>
       </div>
     </div>

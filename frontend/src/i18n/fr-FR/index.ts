@@ -83,4 +83,7 @@ export default {
   'admin.page.title': 'Administration Utilisateur',
   'court.index.title': 'Nos Courts',
   'court.index.dialog.title': 'Créer un entraînement',
+  'court.index.btn.reserve': 'Réserver un entrainment',
+  'court.index.no.selected': 'Aucun court sélectionné',
+  'court.index.selected.court': 'Sélectionner un match',
 };

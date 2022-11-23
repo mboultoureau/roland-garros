@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-4 w-full h-screen">
+  <div class="flex gap-4 w-full h-screen" v-if="trainings">
     <div class="flex flex-col justify-around">
       <div v-for="hour in nbHours" :key="hour">{{ hour }}h</div>
     </div>
@@ -14,18 +14,27 @@
       </div>
     </div>
   </div>
-  
+  <div v-else class="text-center my-16 text-gray-500 font-bold">
+    {{ t('court.index.no.selected') }}
+  </div>
 </template>
 <script setup lang="ts">
-import { addDays, addHours, startOfWeek  } from 'date-fns'  
+import { addDays } from 'date-fns'  
 import { useMatchCard } from 'src/components/match/functions/match';
-import { ref } from 'vue'
+import { Training } from 'src/models/court';
+import { computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n';
+import { currentNbDay, firstDayOfWeek, allEvents } from '../functions/calendar';
+
+const props = defineProps<{
+  trainings: Training[]
+}>()
+
+const { t } = useI18n()
+
+const trainingsComp = computed(() => props.trainings || [])
 
 const { reduceNamePlayer } = useMatchCard()
-
-const curr = new Date();
-const currentNbDay = curr.getDate()
-const firstDayOfWeek = startOfWeek(curr)
 
 const nbDays = 7
 const nbHours = [
@@ -46,59 +55,19 @@ const nbHours = [
 
 const getNbDay = (nb: number) => addDays(firstDayOfWeek, nb).getDate()
 
-const training = ref([
-  {
-    startDate: new Date('2022-11-23T08:00:00'),
-    duration: 3,
-    player: {
-      firstname: 'Sylvain',
-      lastname: 'Mestre'
-    }
-  },
-  {
-    startDate: new Date('2022-11-23T12:00:00'),
-    duration: 1,
-    player: {
-      firstname: 'Mathis',
-      lastname: 'Boultoureau'
-    }
-  },
-  {
-    startDate: new Date('2022-11-21T20:00:00'),
-    duration: 2,
-    details: 'lala',
-    player: {
-      firstname: 'Paul',
-      lastname: 'Breton'
-    }
-  },
-  {
-    startDate: new Date('2022-11-26T18:00:00'),
-    duration: 2,
-    player: {
-      firstname: 'Leane',
-      lastname: 'Diraison'
-    }
-  }
-])
-
-const allEvents = () => {
-  const events = []
-  training.value.forEach((t) => {
-    for(let i=0; i<t.duration;i++) {
-      events.push({ date: t.startDate.getDate(), horaire: addHours(t.startDate, i).getHours(), player: t.player})
-    }
-  })
-  return events
-}
-
-const tabE = allEvents()
+let tabE = []
 
 const hasEvent = (date: number, time: number) => {
   const evt = tabE.find((evt) => evt.date === date && evt.horaire === time)
   if(evt) return reduceNamePlayer(evt.player.firstname, evt.player.lastname)
   else return ''
 }
+
+watch(
+  trainingsComp,
+  () => tabE = allEvents(trainingsComp.value)
+)
+
 </script>
 <style lang="scss" scoped>
 .agenda {

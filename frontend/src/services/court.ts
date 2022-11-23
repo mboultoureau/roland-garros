@@ -1,8 +1,8 @@
-import { fetchMock } from 'src/mocks/CourtMock';
+import { api } from 'boot/axios';
 
-export async function fetch() {
+export async function fetch(date: string) {
   try {
-    const responses = await fetchMock();
-    return responses.payload;
+    const responses = await api.get('courts', { params: { date } });
+    return responses.data;
   } catch (error) {}
 }

@@ -71,9 +71,11 @@ import { useI18n } from 'vue-i18n';
 import InputDate from 'src/components/shared/InputDate.vue';
 import { LocalStorage } from 'quasar';
 import { usePlayerStore } from 'src/stores/player';
+import { useCountryStore } from 'src/stores/country';
 
 const { t } = useI18n()
 const playerStore = usePlayerStore()
+const countryStore = useCountryStore()
 
 const emit = defineEmits<{
   (name: 'update:player', value: Person): Person
@@ -109,8 +111,7 @@ const formCopy = ref({
 
 const optionsCoach = computed(() => playerStore.listCoach)
 
-const optionsNationality = LocalStorage.getItem('nationality')
-
+const optionsNationality = computed(() => countryStore.listNationality)
 const optionsGender = [
   {
     label: t('admin.player.create.gender.MALE'),

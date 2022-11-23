@@ -166,7 +166,7 @@ export function addMatch(tournament: Tournament) {
       createMatch(
         tournament,
         type,
-        Round.QUARTER_FINAL,
+        Round.QUART_FINAL,
         Status.UNDEFINED,
         teamA,
         teamB,

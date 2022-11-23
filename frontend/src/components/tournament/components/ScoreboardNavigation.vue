@@ -21,9 +21,9 @@
       <div class="round-16">
         <RectangleWithLine :nb-line="8" :nb-rectangle="1" :is-selected="nbRectSelected === 8" @click="handleSelectedRect(8, Round.SIXTEENTH_ROUND)"/>
       </div>
-      <div class="title-4 text-gray-400">{{ t('match.round.QUARTER_FINAL') }}</div>
-      <div class="quarter-final">
-        <RectangleWithLine :nb-line="4" :nb-rectangle="1" :is-selected="nbRectSelected === 9" @click="handleSelectedRect(9, Round.QUARTER_FINAL)"/>
+      <div class="title-4 text-gray-400">{{ t('match.round.QUART_FINAL') }}</div>
+      <div class="QUART-final">
+        <RectangleWithLine :nb-line="4" :nb-rectangle="1" :is-selected="nbRectSelected === 9" @click="handleSelectedRect(9, Round.QUART_FINAL)"/>
       </div>
       <div class="title-half text-gray-400">{{ t('match.round.SEMI_FINAL') }}</div>
       <div class="half-final">
@@ -65,7 +65,7 @@ const handleSelectedRect = (number: number, round: Round) => {
   grid-auto-flow: row;
   grid-template-areas:
     "title-1 title-2 title-3 title-8 title-4 title-half title-final"
-    "first-tour second-tour third-tour round-16 quarter-final half-final final";
+    "first-tour second-tour third-tour round-16 QUART-final half-final final";
 }
 
 .first-tour {  display: grid;
@@ -96,7 +96,7 @@ const handleSelectedRect = (number: number, round: Round) => {
 
 .round-16 { grid-area: round-16; }
 
-.quarter-final { grid-area: quarter-final; }
+.QUART-final { grid-area: QUART-final; }
 
 .half-final { grid-area: half-final; }
 

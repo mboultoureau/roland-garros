@@ -4,12 +4,12 @@
       <div class="flex items-center">
         <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
-          {{ reduceNamePlayer(match?.teamA?.personA.firstname, match?.teamA?.personA.lastname) }}
+          {{ reduceNamePlayer(match?.teamAId?.personA.firstname, match?.teamAId?.personA.lastname) }}
         </div>
       </div>
           
       <div class="sets flex gap-4">
-        <div class="font-bold"><q-badge color="green" rounded /></div>
+        <!--<div class="font-bold"><q-badge color="green" rounded /></div>-->
         <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamA >= 6}">{{ score.scoreTeamA }}</div>
       </div>
     </div>
@@ -18,7 +18,7 @@
       <div class="flex items-center">
         <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': false}">
-          {{ reduceNamePlayer(match?.teamB?.personA.firstname, match?.teamB?.personA.lastname) }}
+          {{ reduceNamePlayer(match?.teamBId?.personA.firstname, match?.teamBId?.personA.lastname) }}
         </div>
       </div>
       <div class="sets flex gap-4">

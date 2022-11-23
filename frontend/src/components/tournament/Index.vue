@@ -114,9 +114,9 @@ const getNextOrPreviousRound = (round: Round): Round => {
     break;
     case Round.THIRD_ROUND: return Round.SIXTEENTH_ROUND;
     break;
-    case Round.SIXTEENTH_ROUND: return Round.QUARTER_FINAL;
+    case Round.SIXTEENTH_ROUND: return Round.QUART_FINAL;
     break;
-    case Round.QUARTER_FINAL: return Round.SEMI_FINAL;
+    case Round.QUART_FINAL: return Round.SEMI_FINAL;
     break;
     case Round.SEMI_FINAL: return Round.FINAL_ROUND;
     break;
@@ -125,7 +125,11 @@ const getNextOrPreviousRound = (round: Round): Round => {
   }
 }
 
-onMounted(async () => await tournamentStore.fetch())
+onMounted(async () => {
+  showLoader.value = true
+  await tournamentStore.fetch()
+  showLoader.value = false
+})
 
 </script>
 <style lang="scss" scoped>

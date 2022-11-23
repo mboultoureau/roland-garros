@@ -54,8 +54,8 @@ const optionsPhase = ref([
     value: Round.SIXTEENTH_ROUND
   },
   {
-    label: t('match.round.QUARTER_FINAL'),
-    value: Round.QUARTER_FINAL
+    label: t('match.round.QUART_FINAL'),
+    value: Round.QUART_FINAL
   },
   {
     label: t('match.round.SEMI_FINAL'),

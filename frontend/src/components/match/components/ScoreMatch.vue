@@ -12,7 +12,7 @@
             <div>{{ teamA?.personB?.firstname }}</div>
           </div>
         </div>
-        <q-badge rounded color="green" />
+        <!--<q-badge rounded color="green" />-->
       </div>
       <!--<div v-for="(score, index) in scoreTeamA" :key="index"></div>-->
       <div class="score-teamA flex flex-1 justify-end items-center gap-4">
@@ -34,7 +34,7 @@
             <div>{{ teamB?.personB?.firstname }}</div>
           </div>
         </div>
-        <q-badge rounded color="green" />
+        <!--<q-badge rounded color="green" />-->
       </div>
       <!--<div v-for="(score, index) in scoreTeamB" :key="index"></div>-->
       <div class="flex flex-1 justify-end items-center gap-4">

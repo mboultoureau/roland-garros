@@ -1,5 +1,5 @@
 <template>
-  <q-select filled clearable v-model="selectTournament" label="Sélectionnez un tournoi" :options="optionsTournament" :loading="loaderSelect"></q-select>
+  <q-select filled clearable v-model="selectTournament" label="Sélectionnez un tournoi" :options="optionsTournament"></q-select>
 </template>
 <script setup lang="ts">
 import { Tournament } from 'src/models/tournament';
@@ -22,8 +22,6 @@ const optionsTournament = computed(() => {
   }))
   return options
 })
-
-const loaderSelect = computed(() => optionsTournament.value?.length === 0)
 
 const selectTournament = ref(null)
 

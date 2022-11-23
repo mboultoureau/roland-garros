@@ -5,18 +5,21 @@ import {
   storeMock,
 } from 'src/mocks/TournamentMock';
 import { Tournament, TournamentType } from 'src/models/tournament';
+import { api } from 'boot/axios';
 
 export async function fetch() {
   try {
-    const tournaments = await indexMock();
-    return tournaments.payload;
+    const tournaments = await api.get('/tournaments');
+    return tournaments.data;
   } catch (error) {}
 }
 
 export async function show(id: number, type: TournamentType | null) {
   try {
-    const tournament = await showMock(id, type);
-    return tournament.payload;
+    const tournament = await api.get(`/tournaments/${id}`, {
+      params: { type },
+    });
+    return tournament.data;
   } catch (error) {}
 }
 
@@ -28,6 +31,6 @@ export async function destroy(id: number) {
 
 export async function store(tournament: Tournament) {
   try {
-    await storeMock(tournament);
+    await api.post('/tournaments', tournament);
   } catch (error) {}
 }

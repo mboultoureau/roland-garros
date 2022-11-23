@@ -7,6 +7,7 @@ import {
   mockShow,
 } from 'src/mocks/PlayerMock';
 import { api } from 'src/boot/axios';
+import { ErrorNotify } from 'src/helpers/notify';
 
 export async function fetch(filter?: FilterPlayer) {
   try {
@@ -56,7 +57,9 @@ export async function store(player: Person) {
   }
   try {
     await api.post('persons', playerEdit);
-  } catch (error) {}
+  } catch (error) {
+    ErrorNotify();
+  }
 }
 
 export async function destroy(id: number) {
@@ -90,7 +93,9 @@ export async function edit(player: Person) {
   }
   try {
     await api.put(`persons/${player.id}`, playerEdit);
-  } catch (error) {}
+  } catch (error) {
+    ErrorNotify();
+  }
 }
 
 export async function show(id: number) {

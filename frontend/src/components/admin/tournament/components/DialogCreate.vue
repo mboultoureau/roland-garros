@@ -7,7 +7,7 @@
 
         <q-card-section class="flex gap-4">
           <q-select :label="t('tournament.dialog.select.year')" class="flex-1 w-56" filled v-model="newTournament.year" :options="optionsYears"></q-select>
-          <q-select :label="t('tournament.dialog.select.type')" class="flex-1 w-72" filled use-chips v-model="newTournament.types" multiple :options="optionsTournamentTypes"></q-select>
+          <q-select :label="t('tournament.dialog.select.type')" class="flex-1 w-72" filled use-chips v-model="newTournament.types" emit-value map-options multiple :options="optionsTournamentTypes"></q-select>
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary my-4">

@@ -46,7 +46,7 @@ export default {
   'match.round.SECOND_ROUND': '2ème Tour',
   'match.round.THIRD_ROUND': '3ème Tour',
   'match.round.SIXTEENTH_ROUND': '1/8 Finale',
-  'match.round.QUARTER_FINAL': '1/4 Finale',
+  'match.round.QUART_FINAL': '1/4 Finale',
   'match.round.SEMI_FINAL': '1/2 Finale',
   'match.round.FINAL_ROUND': 'Finale',
   'match.status.IN_PROGRESS': 'En cours',

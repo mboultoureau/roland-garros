@@ -1,5 +1,6 @@
 package bzh.ineed.rolandgarros.controller;
 
+import bzh.ineed.rolandgarros.exception.BadRequestException;
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.model.Team;
 import bzh.ineed.rolandgarros.repository.*;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -28,6 +31,9 @@ public class MatchController {
 
     @Autowired
     ScoreRepository scoreRepository;
+
+    @Autowired
+    TrainingRepository trainingRepository;
 
     @GetMapping("/matches")
     public Page<Match> index(
@@ -216,6 +222,39 @@ public class MatchController {
 
                     if (match.getCourtId() != null && courtRepository.existsById(match.getCourtId())) {
                         match.setCourt(courtRepository.findById(match.getCourtId()).get());
+                    }
+
+                    // Check if time slot is free
+                    if (match.getStartDate() != null && match.getDuration() != null) {
+                        List<Match> matches = matchRepository.findAllByStartDateBetween(
+                                match.getStartDate().withHour(0).withMinute(0).withSecond(0),
+                                match.getStartDate().withHour(23).withMinute(59).withSecond(59)
+                        );
+
+                        List<Training> trainings = trainingRepository.findAllByStartDateBetween(
+                                match.getStartDate().withHour(0).withMinute(0).withSecond(0),
+                                match.getStartDate().withHour(23).withMinute(59).withSecond(59)
+                        );
+
+                        // Check if match is in the same time slot
+                        for (Match m : matches) {
+                            if (m.getId().equals(match.getId())) {
+                                continue;
+                            }
+
+                            if (m.getStartDate().isBefore(match.getStartDate().plusMinutes(match.getDuration())) &&
+                                    m.getStartDate().plusMinutes(m.getDuration()).isAfter(match.getStartDate())) {
+                                throw new BadRequestException("Time slot is not free");
+                            }
+                        }
+
+                        // Check if training is in the same time slot
+                        for (Training t : trainings) {
+                            if (t.getStartDate().isBefore(match.getStartDate().plusMinutes(match.getDuration())) &&
+                                    t.getStartDate().plusMinutes(t.getDuration()).isAfter(match.getStartDate())) {
+                                throw new BadRequestException("Time slot is not free");
+                            }
+                        }
                     }
 
                     return matchRepository.save(match);

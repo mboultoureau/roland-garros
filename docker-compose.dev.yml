@@ -11,8 +11,6 @@ services:
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - web
 
   # MySQL
   mysql:
@@ -25,8 +23,6 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=rolandgarros
-    networks:
-      - web
 
   # phpMyAdmin
   phpmyadmin:
@@ -42,10 +38,7 @@ services:
       - PMA_PASSWORD=root
     labels:
       - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
-    networks:
-      - web
 
 networks:
   web:
-    external: true
 

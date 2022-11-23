@@ -1,34 +1,21 @@
 package bzh.ineed.rolandgarros.controller;
 
-import bzh.ineed.rolandgarros.model.Match;
-import bzh.ineed.rolandgarros.model.Tournament;
+import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.repository.TournamentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 // Match
 import bzh.ineed.rolandgarros.model.Match;
-import bzh.ineed.rolandgarros.model.Match;
 import bzh.ineed.rolandgarros.repository.MatchRepository;
 
 // POST
-import java.io.BufferedReader;
-import java.net.HttpURLConnection;
+import javax.validation.Valid;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.ProtocolException;
-import java.net.MalformedURLException;
-import java.io.OutputStreamWriter;
-
-
-import java.net.URI;
 import java.util.*;
 
 
@@ -38,24 +25,65 @@ public class TournamentController {
     @Autowired
     TournamentRepository tournamentRepository;
 
-    @GetMapping("/tournaments")
+    @Autowired
+    MatchRepository matchRepository;
+
+    @GetMapping("/tournaments/{id}")
     public ResponseEntity<?> index(
-            @RequestParam(defaultValue = "0") Integer id,
-            @RequestParam(defaultValue = "0") Integer year,
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "") Integer year,
+            @RequestParam(defaultValue = "") String type,
+            @RequestParam(defaultValue = "") String round,
             @RequestParam(defaultValue = "id,desc") String sortBy[]
     ) {
+        EType eType = null;
+        switch (type) {
+            case "SIMPLE_MEN":
+                eType = EType.SIMPLE_MEN;
+                break;
+            case "SIMPLE_WOMEN":
+                eType = EType.SIMPLE_WOMEN;
+                break;
+            case "DOUBLE_MEN":
+                eType = EType.DOUBLE_MEN;
+                break;
+            case "DOUBLE_WOMEN":
+                eType = EType.DOUBLE_WOMAN;
+                break;
+        }
+        ERound eRound = null;
+        switch (round) {
+            case "FIRST_ROUND":
+                eRound = ERound.FIRST_ROUND;
+                break;
+            case "SECOND_ROUND":
+                eRound = ERound.SECOND_ROUND;
+                break;
+            case "THIRD_ROUND":
+                eRound = ERound.THIRD_ROUND;
+                break;
+            case "SIXTEENTH_ROUND":
+                eRound = ERound.SIXTEENTH_ROUND;
+                break;
+            case "QUART_FINAL":
+                eRound = ERound.QUART_FINAL;
+                break;
+            case "SEMI_FINAL":
+                eRound = ERound.SEMI_FINAL;
+                break;
+            case "FINAL_ROUND":
+                eRound = ERound.FINAL_ROUND;
+                break;
+        }
+        System.out.println(id);
         try{
             Map<String, Object> response = new HashMap<>();
-            if(year!=0){
-                //find by year
-                response.put("year", tournamentRepository.findByYear(year));
-            }
-            else if(id!= 0){
-                //find by id
-                response.put("tournament", tournamentRepository.findAllById(id));
-            }
-            else {
-                response.put("tournament", tournamentRepository.findAll());
+
+            if (id != 0 && type != null && round != null){
+                response.put("payload", matchRepository.findByTournamentIdAndTypeAndRound(id,eType, eRound));
+            } else {
+                System.out.println("all");
+                response.put("warning", "Not all parameters are set");
             }
             response.put("success", true);
 
@@ -75,66 +103,66 @@ public class TournamentController {
         }
     }
 
-    /* FONCTIONNE
-    @PostMapping(
-            value = "/createTournamentWithMatches",
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Tournament> postBody(@RequestBody Tournament tournament) {
-        Tournament persistedTournament = tournamentRepository.save(tournament);
-        return ResponseEntity
-                .created(URI
-                        .create(String.format("/tournaments/%s", tournament.getYear() )))
-                .body(persistedTournament);
-    }*/
 
-    @PostMapping(
-            value = "/createTournamentWithMatches",
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Tournament> postBody(@RequestBody Tournament tournament) throws IOException {
-        int i;
-        Tournament persistedTournament = tournamentRepository.save(tournament);
 
-        // ça pourrait ếtre cool de recup le token pour ne pas avoir à le rentré à chaque fois mais pour l'instant c'est comme ça
-        //tournament.POSTAuthorization();
+    @PostMapping("/tournaments")
+    public List<String> postBody(
+            @RequestBody @Valid TournamentRequest request) throws IOException {
+        int typeSize = request.getTypes().size();
 
-        // Création d'un match
-        tournament.POSTReq(1,0,0,32);
+        int i, j;
+        Tournament tournament = tournamentRepository.save(new Tournament(request.getYear()));
+        for(j=0;j<typeSize;j++){
+            EType type = null;
+            switch (request.getTypes().get(j)) {
+                case "SIMPLE_MEN":
+                    type = EType.SIMPLE_MEN;
+                    break;
+                case "SIMPLE_WOMEN":
+                    type = EType.SIMPLE_WOMEN;
+                    break;
+                case "DOUBLE_MEN":
+                    type = EType.DOUBLE_MEN;
+                    break;
+                case "DOUBLE_WOMEN":
+                    type = EType.DOUBLE_WOMAN;
+                    break;
+            }
 
-        // Création des matchs du tournoi. (Il manquerait de les associers à un tournoi, ainsi que de définir leurs types depuis la POST de création de tournoi).
-        for(i=0;i<63;i++){
-            // FIRST ROUND
-            tournament.POSTReq(2,0,1,101);
-            if(i>=31){
-                // SECOND ROUND
-                tournament.POSTReq(2,1,1,101);
-            }
-            if(i>=47){
-                // THIRD ROUND
-                tournament.POSTReq(2,2,1,101);
-            }
-            if(i>=55){
-                // SIXTEENTH ROUND
-                tournament.POSTReq(2,3,1,101);
-            }
-            if(i>=59){
-                // QUARTER FINAL
-                tournament.POSTReq(2,4,1,101);
-            }
-            if(i>=61){
-                // SEMI FINAL
-                tournament.POSTReq(2,5,1,101);
-            }
-            if(i>=62){
-                // FINAL ROUND
-                tournament.POSTReq(2,6,1,101);
-            }
-        }
+            for(i=0;i<63;i++){
+                // FIRST ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type,"1", tournament));
+                //tournament.POSTReq(status,round,type,courtId);
+                if(i>=31){
+                    // SECOND ROUND
+                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type,"1", tournament));
+                }
+                if(i>=47){
+                    // THIRD ROUND
+                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type,"1", tournament));
 
-        return ResponseEntity
-                .created(URI
-                        .create(String.format("/tournaments/%s", tournament.getYear() )))
-                .body(persistedTournament);
+                }
+                if(i>=55){
+                    // SIXTEENTH ROUND
+                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,"1", tournament));
+                }
+                if(i>=59){
+                    // QUARTER FINAL
+                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,"1", tournament));
+                }
+                if(i>=61){
+                    // SEMI FINAL
+                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,"1", tournament));
+
+                }
+                if(i>=62){
+                    // FINAL ROUND
+                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,"1", tournament));
+
+                }
+            }
+    }
+
+        return request.getTypes();
     }
 }

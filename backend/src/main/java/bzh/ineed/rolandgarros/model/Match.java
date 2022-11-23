@@ -53,6 +53,15 @@ public class Match {
     }
 
     // constructeur temporaire
+
+    public Match(EStatus status, ERound round, EType type, String courtId, Tournament tournament) {
+        this.status = status;
+        this.round = round;
+        this.type = type;
+        CourtId = courtId;
+        this.tournament = tournament;
+    }
+
     public Match(String courtId) {
         CourtId = courtId;
     }

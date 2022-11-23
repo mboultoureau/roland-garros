@@ -62,7 +62,7 @@ public class Tournament {
 
 
     // POST START
-    public void POSTReq(Integer status, Integer round, Integer type, Integer courtId) throws IOException
+    public void POSTReq(Integer status, Integer round, EType type, Integer courtId) throws IOException
     {
         // The message that is going to be sent to the server
         // using the POST request
@@ -82,7 +82,7 @@ public class Tournament {
         String url = "http://localhost:8000/api/createDefaultMatchForTournament";
         URL urlObj = new URL(url);
         HttpURLConnection postCon = (HttpURLConnection) urlObj.openConnection();
-        postCon.setRequestProperty("Authorization","Bearer "+"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5LGFkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2Njg5Mzg0OTYsImV4cCI6MTY2OTAyNDg5Nn0.8Kz7LkN-L1Dy5QIFox7BZWAADh-nyYgDRr4y-s33C9CWc8F6JRUzAWNx1KC-yEUIwcmeXFdcl3qRxu3iHses1w");
+        postCon.setRequestProperty("Authorization","Bearer "+"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMSxhZG1pbiIsImlzcyI6IkNvZGVKYXZhIiwiaWF0IjoxNjY5MTIzMjk5LCJleHAiOjE2NjkyMDk2OTl9.9-e_tbJdyZHjlo0tKZYAQAY1k9vIL3aYS1TpezJkf7zIaalnuBzEW51whFgH9HinSSR4il2fFJn5xIrs8jHAEw");
         postCon.setRequestMethod("POST");
         //postCon.setRequestProperty("userId", "abcdef");
         // Setting the message content type as JSON

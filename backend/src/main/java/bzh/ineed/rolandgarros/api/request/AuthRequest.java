@@ -1,4 +1,4 @@
-package bzh.ineed.rolandgarros.controller;
+package bzh.ineed.rolandgarros.api.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

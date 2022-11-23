@@ -1,10 +1,8 @@
 package bzh.ineed.rolandgarros.configuration;
 
 import bzh.ineed.rolandgarros.model.*;
-import bzh.ineed.rolandgarros.repository.CountryRepository;
-import bzh.ineed.rolandgarros.repository.PersonRepository;
-import bzh.ineed.rolandgarros.repository.RoleRepository;
-import bzh.ineed.rolandgarros.repository.UserRepository;
+import bzh.ineed.rolandgarros.repository.*;
+import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 @Configuration
@@ -24,10 +23,15 @@ public class LoadDatabase {
             CountryRepository countryRepository,
             PersonRepository personRepository,
             RoleRepository roleRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            CourtRepository courtRepository,
+            TrainingRepository trainingRepository
     ) {
         return args -> {
             // DELETE ALL
+            log.info("[TRAINING] Delete all");
+            trainingRepository.deleteAll();
+
             log.info("[PERSON] Delete all");
             personRepository.deleteAll();
 
@@ -39,6 +43,9 @@ public class LoadDatabase {
 
             log.info("[ROLE] Delete all");
             roleRepository.deleteAll();
+
+            log.info("[COURT] Delete all");
+            courtRepository.deleteAll();
 
             // COUNTRIES
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Afghanistan", "AF", "AFG")));
@@ -299,6 +306,21 @@ public class LoadDatabase {
 
             // PERSONS
 
+            // Coachs
+            Person coach1 = new Person("Tomasz", "Wiktorowski");
+            coach1.setGender(EGender.MALE);
+            coach1.setIsCoach(true);
+            coach1.setIsPlayer(false);
+
+            log.info("[PERSON] Preloading " + personRepository.save(coach1));
+
+            Person coach2 = new Person("Issam", "Jellali");
+            coach2.setGender(EGender.MALE);
+            coach2.setIsCoach(true);
+            coach2.setIsPlayer(false);
+
+            log.info("[PERSON] Preloading " + personRepository.save(coach2));
+
             // Womans
             Person playerF1 = new Person("Iga", "Swiatek");
             playerF1.setGender(EGender.FEMALE);
@@ -311,6 +333,7 @@ public class LoadDatabase {
             playerF1.setPicture("https://images.prismic.io/fft-rg-site/1a1fe64f-69f1-429d-a6d2-1be8f110be47_20200308_PJ_SwiatekIga_US.png?auto=compress,format&rect=0,0,1080,1080&w=400&h=400");
             playerF1.setRanking(1);
             playerF1.setNationality(countryRepository.findByName("Poland"));
+            playerF1.setCoach(personRepository.findByFirstnameAndLastname("Tomasz", "Wiktorowski").get());
 
             Person playerF2 = new Person("Ons", "Jabeur");
             playerF2.setGender(EGender.FEMALE);
@@ -323,6 +346,7 @@ public class LoadDatabase {
             playerF2.setPicture("https://images.prismic.io/fft-rg-site/0942c177-cde4-4f29-8c11-5ec5a19df99e_20220427_PJ_JabeurOns_US.PNG?auto=compress,format&rect=0,0,1080,1080&w=400&h=400");
             playerF2.setRanking(2);
             playerF2.setNationality(countryRepository.findByName("Tunisia"));
+            playerF2.setCoach(personRepository.findByFirstnameAndLastname("Issam", "Jellali").get());
 
             Person playerF3 = new Person("Jessica", "Pegula");
             playerF3.setGender(EGender.FEMALE);
@@ -448,6 +472,7 @@ public class LoadDatabase {
             log.info("[PERSON] Preloading " + personRepository.save(playerF8));
             log.info("[PERSON] Preloading " + personRepository.save(playerM1));
             log.info("[PERSON] Preloading " + personRepository.save(playerM2));
+            log.info("[PERSON] Preloading " + personRepository.save(playerM3));
 
             // ROLES
             Role roleUser = new Role(ERole.ROLE_USER);
@@ -482,6 +507,47 @@ public class LoadDatabase {
             log.info("[USER] Preloading " + userRepository.save(adminPlayer));
             log.info("[USER] Preloading " + userRepository.save(adminMatch));
             log.info("[USER] Preloading " + userRepository.save(adminNoRule));
+
+            // COURTS
+
+            Court court1 = new Court("Court Leane");
+            Court court2 = new Court("Court Mathis");
+            Court court3 = new Court("Court Sylvain");
+            Court court4 = new Court("Court Paul");
+
+            log.info("[COURT] Preloading " + courtRepository.save(court1));
+            log.info("[COURT] Preloading " + courtRepository.save(court2));
+            log.info("[COURT] Preloading " + courtRepository.save(court3));
+            log.info("[COURT] Preloading " + courtRepository.save(court4));
+
+            // TRAININGS
+
+            Training training1 = new Training();
+            training1.setDetails("Entrainement du samedi matin");
+            training1.setDuration(2);
+            training1.setStartDate(LocalDateTime.parse("2022-11-26T10:00:00"));
+            training1.setPlayer(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
+            training1.setCourt(courtRepository.findByName("Court Leane").get());
+
+            log.info("[TRAINING] Preloading " + trainingRepository.save(training1));
+
+            Training training2 = new Training();
+            training2.setDetails("Entrainement du samedi midi");
+            training2.setDuration(2);
+            training2.setStartDate(LocalDateTime.parse("2022-11-26T12:00:00"));
+            training2.setPlayer(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            training2.setCourt(courtRepository.findByName("Court Leane").get());
+
+            log.info("[TRAINING] Preloading " + trainingRepository.save(training2));
+
+            Training training3 = new Training();
+            training3.setDetails("Entrainement du lundi soir");
+            training3.setDuration(2);
+            training3.setStartDate(LocalDateTime.parse("2022-11-28T12:00:00"));
+            training3.setPlayer(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            training3.setCourt(courtRepository.findByName("Court Leane").get());
+
+            log.info("[TRAINING] Preloading " + trainingRepository.save(training3));
         };
     }
 

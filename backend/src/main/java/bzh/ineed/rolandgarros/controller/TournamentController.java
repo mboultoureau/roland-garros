@@ -28,8 +28,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 
-
-
+@RestController
+@RequestMapping("/api")
 public class TournamentController {
 
     @Autowired
@@ -116,10 +116,42 @@ public class TournamentController {
         }
     }
 
+    public Tournament createMatches(Tournament tournament, EType type) {
+        for(Integer i = 0; i < 63; i++){
+            // FIRST ROUND
+            matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type, tournament));
+            //tournament.POSTReq(status,round,type,courtId);
+            if(i>=31){
+                // SECOND ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type, tournament));
+            }
+            if(i>=47){
+                // THIRD ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type, tournament));
+            }
+            if(i>=55){
+                // SIXTEENTH ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,tournament));
+            }
+            if(i>=59){
+                // QUARTER FINAL
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,tournament));
+            }
+            if(i>=61){
+                // SEMI FINAL
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,tournament));
+            }
+            if(i>=62){
+                // FINAL ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,tournament));
+            }
+        }
 
+        return tournament;
+    }
 
     @PostMapping("/tournaments")
-    public List<String> postBody(
+    public Tournament postBody(
             @RequestBody @Valid TournamentRequest request) throws IOException {
         int typeSize = request.getTypes().size();
 
@@ -142,41 +174,10 @@ public class TournamentController {
                     break;
             }
 
-            for(i=0;i<63;i++){
-                // FIRST ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type,"1", tournament));
-                //tournament.POSTReq(status,round,type,courtId);
-                if(i>=31){
-                    // SECOND ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type,"1", tournament));
-                }
-                if(i>=47){
-                    // THIRD ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type,"1", tournament));
-
-                }
-                if(i>=55){
-                    // SIXTEENTH ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,"1", tournament));
-                }
-                if(i>=59){
-                    // QUARTER FINAL
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,"1", tournament));
-                }
-                if(i>=61){
-                    // SEMI FINAL
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,"1", tournament));
-
-                }
-                if(i>=62){
-                    // FINAL ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,"1", tournament));
-
-                }
-            }
+            tournament = createMatches(tournament, type);
         }
 
-        return request.getTypes();
+        return tournament;
     }
 
     @GetMapping("/tournaments/{id}/players")

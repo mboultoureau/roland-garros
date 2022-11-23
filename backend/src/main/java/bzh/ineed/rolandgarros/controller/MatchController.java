@@ -2,24 +2,14 @@ package bzh.ineed.rolandgarros.controller;
 
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.model.Team;
-import bzh.ineed.rolandgarros.repository.MatchRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import bzh.ineed.rolandgarros.repository.*;
+import bzh.ineed.rolandgarros.util.ERoundFormat;
+import bzh.ineed.rolandgarros.util.ETypeFormat;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mapping.PropertyReferenceException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import static bzh.ineed.rolandgarros.model.EType.SIMPLE_MEN;
-import static bzh.ineed.rolandgarros.model.EType.SIMPLE_WOMEN;
-import static bzh.ineed.rolandgarros.model.EType.DOUBLE_MEN;
-import static bzh.ineed.rolandgarros.model.EType.DOUBLE_WOMAN;
 
 @RestController
 @RequestMapping("/api")
@@ -27,103 +17,213 @@ public class MatchController {
     @Autowired
     MatchRepository matchRepository;
 
-    @GetMapping("/matchs")
-    public ResponseEntity<?> index(
-            @RequestParam(defaultValue = "") Integer id,
-            // @RequestParam(defaultValue = "null") Tournament tournament,
-            @RequestParam(defaultValue = "") Integer tournamentID,
-            @RequestParam(defaultValue = "") Integer year,
-            @RequestParam(defaultValue = "UNDEFINED") String status,
+    @Autowired
+    PersonRepository personRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Autowired
+    CourtRepository courtRepository;
+
+    @Autowired
+    ScoreRepository scoreRepository;
+
+    @GetMapping("/matches")
+    public Page<Match> index(
+            @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "") String round,
-            @RequestParam(defaultValue = "") String date,
-            @RequestParam(defaultValue = "") String teamAid,
-            @RequestParam(defaultValue = "") String teamBid,
-            @RequestParam(defaultValue = "") String court,
-            @RequestParam(defaultValue = "null") String type,
-            // @RequestParam(defaultValue = "null") EType type,
-            @RequestParam(defaultValue = "id,desc") String sortBy[]
+            @RequestParam(defaultValue = "") String type,
+            @RequestParam(defaultValue = "") Long tournamentId
     ) {
-        //System.out.println("TEST 1");
-        EType eType = null;
-        switch (type) {
-            case "SIMPLE_MEN":
-                eType = EType.SIMPLE_MEN;
-                break;
-            case "SIMPLE_WOMEN":
-                eType = EType.SIMPLE_WOMEN;
-                break;
-            case "DOUBLE_MEN":
-                eType = EType.DOUBLE_MEN;
-                break;
-            case "DOUBLE_WOMEN":
-                eType = EType.DOUBLE_WOMAN;
-                break;
+        EType etype = ETypeFormat.format(type);
+        ERound eround = ERoundFormat.format(round);
+
+        if (etype != null && eround != null && tournamentId != null) {
+            return matchRepository.findByRoundAndTypeAndTournamentId(eround, etype, tournamentId, pageable);
+        } else {
+            return matchRepository.findAll(pageable);
         }
-        ERound eRound = null;
-        switch (round) {
-            case "FIRST_ROUND":
-                eRound = ERound.FIRST_ROUND;
-                break;
-            case "SECOND_ROUND":
-                eRound = ERound.SECOND_ROUND;
-                break;
-            case "THIRD_ROUND":
-                eRound = ERound.THIRD_ROUND;
-                break;
-            case "SIXTEENTH_ROUND":
-                eRound = ERound.SIXTEENTH_ROUND;
-                break;
-            case "QUART_FINAL":
-                eRound = ERound.QUART_FINAL;
-                break;
-            case "SEMI_FINAL":
-                eRound = ERound.SEMI_FINAL;
-                break;
-            case "FINAL_ROUND":
-                eRound = ERound.FINAL_ROUND;
-                break;
+    }
+
+    public Match addTeamA(Match actualMatch, Match newMatch) {
+        Boolean isDouble = actualMatch.getType() != null &&
+                (actualMatch.getType().equals(EType.DOUBLE_MEN) ||
+                actualMatch.getType().equals(EType.DOUBLE_WOMAN) ||
+                actualMatch.getType().equals(EType.MIXED));;
+
+        // Check if all data are correct
+        if (newMatch.getTeamA() == null) {
+            return actualMatch;
         }
 
-        try{
-            Map<String, Object> response = new HashMap<>();
-            System.out.println(type);
-            if(type != null && round != null){
-                // Find match by type and round
-                System.out.println("0");
-                response.put("match", matchRepository.findByTypeAndRound(eType, eRound) );
-            }
-            else if(type != null && id != null){
-                // Find a specific match with type and id
-                System.out.println("2");
-                response.put("match", matchRepository.findByTypeAndId(eType, id));
-            }
-            else if(type != null){
-                // Find all match with type
-                System.out.println("3");
-                response.put("match", matchRepository.findByType(eType));
-            }
-            else {
-                // Find all match
-                System.out.println("4");
-                response.put("match", matchRepository.findAll());
-            }
-            response.put("success", true);
-
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (PropertyReferenceException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("error", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            System.out.println(e.getClass());
-            System.out.println(e.getMessage());
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (newMatch.getTeamA().getPerson1Id() == null || newMatch.getTeamA().getPerson1Id().equals("null")) {
+            return actualMatch;
         }
-        //return new ResponseEntity<>(null, HttpStatus.OK);
+
+        if (isDouble && (newMatch.getTeamA().getPerson2Id() == null || newMatch.getTeamA().getPerson2Id().equals("null"))) {
+            return actualMatch;
+        }
+
+        Long person1Id = Long.parseLong(newMatch.getTeamA().getPerson1Id());
+        Person person1 = null;
+        Person person2 = null;
+
+        if (!personRepository.existsById(person1Id)) {
+            System.out.println("Player1 doesn't exists");
+            return actualMatch;
+        }
+
+        person1 = personRepository.findById(person1Id).get();
+
+        if (isDouble) {
+            Long person2Id = Long.parseLong(newMatch.getTeamA().getPerson2Id());
+            if (!personRepository.existsById(person2Id)) {
+                System.out.println("Player2 doesn't exists");
+                return actualMatch;
+            }
+            person2 = personRepository.findById(person2Id).get();
+        }
+
+        // Remove old team
+        if (actualMatch.getTeamA() != null) {
+            teamRepository.deleteById(actualMatch.getTeamA().getId());
+        }
+
+        // Create new team
+        Team team = new Team();
+        team.setPerson1(person1);
+
+        if (isDouble) {
+            team.setPerson2(person2);
+        }
+
+        teamRepository.save(team);
+        actualMatch.setTeamA(team);
+
+        return actualMatch;
+    }
+
+    public Match updateScores(Match actualMatch, Match newMatch) {
+        if (newMatch.getScores() == null) {
+            return actualMatch;
+        }
+
+        for (Score score : newMatch.getScores()) {
+            if (score.getRound() == null) {
+                continue;
+            }
+
+            if (score.getScoreTeamA() == null) {
+                continue;
+            }
+
+            if (score.getScoreTeamB() == null) {
+                continue;
+            }
+
+            Score actualScore = actualMatch.getScores().stream()
+                    .filter(s -> s.getRound().equals(score.getRound()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (actualScore == null) {
+                actualScore = new Score();
+                actualScore.setRound(score.getRound());
+                actualScore.setMatch(actualMatch);
+                actualMatch.getScores().add(actualScore);
+            }
+
+            actualScore.setScoreTeamA(score.getScoreTeamA());
+            actualScore.setScoreTeamB(score.getScoreTeamB());
+
+            scoreRepository.save(actualScore);
+        }
+
+        return actualMatch;
+    }
+
+    public Match addTeamB(Match actualMatch, Match newMatch) {
+        Boolean isDouble = isDouble = actualMatch.getType() != null &&
+                (actualMatch.getType().equals(EType.DOUBLE_MEN) ||
+                actualMatch.getType().equals(EType.DOUBLE_WOMAN) ||
+                actualMatch.getType().equals(EType.MIXED));;
+
+        // Check if all data are correct
+        if (newMatch.getTeamB() == null) {
+            return actualMatch;
+        }
+
+        if (newMatch.getTeamB().getPerson1Id() == null || newMatch.getTeamB().getPerson1Id().equals("null")) {
+            return actualMatch;
+        }
+
+        if (isDouble && (newMatch.getTeamB().getPerson2Id() == null || newMatch.getTeamB().getPerson2Id().equals("null"))) {
+            return actualMatch;
+        }
+
+        Long person1Id = Long.parseLong(newMatch.getTeamB().getPerson1Id());
+        Person person1 = null;
+        Person person2 = null;
+
+        if (!personRepository.existsById(person1Id)) {
+            System.out.println("Player1 doesn't exists");
+            return actualMatch;
+        }
+
+        person1 = personRepository.findById(person1Id).get();
+
+        if (isDouble) {
+            Long person2Id = Long.parseLong(newMatch.getTeamB().getPerson2Id());
+            if (!personRepository.existsById(person2Id)) {
+                System.out.println("Player2 doesn't exists");
+                return actualMatch;
+            }
+            person2 = personRepository.findById(person2Id).get();
+        }
+
+        // Remove old team
+        if (actualMatch.getTeamB() != null) {
+            teamRepository.delete(actualMatch.getTeamA());
+        }
+
+        // Create new team
+        Team team = new Team();
+        team.setPerson1(person1);
+
+        if (isDouble) {
+            team.setPerson2(person2);
+        }
+
+        teamRepository.save(team);
+        actualMatch.setTeamB(team);
+
+        return actualMatch;
+    }
+
+    @PutMapping("/matches/{id}")
+    Match replace(@RequestBody Match newMatch, @PathVariable Long id) {
+        return matchRepository.findById(id)
+                .map(match -> {
+                    match.setStartDate(newMatch.getStartDate());
+                    match.setDuration(newMatch.getDuration());
+                    match = addTeamA(match, newMatch);
+                    match = addTeamB(match, newMatch);
+                    match.setStatus(newMatch.getStatus());
+                    match.setRound(newMatch.getRound());
+                    match.setType(newMatch.getType());
+                    match = updateScores(match, newMatch);
+
+                    if (match.getCourtId() != null && courtRepository.existsById(match.getCourtId())) {
+                        match.setCourt(courtRepository.findById(match.getCourtId()).get());
+                    }
+
+                    return matchRepository.save(match);
+                })
+                .orElseGet(() -> {
+                    newMatch.setId(id);
+                    return matchRepository.save(newMatch);
+                });
     }
 
 }

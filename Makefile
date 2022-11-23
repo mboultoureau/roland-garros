@@ -11,7 +11,6 @@ stop: ## Stop the project
 	@docker stop back
 	@docker rm front
 	@docker rm back
-	@docker network remove web
 
 install: ## Installs the necessary dependencies 
 	@docker run --rm --workdir /app -v ${CURDIR}/frontend:/app -it node:18-alpine sh -c "npm install"

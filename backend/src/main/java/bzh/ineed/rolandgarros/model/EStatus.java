@@ -4,5 +4,5 @@ public enum EStatus {
     IN_PROGRESS,
     PLANNED,
     UNDEFINED,
-    FINISH
+    FINISHED
 }

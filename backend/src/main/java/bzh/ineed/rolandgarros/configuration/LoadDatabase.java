@@ -1,5 +1,6 @@
 package bzh.ineed.rolandgarros.configuration;
 
+import bzh.ineed.rolandgarros.controller.TournamentController;
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.repository.*;
 
@@ -27,15 +28,23 @@ public class LoadDatabase {
             CourtRepository courtRepository,
             TrainingRepository trainingRepository,
             TournamentRepository tournamentRepository,
-            MatchRepository matchRepository
+            MatchRepository matchRepository,
+            TeamRepository teamRepository,
+            ScoreRepository scoreRepository
     ) {
         return args -> {
             // DELETE ALL
+            log.info("[SCORE] Delete all");
+            scoreRepository.deleteAll();
+
             log.info("[TRAINING] Delete all");
             trainingRepository.deleteAll();
-            // DELETE ALL
+
             log.info("[MATCH] Delete all");
             matchRepository.deleteAll();
+
+            log.info("[TEAM] Delete all");
+            teamRepository.deleteAll();
 
             log.info("[TOURNAMENT] Delete all");
             tournamentRepository.deleteAll();
@@ -556,6 +565,60 @@ public class LoadDatabase {
             training3.setCourt(courtRepository.findByName("Court Leane").get());
 
             log.info("[TRAINING] Preloading " + trainingRepository.save(training3));
+
+            // TOURNAMENTS
+            TournamentController tournamentController = new TournamentController();
+
+            Tournament tournament1 = new Tournament();
+            tournament1.setYear(2022);
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(tournament1));
+
+            // Create matches
+            Match finalMatch = new Match(EStatus.UNDEFINED, ERound.FINAL_ROUND, EType.SIMPLE_MEN, tournament1);
+            log.info("[MATCH] Preloading " + matchRepository.save(finalMatch));
+
+            for (Integer i = 0; i < 2; i++) {
+                Match semiMatch = new Match(EStatus.UNDEFINED, ERound.SEMI_FINAL, EType.SIMPLE_MEN, tournament1);
+                log.info("[MATCH] Preloading " + matchRepository.save(semiMatch));
+            }
+
+            for (Integer i = 0; i < 4; i++) {
+                Match quartMatch = new Match(EStatus.UNDEFINED, ERound.QUART_FINAL, EType.SIMPLE_MEN, tournament1);
+                log.info("[MATCH] Preloading " + matchRepository.save(quartMatch));
+            }
+
+            for (Integer i = 0; i < 8; i++) {
+                Match sixteenthMatch = new Match(EStatus.UNDEFINED, ERound.SIXTEENTH_ROUND, EType.SIMPLE_MEN, tournament1);
+                log.info("[MATCH] Preloading " + matchRepository.save(sixteenthMatch));
+            }
+
+            for (Integer i = 0; i < 16; i++) {
+                Match thirdMatch = new Match(EStatus.UNDEFINED, ERound.THIRD_ROUND, EType.SIMPLE_MEN, tournament1);
+                log.info("[MATCH] Preloading " + matchRepository.save(thirdMatch));
+            }
+
+            for (Integer i = 0; i < 32; i++) {
+                Match secondMatch = new Match(EStatus.UNDEFINED, ERound.SECOND_ROUND, EType.SIMPLE_MEN, tournament1);
+                log.info("[MATCH] Preloading " + matchRepository.save(secondMatch));
+            }
+
+            for (Integer i = 0; i < 64; i++) {
+                Match firstMatch = new Match(EStatus.UNDEFINED, ERound.FIRST_ROUND, EType.SIMPLE_MEN, tournament1);
+                log.info("[MATCH] Preloading " + matchRepository.save(firstMatch));
+            }
+
+            finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_MEN, ERound.FINAL_ROUND).get(0);
+            Team teamA = new Team();
+            teamA.setPerson1(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
+
+
+            Team teamB = new Team();
+            teamB.setPerson1(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+
+
+
+            finalMatch.setTeamA(teamA);
+            finalMatch.setTeamB(teamB);
         };
     }
 

@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:9000")
 public class PersonController {
 
     @Autowired

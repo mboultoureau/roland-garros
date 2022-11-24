@@ -19,6 +19,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     Page<Match> findByRoundAndTypeAndTournamentId(ERound round, EType type, Long tournamentId, Pageable pageable);
     List<Match> findByTournament(Tournament tournament);
 
+    List<Match> findByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
+
     //@Query("SELECT m FROM Match m WHERE m.tournament = ?1")
     @Query("SELECT DISTINCT m.type FROM Match m WHERE m.tournament = ?1")
     Collection<String> findAllTypes(Tournament id);

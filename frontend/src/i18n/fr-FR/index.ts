@@ -79,6 +79,8 @@ export default {
   'admin.player.create.gender.FEMALE': 'Femme',
   'admin.player.create.gender.OTHER': 'Autre',
   'admin.player.create.gender.AT_AT': 'At-at',
+  'admin.player.new.btn.import': 'Import CSV',
+  'admin.player.new.import.title': 'Importer des Joueurs',
   'admin.index.btn.players': 'Gérer Joueurs',
   'admin.index.btn.tournaments': 'Gérer Tournois',
   'admin.role.ROLE_ADMIN': 'Admin',

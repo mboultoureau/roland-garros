@@ -86,12 +86,7 @@ public class UserController {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not find user " + id));
 
-        user.setEmail(newUser.getEmail());
         user.setUsername(newUser.getUsername());
-
-        // Encode password
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         // Person
         if (newUser.getPersonId() != null && personRepository.existsById(newUser.getPersonId())) {

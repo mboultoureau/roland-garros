@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { LocalStorage } from 'quasar';
 import { Roles, User } from 'src/models/user';
-import { fetch, fetchRole, editU } from 'src/services/user';
+import { fetch, fetchRole, editU, deleteU } from 'src/services/user';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -23,6 +23,9 @@ export const useUserStore = defineStore('user', {
     },
     async fetchRole() {
       this.listRole = await fetchRole();
+    },
+    async delete(id: number) {
+      await deleteU(id);
     },
     async edit(user: User) {
       await editU(user);

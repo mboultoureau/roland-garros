@@ -20,3 +20,9 @@ export async function editU(user: User) {
     await api.put(`/users/${user.id}`, user);
   } catch (error) {}
 }
+
+export async function deleteU(id: number) {
+  try {
+    await api.delete(`users/${id}`);
+  } catch (error) {}
+}

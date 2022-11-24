@@ -1,6 +1,5 @@
 package bzh.ineed.rolandgarros.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -17,8 +16,10 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
+
     @Enumerated(EnumType.STRING)
     private EStatus status;
+
     @Enumerated(EnumType.STRING)
     private ERound round;
 

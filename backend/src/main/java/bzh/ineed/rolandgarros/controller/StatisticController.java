@@ -30,6 +30,7 @@ public class StatisticController {
                 "INNER JOIN teams ON persons.id = teams.persona_id OR persons.id = teams.personb_id\n" +
                 "INNER JOIN matches ON teams.id = matches.winner_id\n" +
                 "INNER JOIN countries ON persons.nationality_id = countries.id\n" +
+                "WHERE persons.is_player = TRUE\n" +
                 "GROUP BY persons.id\n" +
                 "ORDER BY victories DESC\n" +
                 "LIMIT 10;", (rs, rowNum) -> {
@@ -54,6 +55,7 @@ public class StatisticController {
                 "INNER JOIN teams ON teams.persona_id = persons.id OR teams.personb_id = persons.id\n" +
                 "INNER JOIN matches ON teams.id = matches.teama_id OR teams.id = matches.teamb_id\n" +
                 "INNER JOIN countries ON countries.id = persons.nationality_id\n" +
+                "WHERE persons.is_player = TRUE\n" +
                 "GROUP BY persons.id\n" +
                 "ORDER BY duration DESC\n" +
                 "LIMIT 10;", (rs, rowNum) -> {

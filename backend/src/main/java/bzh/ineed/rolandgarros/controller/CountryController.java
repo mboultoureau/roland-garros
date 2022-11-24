@@ -1,15 +1,10 @@
 package bzh.ineed.rolandgarros.controller;
 
-import bzh.ineed.rolandgarros.exception.NotFoundException;
 import bzh.ineed.rolandgarros.model.Country;
-import bzh.ineed.rolandgarros.model.EGender;
-import bzh.ineed.rolandgarros.model.Person;
 import bzh.ineed.rolandgarros.repository.CountryRepository;
-import bzh.ineed.rolandgarros.repository.PersonRepository;
-import org.springdoc.core.annotations.ParameterObject;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +17,8 @@ public class CountryController {
     CountryRepository countryRepository;
 
     @GetMapping("/countries")
+    @Tag(name = "Countries", description = "List of countries with codes for obtaining flags")
+    @Operation(description = "The complete list of country names and their alpha codes")
     public List<Country> countries() {
         return countryRepository.findAll();
     }

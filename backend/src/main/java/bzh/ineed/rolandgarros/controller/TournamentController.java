@@ -1,15 +1,16 @@
 package bzh.ineed.rolandgarros.controller;
 
-import bzh.ineed.rolandgarros.exception.BadRequestException;
 import bzh.ineed.rolandgarros.model.EType;
 import bzh.ineed.rolandgarros.model.Person;
 import bzh.ineed.rolandgarros.repository.PersonRepository;
 
 import bzh.ineed.rolandgarros.util.ERoundFormat;
+import bzh.ineed.rolandgarros.util.ETypeFormat;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,9 @@ public class TournamentController {
 
     @Autowired
     MatchRepository matchRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @GetMapping("/tournaments")
     public ResponseEntity<?> index(@ParameterObject Pageable pageable) {
@@ -79,40 +83,6 @@ public class TournamentController {
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    public Tournament createMatches(Tournament tournament, EType type) {
-        for (Integer i = 0; i < 63; i++) {
-            // FIRST ROUND
-            matchRepository.save(new Match(EStatus.UNDEFINED, ERound.FIRST_ROUND, type, tournament));
-            //tournament.POSTReq(status,round,type,courtId);
-            if (i >= 31) {
-                // SECOND ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.SECOND_ROUND, type, tournament));
-            }
-            if (i >= 47) {
-                // THIRD ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.THIRD_ROUND, type, tournament));
-            }
-            if (i >= 55) {
-                // SIXTEENTH ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.SIXTEENTH_ROUND, type, tournament));
-            }
-            if (i >= 59) {
-                // QUARTER FINAL
-                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.QUART_FINAL, type, tournament));
-            }
-            if (i >= 61) {
-                // SEMI FINAL
-                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.SEMI_FINAL, type, tournament));
-            }
-            if (i >= 62) {
-                // FINAL ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.FINAL_ROUND, type, tournament));
-            }
-        }
-
-        return tournament;
     }
 
     @GetMapping("/tournament/{id}")
@@ -217,36 +187,16 @@ public class TournamentController {
     }
 
     @GetMapping("/tournaments/{id}/players")
-    public Page<Person> players(
+    public List<Person> players(
             @PathVariable Long id,
-            @ParameterObject Pageable pageable,
             @RequestParam(defaultValue = "") String type
     ) {
-        EType etype = null;
-        if (type.equals("")) {
-            etype = null;
-        } else if (type.equals("SIMPLE_MEN")) {
-            etype = EType.SIMPLE_MEN;
-        } else if (type.equals("SIMPLE_WOMEN")) {
-            etype = EType.SIMPLE_WOMEN;
-        } else if (type.equals("DOUBLE_MEN")) {
-            etype = EType.DOUBLE_MEN;
-        } else if (type.equals("DOUBLE_WOMAN")) {
-            etype = EType.DOUBLE_WOMAN;
-        } else if (type.equals("MIXED")) {
-            etype = EType.MIXED;
-        } else {
-            throw new BadRequestException("Type " + type + " is not valid");
-        }
+        EType etype = ETypeFormat.format(type);
 
         if (etype == null) {
-            //return personRepository.findByTournamentId(id, pageable);
+            return personRepository.findByTournamentId(id);
         } else {
-            //return personRepository.findByTournamentIdAndType(id, etype, pageable);
+            return personRepository.findByTournamentIdAndType(id, etype);
         }
-        return null;
     }
-
-    ;
-
 }

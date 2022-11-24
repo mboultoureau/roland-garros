@@ -150,7 +150,7 @@ public class MatchController {
     }
 
     public Match addTeamB(Match actualMatch, Match newMatch) {
-        Boolean isDouble = isDouble = actualMatch.getType() != null &&
+        Boolean isDouble = actualMatch.getType() != null &&
                 (actualMatch.getType().equals(EType.DOUBLE_MEN) ||
                 actualMatch.getType().equals(EType.DOUBLE_WOMAN) ||
                 actualMatch.getType().equals(EType.MIXED));;

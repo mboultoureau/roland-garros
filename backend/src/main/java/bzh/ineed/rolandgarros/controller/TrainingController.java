@@ -54,7 +54,7 @@ public class TrainingController {
             }
         }
 
-        List<Match> matches = matchRepository.findByCourtAndStartDateBetween(
+        List<Match> matches = matchRepository.findAllByCourtAndStartDateBetween(
                 court,
                 startDate.withHour(0).withMinute(0).withSecond(0),
                 startDate.withHour(23).withMinute(59).withSecond(59)

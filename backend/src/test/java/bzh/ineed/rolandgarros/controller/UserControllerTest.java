@@ -14,21 +14,21 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CountryControllerTest {
+public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testCountryController() throws Exception {
-        mockMvc.perform(get("/api/countries"))
+    public void testUserController() throws Exception {
+        mockMvc.perform(get("/api/users"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(243)))
-                .andExpect(jsonPath("$[0].name", is("Afghanistan")))
-                .andExpect(jsonPath("$[0].alpha2Code", is("AF")))
-                .andExpect(jsonPath("$[0].alpha3Code", is("AFG")))
-                .andExpect(jsonPath("$[198].name", is("Slovenia")))
-                .andExpect(jsonPath("$[198].alpha2Code", is("SI")))
-                .andExpect(jsonPath("$[198].alpha3Code", is("SVN")));
+                .andExpect(jsonPath("$", hasSize(4)))
+                .andExpect(jsonPath("$[0].username", is("admin")))
+                .andExpect(jsonPath("$[0].email", is("admin@email.com")))
+                .andExpect(jsonPath("$[0].roles", hasSize(1)))
+                .andExpect(jsonPath("$[0].roles[0].name", is("ROLE_ADMIN")));
     }
+
 }
+

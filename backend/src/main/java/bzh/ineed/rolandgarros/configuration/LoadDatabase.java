@@ -91,7 +91,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Benin", "BJ", "BEN")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bermuda", "BM", "BMU")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bhutan", "BT", "BTN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bolivia", "Plurinational State of", "BO")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bolivia", "BO", "BOL")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bosnia and Herzegovina", "BA", "BIH")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Botswana", "BW", "BWA")));
@@ -117,7 +116,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Colombia", "CO", "COL")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Comoros", "KM", "COM")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Congo", "CG", "COG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Congo", "the Democratic Republic of the", "CD")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cook Islands", "CK", "COK")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Costa Rica", "CR", "CRI")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Côte d'Ivoire", "CI", "CIV")));
@@ -170,7 +168,7 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iceland", "IS", "ISL")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("India", "IN", "IND")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Indonesia", "ID", "IDN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iran", "Islamic Republic of", "IR")));
+            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iran", "IR", "IRA")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iraq", "IQ", "IRQ")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ireland", "IE", "IRL")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Isle of Man", "IM", "IMN")));
@@ -183,8 +181,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kazakhstan", "KZ", "KAZ")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kenya", "KE", "KEN")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kiribati", "KI", "KIR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Korea", "Democratic People's Republic of", "KP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Korea", "Republic of", "KR")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("South Korea", "KR", "KOR")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kuwait", "KW", "KWT")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kyrgyzstan", "KG", "KGZ")));
@@ -199,7 +195,7 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Lithuania", "LT", "LTU")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Luxembourg", "LU", "LUX")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Macao", "MO", "MAC")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Macedonia", "the former Yugoslav Republic of", "MK")));
+            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Macedonia", "MK", "MKD")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Madagascar", "MG", "MDG")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Malawi", "MW", "MWI")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Malaysia", "MY", "MYS")));
@@ -212,8 +208,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mauritius", "MU", "MUS")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mayotte", "YT", "MYT")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mexico", "MX", "MEX")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Micronesia", "Federated States of", "FM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Moldova", "Republic of", "MD")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Monaco", "MC", "MCO")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mongolia", "MN", "MNG")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Montenegro", "ME", "MNE")));
@@ -239,7 +233,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Oman", "OM", "OMN")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Pakistan", "PK", "PAK")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Palau", "PW", "PLW")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Palestinian Territory", "Occupied", "PS")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Panama", "PA", "PAN")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Papua New Guinea", "PG", "PNG")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Paraguay", "PY", "PRY")));
@@ -255,7 +248,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Russian Federation", "RU", "RUS")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Russia", "RU", "RUS")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Rwanda", "RW", "RWA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Helena", "Ascension and Tristan da Cunha", "SH")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Kitts and Nevis", "KN", "KNA")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Lucia", "LC", "LCA")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Pierre and Miquelon", "PM", "SPM")));
@@ -287,10 +279,8 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Sweden", "SE", "SWE")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Switzerland", "CH", "CHE")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Syrian Arab Republic", "SY", "SYR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Taiwan", "Province of China", "TW")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Taiwan", "TW", "TWN")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tajikistan", "TJ", "TJK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tanzania", "United Republic of", "TZ")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Thailand", "TH", "THA")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Timor-Leste", "TL", "TLS")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Togo", "TG", "TGO")));
@@ -314,8 +304,6 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Venezuela", "VE", "VEN")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Viet Nam", "VN", "VNM")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Vietnam", "VN", "VNM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Virgin Islands", "British", "VG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Virgin Islands", "U.S.", "VI")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Wallis and Futuna", "WF", "WLF")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Western Sahara", "EH", "ESH")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Yemen", "YE", "YEM")));

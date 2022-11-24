@@ -6,7 +6,9 @@ import bzh.ineed.rolandgarros.repository.CountryRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.hibernate.validator.internal.constraintvalidators.hv.URLValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -25,6 +27,8 @@ public class CSVPlayerUtil {
 
     public static List<Person> csvToPlayers(InputStream is, CountryRepository countryRepository) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
+            URLValidator urlValidator = new URLValidator();
+
             CSVFormat csvFormat = CSVFormat.DEFAULT
                     .builder()
                     .setSkipHeaderRecord(true)
@@ -34,9 +38,7 @@ public class CSVPlayerUtil {
                     .build();
 
             CSVParser csvParser = new CSVParser(fileReader, csvFormat);
-
             List<Person> players = new ArrayList<Person>();
-
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
             for (CSVRecord csvRecord : csvRecords) {

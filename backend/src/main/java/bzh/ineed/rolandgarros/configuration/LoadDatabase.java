@@ -49,14 +49,14 @@ public class LoadDatabase {
             log.info("[TOURNAMENT] Delete all");
             tournamentRepository.deleteAll();
 
+            log.info("[USER] Delete all");
+            userRepository.deleteAll();
+
             log.info("[PERSON] Delete all");
             personRepository.deleteAll();
 
             log.info("[COUNTRY] Delete all");
             countryRepository.deleteAll();
-
-            log.info("[USER] Delete all");
-            userRepository.deleteAll();
 
             log.info("[ROLE] Delete all");
             roleRepository.deleteAll();

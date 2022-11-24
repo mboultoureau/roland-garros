@@ -134,7 +134,7 @@ public class TournamentController {
                 }else{
                     tournamentResponse.put("id", t.getId());
                     tournamentResponse.put("year", t.getYear());
-                    tournamentResponse.put("types",matchRepository.findAllTypes(t));
+                    // tournamentResponse.put("types",matchRepository.findAllTypes(t));
                     response.add(tournamentResponse);
                 }
             }
@@ -170,7 +170,7 @@ public class TournamentController {
                 Map<String, Object> tournamentResponse = new HashMap<>();
                 tournamentResponse.put("id", t.getId());
                 tournamentResponse.put("year", t.getYear());
-                tournamentResponse.put("types",matchRepository.findAllTypes(t));
+                // tournamentResponse.put("types",matchRepository.findAllTypes(t));
                 response.add(tournamentResponse);
             }
             return new ResponseEntity<>(response, HttpStatus.OK);

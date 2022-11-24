@@ -1,5 +1,6 @@
 package bzh.ineed.rolandgarros.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,10 +34,14 @@ public class User implements UserDetails {
 
     @NotBlank
     @Size(max = 120)
+    @JsonIgnore
     private String password;
 
     @OneToOne
     private Person person;
+
+    @Transient
+    private Long personId;
 
     @ManyToMany
     private Set<Role> roles;
@@ -114,6 +119,14 @@ public class User implements UserDetails {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     public Set<Role> getRoles() {

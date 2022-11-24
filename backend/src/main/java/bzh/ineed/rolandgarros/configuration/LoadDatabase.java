@@ -610,15 +610,17 @@ public class LoadDatabase {
             finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_MEN, ERound.FINAL_ROUND).get(0);
             Team teamA = new Team();
             teamA.setPersonA(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
-
+            teamA = teamRepository.save(teamA);
 
             Team teamB = new Team();
             teamB.setPersonA(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            teamB = teamRepository.save(teamB);
 
-
-
+            finalMatch.setWinner(teamA);
             finalMatch.setTeamA(teamA);
             finalMatch.setTeamB(teamB);
+
+            matchRepository.save(finalMatch);
         };
     }
 

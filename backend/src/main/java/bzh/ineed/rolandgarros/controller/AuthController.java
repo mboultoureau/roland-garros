@@ -1,6 +1,5 @@
 package bzh.ineed.rolandgarros.controller;
 
-import bzh.ineed.rolandgarros.api.request.AuthRequest;
 import bzh.ineed.rolandgarros.model.Role;
 import bzh.ineed.rolandgarros.model.User;
 import bzh.ineed.rolandgarros.security.JwtTokenUtil;

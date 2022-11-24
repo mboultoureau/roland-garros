@@ -46,6 +46,9 @@ public class Match {
     @JsonIgnoreProperties("match")
     private Set<Score> scores;
 
+    @ManyToOne
+    private Team winner;
+
     public Match() {
     }
 
@@ -150,6 +153,14 @@ public class Match {
 
     public void setScores(Set<Score> scores) {
         this.scores = scores;
+    }
+
+    public Team getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Team winner) {
+        this.winner = winner;
     }
 
     @Override

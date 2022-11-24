@@ -1,11 +1,6 @@
 <template>
-  <NewPlayerForm></NewPlayerForm>
+  <NewPlayer></NewPlayer>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import NewPlayerForm from '../../../components/admin/player/NewPlayerForm.vue';
-export default defineComponent({
-    components: { NewPlayerForm }
-})
+<script lang="ts" setup>
+import NewPlayer from 'src/components/admin/player/NewPlayer.vue';
 </script>

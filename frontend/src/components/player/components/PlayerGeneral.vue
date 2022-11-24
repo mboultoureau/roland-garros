@@ -4,7 +4,7 @@
       <div class="title-personnel font-bold text-2xl flex items-center mb-8"><FourCercle />{{ t('player.show.fiche.perso') }}</div>
       <div class="title-pro font-bold text-2xl flex items-center mb-8"><FourCercle /> {{ t('player.show.fiche.pro') }}</div>
       <div class="age px-4 pb-4">
-        <div>{{ t('player.show.age') }}</div>
+        <div>{{ t('player.show.birthday') }}</div>
         <div class="font-bold">{{ player?.birthDate }}</div>
       </div>
       <div class="height px-4">

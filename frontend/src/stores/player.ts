@@ -7,6 +7,7 @@ import {
   destroy,
   show,
   fetchCoach,
+  fetchAll,
 } from 'src/services/player';
 
 export const usePlayerStore = defineStore('player', {
@@ -20,6 +21,9 @@ export const usePlayerStore = defineStore('player', {
       state.listPlayer.find((player: Person) => player.id === id),
   },
   actions: {
+    async fetchAll() {
+      return await fetchAll();
+    },
     async fetch(filter?: FilterPlayer) {
       const response = await fetch(filter);
       this.listPlayer = response.content;

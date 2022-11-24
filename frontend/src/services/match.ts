@@ -20,7 +20,7 @@ export async function show(id: string | number) {
 
 export async function edit(matchEdit: MatchEditFilter) {
   try {
-    const response = await editMock(matchEdit);
-    return response.success;
+    const response = await api.put(`/matches/${matchEdit.matchId}`, matchEdit);
+    return response;
   } catch (error) {}
 }

@@ -36,12 +36,13 @@ import MatchDoubleCard from 'src/components/match/components/MatchDoubleCard.vue
 
 const props = defineProps<{
   matchFiltre: MatchFilter,
-  type: string
+  type: string,
 }>()
 
 const { t } = useI18n()
 
 const matchStore = useMatchStore()
+
 const router = useRouter()
 
 const listMatch = computed(() => matchStore.listMatch)
@@ -51,7 +52,7 @@ const isSimpleMatch = computed(() => props.type === 'MatchCard')
 
 const tournamentSelect = ref()
 
-const handleShowMatch = (match: Match) => router.push({ name: 'show-match', params: { idT: tournamentSelect.value?.id, idM: match.id }})
+const handleShowMatch = (match: Match) => router.push({ name: 'show-match', params: { idT: match?.tournament?.id, idM: match.id }})
 
 const getNextOrPreviousRound = (round: Round): Round => {
   switch(round) {

@@ -2,7 +2,7 @@ import { Match } from './match';
 
 export enum TournamentType {
   SIMPLE_MEN = 'SIMPLE_MEN',
-  SIMPLE_WOMAN = 'SIMPLE_WOMAN',
+  SIMPLE_WOMEN = 'SIMPLE_WOMEN',
   DOUBLE_MEN = 'DOUBLE_MEN',
   DOUBLE_WOMAN = 'DOUBLE_WOMAN',
   MIXED = 'MIXED',
@@ -13,7 +13,7 @@ export const optionsTournamentTypes = [
     value: TournamentType.SIMPLE_MEN,
   },
   {
-    value: TournamentType.SIMPLE_WOMAN,
+    value: TournamentType.SIMPLE_WOMEN,
   },
   {
     value: TournamentType.DOUBLE_MEN,

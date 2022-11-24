@@ -4,6 +4,8 @@
       <q-toolbar class="bg-white">
         <q-toolbar-title>
           <img
+            style="cursor: pointer;"
+            @click="handleHome"
             class="w-20 my-2"
             src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Logo_Roland-Garros.svg/350px-Logo_Roland-Garros.svg.png?20120514221714"
           />
@@ -113,6 +115,7 @@ const handleLogout = () => {
   userStore.logout()
   router.push({path: '/'})
 }
+const handleHome = () => router.push({path: '/'})
 const handleCourt = () => router.push({path: '/court'})
 const handleAdminPage = (role: Roles) => {
   switch(role) {

@@ -71,6 +71,8 @@ export default {
   'tournament.edit.match.select.date': 'Sélectionner Date',
   'tournament.edit.match.select.time': 'Sélectionner Heure',
   'tournament.edit.match.select.court': 'Sélectionner Court',
+  'tournament.index.btn.players': 'Liste des Joueurs',
+  'tournament.index.btn.tournaments': 'Liste des Matchs',
   'admin.player.index.title': 'Administration Joueur',
   'admin.player.create.title': 'Création Joueur',
   'admin.player.create.gender.MALE': 'Homme',

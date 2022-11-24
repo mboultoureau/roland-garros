@@ -1,9 +1,6 @@
 package bzh.ineed.rolandgarros.repository;
 
-import bzh.ineed.rolandgarros.model.Court;
-import bzh.ineed.rolandgarros.model.ERound;
-import bzh.ineed.rolandgarros.model.EType;
-import bzh.ineed.rolandgarros.model.Match;
+import bzh.ineed.rolandgarros.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +17,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findAllByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
 
     Page<Match> findByRoundAndTypeAndTournamentId(ERound round, EType type, Long tournamentId, Pageable pageable);
+
+    @Query("SELECT DISTINCT m.type FROM Match m WHERE m.tournament = ?1")
+    Collection<String> findAllTypes(Tournament id);
 }

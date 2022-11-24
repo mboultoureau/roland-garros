@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-gray-100 p-8 rounded-md">
+  <div class="bg-gray-100 p-8 rounded-md mb-8">
     <div class="flex items-center">
       <FourCercle />
       <div class="m-auto text-2xl font-bold">{{ title }}</div>
       <slot name="btn"></slot>
     </div>
-    <slot></slot>
+    <slot class="mt-8"></slot>
   </div>
 </template>
 <script lang="ts">

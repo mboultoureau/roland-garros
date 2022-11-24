@@ -7,7 +7,7 @@ export async function fetch(filter: MatchFilter) {
     const matchs = await api.get(`/tournaments/${filter.tournamentId}`, {
       params: filter,
     });
-    return matchs.data.payload;
+    return matchs.data.matches;
   } catch (error) {}
 }
 

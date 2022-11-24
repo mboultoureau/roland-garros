@@ -71,7 +71,7 @@
           <div class="mx-24 text-center text-white my-3">
             <b>Retrouvez-nous et prolongez l'expérience !</b> <br />
             <p class="text-sm">
-              Mentions légales et conditions générales d'utilisation
+              <a href="https://www.rolandgarros.com/fr-fr/page/cgu">Mentions légales et Conditions Générales d'Utilisation</a>
             </p>
           </div>
           <div class="mx-24">

@@ -1,63 +1,58 @@
 <template>
-  <div class="header px-4 py-8 mb-8 bg-gray-100 rounded-md">
-    <div class="flex items-center text-xl font-bold mb-4"><FourCercle />
-      {{ t('tournament.index.title') }}
-    </div>
-    <div class="flex gap-4">
-      <FilterByYears class="flex-1" :tournaments="listTournament" @handle-select-tournament="handleSelectTournament"/>
-      <FilterByType class="flex-1" :tournament="tournamentSelect" @handle-select-type="handleSelectType"/>
-    </div>
-  </div>
-  <ScoreboardNavigation @handle-select-round="handleSelectRound"/>
-  <div class="flex justify-around gap-16" :class="{'flex-row-reverse': matchFiltre.round === Round.FINAL_ROUND}">
-    <div class="flex flex-col">
-      <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${matchFiltre.round}`) }}</div>
-      <div class="flex flex-1 flex-col justify-center items-center">
-        <component :is="matchComponent" v-for="match in listMatch" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
+  <HeaderC :title="t('tournament.index.title')">
+    <template v-slot:btn>
+      <q-btn color="primary" @click="handlePlayerTournaments">{{ t(`tournament.index.btn.${btnTitle}`) }}</q-btn>    
+    </template>
+    <template v-slot:default>
+      <div class="flex gap-4 mt-8">
+        <FilterByYears class="flex-1" :tournaments="listTournament" @handle-select-tournament="handleSelectTournament"/>
+        <FilterByType class="flex-1" :tournament="tournamentSelect" @handle-select-type="handleSelectType"/>
       </div>
-    </div>
-    <div class="flex flex-col">
-      <div class="flex text-2xl text-gray-300 my-8 items-center justify-center" v-if="matchFiltre?.round"><FourCercle />{{ t(`match.round.${getNextOrPreviousRound(matchFiltre.round)}`) }}</div>
-      <div class="flex flex-1 flex-col justify-around">
-        <component :is="matchComponent" v-for="match in listMatchNextOrPrevious" :key="match.id" :match="match" @click="handleShowMatch(match)" class="cursor-pointer"/>
-      </div>
-    </div> 
-  </div>
+    </template>
+  </HeaderC>
+  <q-tab-panels v-model="btnTitle" animated>
+    <q-tab-panel name="tournaments">
+      <TabListPlayer v-model:current-tab="currentTab"></TabListPlayer>
+    </q-tab-panel>
+    <q-tab-panel name="players">
+      <ScoreboardNavigation @handle-select-round="handleSelectRound"/>
+      <ListMatchTournament :match-filtre="matchFiltre" :type="matchComponent"></ListMatchTournament>
+    </q-tab-panel>
+  </q-tab-panels>
+  
   <Loader v-model:show="showLoader" />
 </template>
 <script lang="ts">
-import { Match, MatchFilter } from 'src/models/match';
+export default {
+  name: 'IndexMatch',
+}
+</script>
+<script setup lang="ts">
+import { MatchFilter } from 'src/models/match';
 import { Round, Tournament, TournamentType } from 'src/models/tournament';
 import { useMatchStore } from 'src/stores/match';
 import { useTournamentStore } from 'src/stores/tournament';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import FourCercle from '../shared/FourCercle.vue';
 import FilterByType from './components/FilterByType.vue';
 import FilterByYears from './components/FilterByYears.vue';
-import MatchCard from '../match/components/MatchCard.vue';
-import MatchDoubleCard from '../match/components/MatchDoubleCard.vue';
-import ScoreboardNavigation from './components/ScoreboardNavigation.vue';
-import { useRouter } from 'vue-router';
 import Loader from '../shared/Loader.vue';
+import HeaderC from '../shared/Header.vue';
+import ListMatchTournament from './components/ListMatchTournament.vue';
+import ScoreboardNavigation from './components/ScoreboardNavigation.vue'
+import TabListPlayer from '../player/components/TabListPlayer.vue';
+import { Gender } from 'src/models/person';
 
-export default {
-    name: 'IndexMatch',
-    components: { ScoreboardNavigation, MatchCard, MatchDoubleCard, FilterByYears, FourCercle, FilterByType, Loader }
-}
-</script>
-<script setup lang="ts">
+
 const { t } = useI18n()
 
 const tournamentStore = useTournamentStore()
 const matchStore = useMatchStore()
-const router = useRouter()
 
 const showLoader = ref(false)
+const btnTitle = ref('players')
 
 const listTournament = computed(() => tournamentStore.listTournament)
-const listMatch = computed(() => matchStore.listMatch)
-const listMatchNextOrPrevious = computed(() => matchStore.listMatchNextOrPrevious)
 
 const tournamentSelect = ref(null as Tournament | null)
 
@@ -73,19 +68,16 @@ const handleSelectTournament = (tournament: Tournament | null) => {
 }
 const handleSelectType = (type: TournamentType | null) => matchFiltre.value.type = type
 const handleSelectRound = (round: Round) => matchFiltre.value.round = round
-const handleShowMatch = (match: Match) => router.push({ name: 'show-match', params: { idT: tournamentSelect.value?.id, idM: match.id }})
-
-const matchComponent = computed(() => {
-  let component = ''
-  if(matchFiltre.value.type != null) {
-    if(matchFiltre.value?.type.includes('DOUBLE_')) {
-      component = 'MatchDoubleCard'
-    } else {
-      component = 'MatchCard'
-    }
+const handlePlayerTournaments = () => {
+  if(btnTitle.value === 'players') {
+    btnTitle.value = 'tournaments'
+  } else {
+    btnTitle.value = 'players'
   }
-  return component
-})
+}
+
+const currentTab = ref(Gender.MEN)
+// TODO: watch and fetch tournament player
 
 watch(
   matchFiltre.value,
@@ -124,6 +116,18 @@ const getNextOrPreviousRound = (round: Round): Round => {
     break;
   }
 }
+
+const matchComponent = computed(() => {
+  let component = ''
+  if(matchFiltre.value?.type != null) {
+    if(matchFiltre.value?.type.includes('DOUBLE_')) {
+      component = 'MatchDoubleCard'
+    } else {
+      component = 'MatchCard'
+    }
+  }
+  return component
+})
 
 onMounted(async () => {
   showLoader.value = true

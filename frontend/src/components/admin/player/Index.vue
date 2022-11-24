@@ -81,7 +81,6 @@ watch(
   filters.value,
   async () => { 
   loaderShow.value = true
-  console.log(filters.value)
   await playerStore.fetch({
     gender: filters.value.gender,
     sort: filters.value.sort,

@@ -4,6 +4,8 @@ import bzh.ineed.rolandgarros.exception.BadRequestException;
 import bzh.ineed.rolandgarros.model.EType;
 import bzh.ineed.rolandgarros.model.Person;
 import bzh.ineed.rolandgarros.repository.PersonRepository;
+
+import bzh.ineed.rolandgarros.util.ERoundFormat;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,79 +43,42 @@ public class TournamentController {
     @Autowired
     MatchRepository matchRepository;
 
+    @GetMapping("/tournaments")
+    public ResponseEntity<?> index(@ParameterObject Pageable pageable) {
+        ArrayList<Map<String, Object>> response = new ArrayList<>();
+        List<Tournament> tournaments = tournamentRepository.findAll();
+        List<Match> matches = matchRepository.findAll();
+
+        System.out.println(tournaments);
+        for (Tournament t : tournaments) {
+            Map<String, Object> tournamentResponse = new HashMap<>();
+            tournamentResponse.put("id", t.getId());
+            tournamentResponse.put("year", t.getYear());
+            tournamentResponse.put("types", matchRepository.findAllTypes(t));
+            response.add(tournamentResponse);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/tournaments/{id}")
     public ResponseEntity<?> index(
             @PathVariable Long id,
-            @RequestParam(defaultValue = "") Integer year,
             @RequestParam(defaultValue = "") String type,
-            @RequestParam(defaultValue = "") String round,
-            @RequestParam(defaultValue = "id,desc") String sortBy[]
+            @RequestParam(defaultValue = "") String round
     ) {
-        EType eType = null;
-        switch (type) {
-            case "SIMPLE_MEN":
-                eType = EType.SIMPLE_MEN;
-                break;
-            case "SIMPLE_WOMEN":
-                eType = EType.SIMPLE_WOMEN;
-                break;
-            case "DOUBLE_MEN":
-                eType = EType.DOUBLE_MEN;
-                break;
-            case "DOUBLE_WOMEN":
-                eType = EType.DOUBLE_WOMAN;
-                break;
-        }
-        ERound eRound = null;
-        switch (round) {
-            case "FIRST_ROUND":
-                eRound = ERound.FIRST_ROUND;
-                break;
-            case "SECOND_ROUND":
-                eRound = ERound.SECOND_ROUND;
-                break;
-            case "THIRD_ROUND":
-                eRound = ERound.THIRD_ROUND;
-                break;
-            case "SIXTEENTH_ROUND":
-                eRound = ERound.SIXTEENTH_ROUND;
-                break;
-            case "QUART_FINAL":
-                eRound = ERound.QUART_FINAL;
-                break;
-            case "SEMI_FINAL":
-                eRound = ERound.SEMI_FINAL;
-                break;
-            case "FINAL_ROUND":
-                eRound = ERound.FINAL_ROUND;
-                break;
-        }
-        System.out.println(id);
-        try{
-            Map<String, Object> response = new HashMap<>();
+        HashMap<String, Object> response = new HashMap<>();
+        Tournament tournament = tournamentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Tournament not found"));
 
-            if (id != 0 && type != null && round != null){
-                response.put("payload", matchRepository.findByTournamentIdAndTypeAndRound(id,eType, eRound));
-            } else {
-                System.out.println("all");
-                response.put("warning", "Not all parameters are set");
-            }
-            response.put("success", true);
+        response.put("id", tournament.getId());
+        response.put("year", tournament.getYear());
+        response.put("types", matchRepository.findAllTypes(tournament));
 
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (PropertyReferenceException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("error", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            System.out.println(e.getClass());
-            System.out.println(e.getMessage());
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (!type.equals("") && !round.equals("")) {
+            response.put("matches", matchRepository.findAllByTournamentAndTypeAndRound(tournament, EType.valueOf(type), ERoundFormat.format(round)));
         }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public Tournament createMatches(Tournament tournament, EType type) {
@@ -187,39 +152,38 @@ public class TournamentController {
         }
     }
 
-    @GetMapping("/tournaments")
-    public ResponseEntity<?> index(
-            @RequestParam(defaultValue = "") Integer year,
-            @RequestParam(defaultValue = "") String type,
-            @RequestParam(defaultValue = "") String round,
-            @RequestParam(defaultValue = "id,desc") String sortBy[]
-    ) {
-        try {
-            ArrayList<Map<String, Object>> response = new ArrayList<>();
-            List<Tournament> tournaments = tournamentRepository.findAll();
-            List<Match> matches = matchRepository.findAll();
-
-            System.out.println(tournaments);
-            for (Tournament t : tournaments) {
-                Map<String, Object> tournamentResponse = new HashMap<>();
-                tournamentResponse.put("id", t.getId());
-                tournamentResponse.put("year", t.getYear());
-                tournamentResponse.put("types",matchRepository.findAllTypes(t));
-                response.add(tournamentResponse);
+    public Tournament createMatches(Tournament tournament, EType type) {
+        for(Integer i = 0; i < 63; i++){
+            // FIRST ROUND
+            matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type, tournament));
+            //tournament.POSTReq(status,round,type,courtId);
+            if(i>=31){
+                // SECOND ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type, tournament));
             }
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (PropertyReferenceException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("error", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            System.out.println(e.getClass());
-            System.out.println(e.getMessage());
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            if(i>=47){
+                // THIRD ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type, tournament));
+            }
+            if(i>=55){
+                // SIXTEENTH ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,tournament));
+            }
+            if(i>=59){
+                // QUARTER FINAL
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,tournament));
+            }
+            if(i>=61){
+                // SEMI FINAL
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,tournament));
+            }
+            if(i>=62){
+                // FINAL ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,tournament));
+            }
         }
+
+        return tournament;
     }
 
     @PostMapping("/tournaments")

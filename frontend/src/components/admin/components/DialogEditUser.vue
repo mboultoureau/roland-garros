@@ -7,7 +7,7 @@
 
         <q-card-section class="flex gap-4">
           <q-input :label="t('auth.input.username')" class="flex-1 w-56" filled v-model="userEdit.username"></q-input>
-          <q-select :label="t('tournament.dialog.select.type')" map-options option-label="name" emit-value option-value="id" class="flex-1 w-72" filled use-chips v-model="userEdit.roles" multiple :options="optionsRoles">
+          <q-select :label="t('tournament.dialog.select.type')" map-options option-label="name" emit-value option-value="name" class="flex-1 w-72" filled use-chips v-model="userEdit.roles" multiple :options="optionsRoles">
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-label>{{ t(`admin.role.${scope.opt.name}`) }}</q-item-label>
@@ -27,14 +27,14 @@
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary my-4">
-          <q-btn color="primary" :loading="loaderBtn" :label="t('btn.confirm')"/>
           <q-btn flat :label="t('btn.cancel')" @click="handleCancel" />
+          <q-btn color="primary" :loading="loaderBtn" :label="t('btn.confirm')" @click="handleEditUser"/>
         </q-card-actions>
       </q-card>
   </q-dialog>
 </template>
 <script setup lang="ts">
-import { User } from 'src/models/user';
+import { Roles, User } from 'src/models/user';
 import { useUserStore } from 'src/stores/user';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -48,6 +48,7 @@ const props = defineProps<{
 }>()
 
 const userEdit = ref({
+  id: props.user.id,
   username: props.user.username,
   roles: props.user.roles
 })
@@ -68,9 +69,11 @@ const loaderBtn = ref(false)
 const handleCloseDialog = () => emit('update:show', false)
 
 const handleEditUser = async () => {
+  userEdit.value.roles = userEdit.value.roles?.map((role: Roles) => typeof role === 'object' ? role.name : role)
   loaderBtn.value = true
-  await userStore.edit(props.user.id, userEdit.value.username, userEdit.value.roles)
+  await userStore.edit(userEdit.value)
   handleCloseDialog()
+  await userStore.fetch()
   loaderBtn.value = false
 }
 

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
@@ -17,11 +18,9 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findAllByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
 
     Page<Match> findByRoundAndTypeAndTournamentId(ERound round, EType type, Long tournamentId, Pageable pageable);
-    List<Match> findByTournament(Tournament tournament);
 
-    List<Match> findByCourtAndStartDateBetween(Court court, LocalDateTime startDate, LocalDateTime endDate);
-
-    //@Query("SELECT m FROM Match m WHERE m.tournament = ?1")
     @Query("SELECT DISTINCT m.type FROM Match m WHERE m.tournament = ?1")
     Collection<String> findAllTypes(Tournament id);
+
+    List<Match> findAllByTournamentAndTypeAndRound(Tournament tournament, EType type, ERound round);
 }

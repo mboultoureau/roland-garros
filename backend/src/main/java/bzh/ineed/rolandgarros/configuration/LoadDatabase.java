@@ -50,14 +50,14 @@ public class LoadDatabase {
             log.info("[TOURNAMENT] Delete all");
             tournamentRepository.deleteAll();
 
+            log.info("[USER] Delete all");
+            userRepository.deleteAll();
+
             log.info("[PERSON] Delete all");
             personRepository.deleteAll();
 
             log.info("[COUNTRY] Delete all");
             countryRepository.deleteAll();
-
-            log.info("[USER] Delete all");
-            userRepository.deleteAll();
 
             log.info("[ROLE] Delete all");
             roleRepository.deleteAll();
@@ -611,15 +611,17 @@ public class LoadDatabase {
             finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_MEN, ERound.FINAL_ROUND).get(0);
             Team teamA = new Team();
             teamA.setPersonA(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
-
+            teamA = teamRepository.save(teamA);
 
             Team teamB = new Team();
             teamB.setPersonA(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
+            teamB = teamRepository.save(teamB);
 
-
-
+            finalMatch.setWinner(teamA);
             finalMatch.setTeamA(teamA);
             finalMatch.setTeamB(teamB);
+
+            matchRepository.save(finalMatch);
         };
     }
 

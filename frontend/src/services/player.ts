@@ -64,7 +64,7 @@ export async function store(player: Person) {
 
 export async function destroy(id: number) {
   try {
-    await mockDelete(id);
+    await api.delete(`persons/${id}`);
   } catch (error) {}
 }
 

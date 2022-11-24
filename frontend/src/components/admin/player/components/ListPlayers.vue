@@ -8,7 +8,7 @@
   <DialogDeletePlayer v-model:show="showDialog" :loading-btn="loadingBtn" @handle-confirm="confirmDelete"></DialogDeletePlayer>
 </template>
 <script lang="ts" setup>
-import { Person } from 'src/models/person';
+import { FilterPlayer, Person } from 'src/models/person';
 import { usePlayerStore } from 'src/stores/player';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -18,6 +18,10 @@ import DialogDeletePlayer from './DialogDeletePlayer.vue';
 
 const router = useRouter()
 const playerStore = usePlayerStore()
+
+const props = defineProps<{
+  filters: FilterPlayer
+}>()
 
 const listComputed = computed(() => playerStore.listPlayer)
 
@@ -35,6 +39,7 @@ const handleDelete = (player: Person) => {
 const confirmDelete = async () => {
   loadingBtn.value = true
   await playerStore.delete(deletePlayer.value.id)
+  await playerStore.fetch(props.filters)
   showDialog.value = false
   loadingBtn.value = false
 }

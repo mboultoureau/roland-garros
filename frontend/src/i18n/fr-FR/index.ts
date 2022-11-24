@@ -24,6 +24,7 @@ export default {
   'input.firstname': 'Prénom *',
   'input.ranking': 'Classement mondial *',
   'input.career.start': 'Date début de carrière *',
+  'input.upload.csv': 'Ajouter un fichier CSV',
   'select.gender': 'Genre *',
   'field.empty': 'Aucun(e) {object}',
   'dialog.confirm.delete': 'Êtes-vous de vouloir supprimer {type}',

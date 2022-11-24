@@ -52,6 +52,7 @@ public class CSVPlayerUtil {
                 player.setPicture(csvRecord.get("picture"));
                 player.setRanking(Integer.parseInt(csvRecord.get("ranking")));
                 player.setHand(EHandFormat.format(csvRecord.get("hand")));
+                player.setIsPlayer(true);
 
                 players.add(player);
             };

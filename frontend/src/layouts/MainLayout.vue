@@ -66,7 +66,7 @@
               src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Logo_Roland-Garros.svg/350px-Logo_Roland-Garros.svg.png?20120514221714"
             />
           </div>
-          <div class="mx-24 text-center my-3">
+          <div class="mx-24 text-center text-white my-3">
             <b>Retrouvez-nous et prolongez l'expérience !</b> <br />
             <p class="text-sm">
               Mentions légales et conditions générales d'utilisation
@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 text-center bg-primary text-white">
+      <div class="p-2 text-center bg-primary text-orange-200">
         ©2022 - tous droits réservés Fédération Française de Tennis
       </div>
     </div>
@@ -138,9 +138,7 @@ onMounted(async () => {
   //await playerStore.fetch()
   await userStore.fetchRole()
   
-  if(!LocalStorage.has('nationality')) {
-    await countryStore.fetch()
-  }
+  await countryStore.fetch()
   //***************************** */
 
   loaderPage.value = false

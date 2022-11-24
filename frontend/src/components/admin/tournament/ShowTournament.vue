@@ -1,9 +1,8 @@
 <template>
-  <HeaderFIlterTournament :tournament="tournament.tournament" @handle-select-round="handleSelectRound" @handle-select-type="handleSelectType"/>
-  <ListMatch :type="typeSelected" :round="roundSelected" :tournament-id="tournament?.tournament?.id"></ListMatch>
+  <HeaderFIlterTournament :tournament="tournament" @handle-select-round="handleSelectRound" @handle-select-type="handleSelectType"/>
+  <ListMatch :type="typeSelected" :round="roundSelected" :tournament-id="tournament.id"></ListMatch>
 </template>
 <script setup lang="ts">
-import { Match } from 'src/models/match';
 import { Round, Tournament, TournamentType } from 'src/models/tournament';
 import { useTournamentStore } from 'src/stores/tournament';
 import { computed, onMounted, ref } from 'vue';
@@ -14,9 +13,9 @@ import ListMatch from './components/ListMatch.vue';
 const tournamentStore = useTournamentStore()
 const route = useRoute()
 
-const tournament = computed(() => (tournamentStore.tournament as { tournament: Tournament, match: Match }))
+const tournament = computed(() => (tournamentStore.tournament as Tournament))
 
-onMounted(async () => await tournamentStore.show(parseInt(route.params.id as string) as number, null))
+onMounted(async () => await tournamentStore.getTournamentTypes(parseInt(route.params.id as string) as number))
 
 const typeSelected = ref()
 const roundSelected = ref()

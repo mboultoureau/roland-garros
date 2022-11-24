@@ -4,6 +4,7 @@ import bzh.ineed.rolandgarros.controller.TournamentController;
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.repository.*;
 
+import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -150,7 +151,7 @@ public class LoadDatabase {
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Germany", "DE", "DEU")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ghana", "GH", "GHA")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Gibraltar", "GI", "GIB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Greece", "GR", "GRC")));
+            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Greece", "GR", "GRE")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Greenland", "GL", "GRL")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Grenada", "GD", "GRD")));
             log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guadeloupe", "GP", "GLP")));

@@ -5,18 +5,18 @@
         <PlayerImgFlag :team="match.teamB" /> 
         <div class="flex flex-col gap-1">
           <div class="flex gap-1" >
-            <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">{{ reduceNamePlayer(match?.teamA.personA.firstname, match?.teamA.personA.lastname) }}</div>
-            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamA.personA.flag}.svg`" />
+            <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">{{ reduceNamePlayer(match?.teamAId?.personA.firstname, match?.teamAId?.personA.lastname) }}</div>
+            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamAId?.personA.flag}.svg`" />
           </div>
           <div class="flex gap-1" >
-            <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">{{ reduceNamePlayer(match?.teamA.personB?.firstname, match?.teamA?.personB?.lastname) }}</div>
-            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamA.personB?.flag}.svg`" />
+            <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">{{ reduceNamePlayer(match?.teamAId?.personB?.firstname, match?.teamAId?.personB?.lastname) }}</div>
+            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamAId?.personB?.flag}.svg`" />
           </div>
         </div>
       </div>
           
       <div class="sets flex gap-3">
-        <div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}"><q-badge color="green" rounded></q-badge></div>
+        <!--<div class="font-bold mx-2 text-tertiary" :class="{'text-secondary': true}"><q-badge color="green" rounded></q-badge></div>-->
         <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamA >= 6}">{{ score.scoreTeamA }}</div>
       </div>
     </div>
@@ -26,12 +26,12 @@
         <PlayerImgFlag :team="match.teamB" /> 
         <div class="flex flex-col gap-1">
           <div class="flex gap-1" >
-            <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamB.personA?.firstname, match?.teamB?.personA?.lastname) }}</div>
-            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamB.personA?.flag}.svg`" />
+            <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamBId?.personA?.firstname, match?.teamBId?.personA?.lastname) }}</div>
+            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamBId?.personA?.flag}.svg`" />
           </div>
           <div class="flex gap-1" >
-            <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamB.personB?.firstname, match?.teamB?.personB?.lastname) }}</div>
-            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamB.personB?.flag}.svg`" />
+            <div class="font-bold ml-6 text-tertiary">{{ reduceNamePlayer(match?.teamBId?.personB?.firstname, match?.teamBId?.personB?.lastname) }}</div>
+            <img class="rounded-sm w-8 h-6" :src="`https://www.rolandgarros.com/img/flags-svg/${match?.teamBId?.personB?.flag}.svg`" />
           </div>
         </div>
       </div>

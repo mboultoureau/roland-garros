@@ -1,21 +1,25 @@
-import { Court } from 'src/models/match';
+import { Court } from 'src/models/court';
 
 const courts = [
   {
     id: 1,
     name: 'Court Léane',
+    trainings: [],
   },
   {
     id: 2,
     name: 'Court Mathis',
+    trainings: [],
   },
   {
     id: 3,
     name: 'Court Sylvain',
+    trainings: [],
   },
   {
     id: 4,
     name: 'Court Paul',
+    trainings: [],
   },
 ] as Court[];
 

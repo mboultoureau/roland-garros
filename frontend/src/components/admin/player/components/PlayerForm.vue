@@ -38,7 +38,7 @@
         <InputDate v-model="formComputed.earlyCareer" :label="t('input.career.start')"></InputDate>
       </div>
       <div class="coach">
-        <q-select filled v-model="formComputed.coach" :options="[]" :label="t('input.coach')" :option-label="item => item.firstname" map-options>
+        <q-select filled v-model="formComputed.coach" :options="optionsCoach" :label="t('input.coach')" emit-value option-label="lastname" map-options>
           <template v-slot:no-option>
             <div class="p-4 text-gray-500">
               {{ t('field.empty', { object: 'coach'}) }}
@@ -66,12 +66,16 @@
 
 <script setup lang="ts">
 import { Gender, Person } from 'src/models/person';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import InputDate from 'src/components/shared/InputDate.vue';
 import { LocalStorage } from 'quasar';
+import { usePlayerStore } from 'src/stores/player';
+import { useCountryStore } from 'src/stores/country';
 
 const { t } = useI18n()
+const playerStore = usePlayerStore()
+const countryStore = useCountryStore()
 
 const emit = defineEmits<{
   (name: 'update:player', value: Person): Person
@@ -101,11 +105,13 @@ const formCopy = ref({
   nationality: null,
   picture: '',
   isPlayer: true,
-  isCoach: false
+  isCoach: false,
+  ranking: 0
 })
 
-const optionsNationality = LocalStorage.getItem('nationality')
+const optionsCoach = computed(() => playerStore.listCoach)
 
+const optionsNationality = computed(() => countryStore.listNationality)
 const optionsGender = [
   {
     label: t('admin.player.create.gender.MALE'),
@@ -136,6 +142,8 @@ let optionsRanking = [] as []
 for(let i=1; i<100; i++) {
   optionsRanking.push(i)
 }
+
+onMounted(async () => await playerStore.fetchCoach())
 </script>
 <style lang="scss">
 .container {

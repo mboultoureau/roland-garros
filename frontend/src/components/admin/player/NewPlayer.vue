@@ -23,17 +23,17 @@ const formCopy = ref({
   height: 0,
   weight: 0,
   earlyCareer: '',
-  coach: null,
+  coach: '',
   nationality: null,
   picture: '',
   isPlayer: true,
   isCoach: false
 })
 
-const submit = () => {
-  playerStore.store(formCopy.value)
-  router.push({ name: 'players' })
+const submit = async () => {
+  await playerStore.store(formCopy.value)
+  router.push({ name: 'admin-players' })
 }
 
-const cancel = () => router.push({ name: 'players' })
+const cancel = () => router.push({ name: 'admin-players' })
 </script>

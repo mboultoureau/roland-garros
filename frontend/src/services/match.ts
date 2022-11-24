@@ -1,10 +1,13 @@
 import { indexMock, showMock, editMock } from 'src/mocks/MatchMock';
 import { MatchEditFilter, MatchFilter } from 'src/models/match';
+import { api } from 'src/boot/axios';
 
 export async function fetch(filter: MatchFilter) {
   try {
-    const matchs = await indexMock(filter);
-    return matchs.payload;
+    const matchs = await api.get(`/tournaments/${filter.tournamentId}`, {
+      params: filter,
+    });
+    return matchs.data.payload;
   } catch (error) {}
 }
 

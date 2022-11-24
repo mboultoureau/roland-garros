@@ -8,9 +8,8 @@ export interface Court {
 
 export interface Training {
   id: number;
-  person: Person;
+  player: Person;
   startDate: string;
-  endDate: string;
-  cour: Court;
+  duration: number;
   details: string;
 }

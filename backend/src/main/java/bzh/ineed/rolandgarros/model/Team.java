@@ -3,42 +3,60 @@ package bzh.ineed.rolandgarros.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "teams",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "id")
-        })
+@Table(name = "teams")
 public class Team {
-    // CHANGER LE TYPE EN PERSON
-    private String person1;
-
-    // CHANGER LE TYPE EN PERSON
-    private String person2;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public void setPerson2(String person2) {
-        this.person2 = person2;
-    }
+    @ManyToOne
+    private Person personA;
 
-    public String getPerson2() {
-        return person2;
-    }
+    @ManyToOne
+    private Person personB;
 
-    public void setPerson1(String person1) {
-        this.person1 = person1;
-    }
+    @Transient
+    private String personAId;
 
-    public String getPerson1() {
-        return person1;
-    }
+    @Transient String personBId;
 
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
+    public Person getPersonA() {
+        return personA;
+    }
+
+    public void setPersonA(Person person1) {
+        this.personA = person1;
+    }
+
+    public Person getPersonB() {
+        return personB;
+    }
+
+    public void setPersonB(Person person2) {
+        this.personB = person2;
+    }
+
+    public String getPersonAId() {
+        return personAId;
+    }
+
+    public void setPersonAId(String personAId) {
+        this.personAId = personAId;
+    }
+
+    public String getPersonBId() {
+        return personBId;
+    }
+
+    public void setPersonBId(String personBId) {
+        this.personBId = personBId;
     }
 }

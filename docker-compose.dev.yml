@@ -5,7 +5,7 @@ services:
     image: traefik:v2.9
     command:
       --api.insecure=true
-      --providers.docker.network=web
+      --providers.docker
     ports:
       - "80:80"
       - "8080:8080"
@@ -38,7 +38,3 @@ services:
       - PMA_PASSWORD=root
     labels:
       - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
-
-networks:
-  web:
-

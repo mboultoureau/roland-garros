@@ -1,9 +1,19 @@
 package bzh.ineed.rolandgarros.controller;
 
+import bzh.ineed.rolandgarros.exception.BadRequestException;
+import bzh.ineed.rolandgarros.model.EType;
+import bzh.ineed.rolandgarros.model.Person;
+import bzh.ineed.rolandgarros.repository.PersonRepository;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.repository.TournamentRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +28,13 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 
-
 @RestController
 @RequestMapping("/api")
 public class TournamentController {
+
+    @Autowired
+    PersonRepository personRepository;
+
     @Autowired
     TournamentRepository tournamentRepository;
 
@@ -174,10 +187,42 @@ public class TournamentController {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+    public Tournament createMatches(Tournament tournament, EType type) {
+        for(Integer i = 0; i < 63; i++){
+            // FIRST ROUND
+            matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type, tournament));
+            //tournament.POSTReq(status,round,type,courtId);
+            if(i>=31){
+                // SECOND ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type, tournament));
+            }
+            if(i>=47){
+                // THIRD ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type, tournament));
+            }
+            if(i>=55){
+                // SIXTEENTH ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,tournament));
+            }
+            if(i>=59){
+                // QUARTER FINAL
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,tournament));
+            }
+            if(i>=61){
+                // SEMI FINAL
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,tournament));
+            }
+            if(i>=62){
+                // FINAL ROUND
+                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,tournament));
+            }
+        }
 
+        return tournament;
+    }
 
     @PostMapping("/tournaments")
-    public List<String> postBody(
+    public Tournament postBody(
             @RequestBody @Valid TournamentRequest request) throws IOException {
         int typeSize = request.getTypes().size();
 
@@ -200,40 +245,43 @@ public class TournamentController {
                     break;
             }
 
-            for(i=0;i<63;i++){
-                // FIRST ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type,"1", tournament));
-                //tournament.POSTReq(status,round,type,courtId);
-                if(i>=31){
-                    // SECOND ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type,"1", tournament));
-                }
-                if(i>=47){
-                    // THIRD ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type,"1", tournament));
+            tournament = createMatches(tournament, type);
+        }
 
-                }
-                if(i>=55){
-                    // SIXTEENTH ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,"1", tournament));
-                }
-                if(i>=59){
-                    // QUARTER FINAL
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,"1", tournament));
-                }
-                if(i>=61){
-                    // SEMI FINAL
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,"1", tournament));
-
-                }
-                if(i>=62){
-                    // FINAL ROUND
-                    matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,"1", tournament));
-
-                }
-            }
+        return tournament;
     }
 
-        return request.getTypes();
+    @GetMapping("/tournaments/{id}/players")
+    public Page<Person> players(
+            @PathVariable Long id,
+            @ParameterObject Pageable pageable,
+            @RequestParam(defaultValue = "") String type
+    ) {
+        EType etype = null;
+        if (type.equals("")) {
+            etype = null;
+        } else if (type.equals("SIMPLE_MEN")) {
+            etype = EType.SIMPLE_MEN;
+        } else if (type.equals("SIMPLE_WOMEN")) {
+            etype = EType.SIMPLE_WOMEN;
+        } else if (type.equals("DOUBLE_MEN")) {
+            etype = EType.DOUBLE_MEN;
+        } else if (type.equals("DOUBLE_WOMAN")) {
+            etype = EType.DOUBLE_WOMAN;
+        } else if (type.equals("MIXED")) {
+            etype = EType.MIXED;
+        } else {
+            throw new BadRequestException("Type " + type + " is not valid");
+        }
+
+        if (etype == null) {
+            //return personRepository.findByTournamentId(id, pageable);
+        } else {
+            //return personRepository.findByTournamentIdAndType(id, etype, pageable);
+        }
+        return null;
     }
+
+    ;
+
 }

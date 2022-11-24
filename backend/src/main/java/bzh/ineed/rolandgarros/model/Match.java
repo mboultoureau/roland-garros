@@ -1,21 +1,20 @@
 package bzh.ineed.rolandgarros.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
-@Table(name = "matchs",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "id")
-        })
+@Table(name = "matches")
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    // déclaration d'une table d'association
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
     @Enumerated(EnumType.STRING)
@@ -26,54 +25,69 @@ public class Match {
     @Enumerated(EnumType.STRING)
     private  EType type;
 
-    private Date date;
-    @ManyToOne
-    // déclaration d'une table d'association
-    @JoinTable(name = "teamA_match",
-            joinColumns = @JoinColumn(name = "match_id"),
-            inverseJoinColumns = @JoinColumn(name = "teamA_id"))
-    private Team teamAId;
+    private LocalDateTime startDate;
+
+    private Integer duration;
 
     @ManyToOne
-    // déclaration d'une table d'association
-    @JoinTable(name = "teamB_match",
-            joinColumns = @JoinColumn(name = "match_id"),
-            inverseJoinColumns = @JoinColumn(name = "teamB_id"))
-    private Team teamBId;
+    private Team teamA;
 
-    // CHANGER LE TYPE EN COURT
-    private String CourtId;
+    @ManyToOne
+    private Team teamB;
 
-    // --- CONSTRUCTOR ---
-    public Match(Tournament tournament, EType type,EStatus status, ERound round) {
-        this.tournament = tournament;
-        this.type = type;
-        this.status = status;
-        this.round = round;
-    }
+    @ManyToOne
+    private Court court;
 
-    // constructeur temporaire
+    @Transient
+    private Long courtId;
 
-    public Match(EStatus status, ERound round, EType type, String courtId, Tournament tournament) {
-        this.status = status;
-        this.round = round;
-        this.type = type;
-        CourtId = courtId;
-        this.tournament = tournament;
-    }
-
-    public Match(String courtId) {
-        CourtId = courtId;
-    }
-
-    public Match(Tournament tournament) {
-        this.tournament = tournament;
-    }
+    @OneToMany(mappedBy = "match")
+    // Circular reference
+    @JsonIgnoreProperties("match")
+    private Set<Score> scores;
 
     public Match() {
     }
 
-    // --- METHOD ---
+    public Match(EStatus status, ERound round, EType type, Tournament tournament) {
+        this.status = status;
+        this.round = round;
+        this.type = type;
+        this.tournament = tournament;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
+    public EStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EStatus status) {
+        this.status = status;
+    }
+
+    public ERound getRound() {
+        return round;
+    }
+
+    public void setRound(ERound round) {
+        this.round = round;
+    }
+
     public EType getType() {
         return type;
     }
@@ -82,67 +96,64 @@ public class Match {
         this.type = type;
     }
 
-    public String getCourtId() {
-        return CourtId;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setCourtId(String courtId) {
-        CourtId = courtId;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
-    public void setTeamBId(Team teamBId) {
-        this.teamBId = teamBId;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public Team getTeamBId() {
-        return teamBId;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public void setTeamAId(Team teamAId) {
-        this.teamAId = teamAId;
+    public Team getTeamA() {
+        return teamA;
     }
 
-    public Team getTeamAId() {
-        return teamAId;
+    public void setTeamA(Team teamA) {
+        this.teamA = teamA;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public Team getTeamB() {
+        return teamB;
     }
 
-    public Date getDate() {
-        return date;
+    public void setTeamB(Team teamB) {
+        this.teamB = teamB;
     }
 
-    public void setRound(ERound round) {
-        this.round = round;
+    public Court getCourt() {
+        return court;
     }
 
-    public ERound getRound() {
-        return round;
+    public void setCourt(Court court) {
+        this.court = court;
     }
 
-    public void setStatus(EStatus status) {
-        this.status = status;
+    public Long getCourtId() {
+        return courtId;
     }
 
-    public EStatus getStatus() {
-        return status;
+    public void setCourtId(Long courtId) {
+        this.courtId = courtId;
     }
 
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
+    public Set<Score> getScores() {
+        return scores;
     }
 
-    public Tournament getTournament(){
-        return tournament;
+    public void setScores(Set<Score> scores) {
+        this.scores = scores;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Status: " + status + ", Round: " + round + ", Type: " + type + ", Tournament year:" + tournament.getYear();
     }
 }

@@ -24,8 +24,8 @@ export const useUserStore = defineStore('user', {
     async fetchRole() {
       this.listRole = await fetchRole();
     },
-    async edit(id: number, username: string, roles: Roles[]) {
-      await editU(id, username, roles);
+    async edit(user: User) {
+      await editU(user);
     },
     setUser(user: User) {
       this.user = user;

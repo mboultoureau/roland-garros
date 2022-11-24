@@ -1,5 +1,5 @@
 import { api } from 'src/boot/axios';
-import { Roles } from 'src/models/user';
+import { Roles, User } from 'src/models/user';
 
 export async function fetch() {
   try {
@@ -15,8 +15,8 @@ export async function fetchRole() {
   } catch (error) {}
 }
 
-export async function editU(id: number, username: string, roles: Roles[]) {
+export async function editU(user: User) {
   try {
-    await api.put(`/users/${id}`, { username, roles });
+    await api.put(`/users/${user.id}`, user);
   } catch (error) {}
 }

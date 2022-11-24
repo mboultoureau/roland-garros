@@ -27,8 +27,8 @@
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary my-4">
-          <q-btn color="primary" :loading="loaderBtn" :label="t('btn.confirm')"/>
           <q-btn flat :label="t('btn.cancel')" @click="handleCancel" />
+          <q-btn color="primary" :loading="loaderBtn" :label="t('btn.confirm')" @click="handleEditUser"/>
         </q-card-actions>
       </q-card>
   </q-dialog>
@@ -48,6 +48,7 @@ const props = defineProps<{
 }>()
 
 const userEdit = ref({
+  id: props.user.id,
   username: props.user.username,
   roles: props.user.roles
 })
@@ -69,7 +70,7 @@ const handleCloseDialog = () => emit('update:show', false)
 
 const handleEditUser = async () => {
   loaderBtn.value = true
-  await userStore.edit(props.user.id, userEdit.value.username, userEdit.value.roles)
+  await userStore.edit(userEdit.value)
   handleCloseDialog()
   loaderBtn.value = false
 }

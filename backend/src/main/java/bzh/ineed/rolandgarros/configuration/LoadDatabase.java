@@ -3,6 +3,7 @@ package bzh.ineed.rolandgarros.configuration;
 import bzh.ineed.rolandgarros.controller.TournamentController;
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.repository.*;
+
 import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

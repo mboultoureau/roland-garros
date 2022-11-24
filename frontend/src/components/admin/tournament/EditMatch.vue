@@ -81,8 +81,10 @@ const handleSubmit = async () => {
     personAId: teamB.value
   }
   if(match.value?.type.includes('DOUBLE_')) {
-    teamAComp.personB = teamA.value[1]
-    teamBComp.personB = teamA.value[1]
+    teamAComp.personAId = teamA.value[0]
+    teamBComp.personAId = teamB.value[0]
+    teamAComp.personBId = teamA.value[1]
+    teamBComp.personBId = teamB.value[1]
   }
   await matchStore.edit({
     matchId: matchId,

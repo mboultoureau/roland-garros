@@ -20,4 +20,6 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     @Query("SELECT DISTINCT m.type FROM Match m WHERE m.tournament = ?1")
     Collection<String> findAllTypes(Tournament id);
+
+    List<Match> findAllByTournamentAndTypeAndRound(Tournament tournament, EType type, ERound round);
 }

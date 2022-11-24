@@ -143,7 +143,7 @@ public class PersonController {
 
         if (CSVPlayerUtil.hasCSVFormat(file)) {
             try {
-                List<Person> players = CSVPlayerUtil.csvToPlayers(file.getInputStream());
+                List<Person> players = CSVPlayerUtil.csvToPlayers(file.getInputStream(), countryRepository);
                 personRepository.saveAll(players);
 
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();

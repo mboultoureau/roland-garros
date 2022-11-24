@@ -20,8 +20,7 @@ export const useMatchStore = defineStore('match', {
       this.match = await show(id);
     },
     async edit(match: MatchEditFilter) {
-      const success = await edit(match);
-      return success;
+      await edit(match);
     },
     set(match: Match) {
       this.match = match;

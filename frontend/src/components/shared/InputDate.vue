@@ -8,7 +8,7 @@
           v-model="modelValueComp"
           :locale="localeDatePicker"
           mask="YYYY-MM-DD"></q-date>
-          <q-time v-if="isTimeInput" v-model="modelValueComp" format24h mask="HH:mm" color="primary" />
+          <q-time v-if="isTimeInput" v-model="modelValueComp" format24h mask="HH:mm" :minute-options="[0]" color="primary" />
         </q-popup-proxy>
       </q-icon>
     </template>

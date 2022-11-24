@@ -8,7 +8,7 @@ export const useCourtStore = defineStore('court', {
     listCourt: [] as Court[],
   }),
   actions: {
-    async fetch(date: string) {
+    async fetch(date?: string) {
       this.listCourt = await fetch(date);
     },
   },

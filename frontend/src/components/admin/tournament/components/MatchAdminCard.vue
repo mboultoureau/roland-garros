@@ -40,7 +40,7 @@ const props = defineProps<{
 
 const handleEditMatch = () => {
   matchStore.set(props.match)
-  router.push({name: 'edit-match-tournament', params: {idT: props.match?.tournamentId, idM: props.match?.id}})
+  router.push({name: 'edit-match-tournament', params: {idT: props.match?.tournament.id, idM: props.match?.id}})
 }
 const { reduceNamePlayer } = useMatchCard()
 </script>

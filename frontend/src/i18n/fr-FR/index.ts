@@ -56,7 +56,7 @@ export default {
   'match.status.UNDEFINED': 'Non définis',
   'match.status.FINISH': 'Terminé',
   'tournament.type.SIMPLE_MEN': 'Simple Homme',
-  'tournament.type.SIMPLE_WOMAN': 'Simple Femme',
+  'tournament.type.SIMPLE_WOMEN': 'Simple Femme',
   'tournament.type.DOUBLE_MEN': 'Double Homme',
   'tournament.type.DOUBLE_WOMAN': 'Double Femme',
   'tournament.type.MIXED': 'Mixte',

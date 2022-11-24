@@ -19,6 +19,9 @@ public class Training {
     @JoinColumn(name = "person_id")
     private Person player;
 
+    @Transient
+    private Long playerId;
+
     @Size(max = 250)
     private String details;
 
@@ -32,6 +35,9 @@ public class Training {
     @JsonIgnore
     @JoinColumn(name = "court_id")
     private Court court;
+
+    @Transient
+    private Long courtId;
 
     public Training() {}
 
@@ -49,6 +55,14 @@ public class Training {
 
     public void setPlayer(Person player) {
         this.player = player;
+    }
+
+    public Long getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
     public String getDetails() {
@@ -81,6 +95,14 @@ public class Training {
 
     public void setCourt(Court court) {
         this.court = court;
+    }
+
+    public Long getCourtId() {
+        return courtId;
+    }
+
+    public void setCourtId(Long courtId) {
+        this.courtId = courtId;
     }
 
     @Override

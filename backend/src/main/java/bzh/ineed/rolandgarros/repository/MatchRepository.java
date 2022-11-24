@@ -1,9 +1,6 @@
 package bzh.ineed.rolandgarros.repository;
 
-import bzh.ineed.rolandgarros.model.Court;
-import bzh.ineed.rolandgarros.model.ERound;
-import bzh.ineed.rolandgarros.model.EType;
-import bzh.ineed.rolandgarros.model.Match;
+import bzh.ineed.rolandgarros.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

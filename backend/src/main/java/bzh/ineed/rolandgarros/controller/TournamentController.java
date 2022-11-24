@@ -117,35 +117,39 @@ public class TournamentController {
     }
 
     public Tournament createMatches(Tournament tournament, EType type) {
-        for(Integer i = 0; i < 63; i++){
+        for (Integer i = 0; i < 63; i++) {
             // FIRST ROUND
-            matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FIRST_ROUND,type, tournament));
+            matchRepository.save(new Match(EStatus.UNDEFINED, ERound.FIRST_ROUND, type, tournament));
             //tournament.POSTReq(status,round,type,courtId);
-            if(i>=31){
+            if (i >= 31) {
                 // SECOND ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SECOND_ROUND,type, tournament));
+                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.SECOND_ROUND, type, tournament));
             }
-            if(i>=47){
+            if (i >= 47) {
                 // THIRD ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.THIRD_ROUND,type, tournament));
+                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.THIRD_ROUND, type, tournament));
             }
-            if(i>=55){
+            if (i >= 55) {
                 // SIXTEENTH ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SIXTEENTH_ROUND,type,tournament));
+                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.SIXTEENTH_ROUND, type, tournament));
             }
-            if(i>=59){
+            if (i >= 59) {
                 // QUARTER FINAL
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.QUART_FINAL,type,tournament));
+                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.QUART_FINAL, type, tournament));
             }
-            if(i>=61){
+            if (i >= 61) {
                 // SEMI FINAL
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.SEMI_FINAL,type,tournament));
+                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.SEMI_FINAL, type, tournament));
             }
-            if(i>=62){
+            if (i >= 62) {
                 // FINAL ROUND
-                matchRepository.save(new Match(EStatus.UNDEFINED,ERound.FINAL_ROUND,type,tournament));
+                matchRepository.save(new Match(EStatus.UNDEFINED, ERound.FINAL_ROUND, type, tournament));
             }
         }
+
+        return tournament;
+    }
+
     @GetMapping("/tournament/{id}")
     public ResponseEntity<?> index(
             @PathVariable Long id,
@@ -204,21 +208,18 @@ public class TournamentController {
                 response.add(tournamentResponse);
             }
             return new ResponseEntity<>(response, HttpStatus.OK);
-    } catch (PropertyReferenceException e) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", false);
-        response.put("error", e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    } catch (Exception e) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", false);
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
-
-        return tournament;
+        } catch (PropertyReferenceException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+            System.out.println(e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/tournaments")

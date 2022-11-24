@@ -39,7 +39,7 @@ public class UserController {
     RoleRepository roleRepository;
 
     @GetMapping("/users")
-    @Operation(tags={"Users"})
+    @Tag(name = "Users")
     public List<User> users() {
         return userRepository.findAll();
     }
@@ -87,6 +87,12 @@ public class UserController {
                 .orElseThrow(() -> new NotFoundException("Could not find user " + id));
 
         user.setUsername(newUser.getUsername());
+
+        // If password is not empty, encode it
+        if (newUser.getPassword() != null) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        }
 
         // Person
         if (newUser.getPersonId() != null && personRepository.existsById(newUser.getPersonId())) {

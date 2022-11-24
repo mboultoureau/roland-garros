@@ -34,7 +34,7 @@ export default {
   'player.index.tabs.label.woman': 'Femme(s)',
   'player.show.fiche.perso': 'Fiche Personnelle',
   'player.show.fiche.pro': 'Fiche Professionelle',
-  'player.show.age': 'Age :',
+  'player.show.birthday': 'Date de naissance :',
   'player.show.height': 'Taille :',
   'player.show.weight': 'Poids :',
   'player.show.start.career': 'Début de carrière :',

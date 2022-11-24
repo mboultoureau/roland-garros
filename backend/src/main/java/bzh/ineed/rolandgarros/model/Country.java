@@ -1,18 +1,27 @@
 package bzh.ineed.rolandgarros.model;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
-@Table(name = "countries")
+@Table(name = "countries",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "name"),
+                @UniqueConstraint(columnNames = "alpha2Code"),
+                @UniqueConstraint(columnNames = "alpha3Code")
+        })
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Length(min = 2, max = 100)
     private String name;
 
+    @Length(min = 2, max = 2)
     private String alpha2Code;
 
+    @Length(min = 3, max = 3)
     private String alpha3Code;
 
     public Country() {}

@@ -24,12 +24,12 @@ public class User implements UserDetails {
     private Long id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(min = 2, max = 20)
     private String username;
 
     @NotBlank
     @Email
-    @Size(max = 50)
+    @Size(min = 5, max = 50)
     private String email;
 
     @NotBlank
@@ -46,9 +46,7 @@ public class User implements UserDetails {
     @ManyToMany
     private Set<Role> roles;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(String username, String email, String password) {
         this.username = username;

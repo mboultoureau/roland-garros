@@ -4,6 +4,8 @@
       <q-toolbar class="bg-white">
         <q-toolbar-title>
           <img
+            style="cursor: pointer;"
+            @click="handleHome"
             class="w-20 my-2"
             src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Logo_Roland-Garros.svg/350px-Logo_Roland-Garros.svg.png?20120514221714"
           />
@@ -69,7 +71,7 @@
           <div class="mx-24 text-center text-white my-3">
             <b>Retrouvez-nous et prolongez l'expérience !</b> <br />
             <p class="text-sm">
-              Mentions légales et conditions générales d'utilisation
+              <a href="https://www.rolandgarros.com/fr-fr/page/cgu">Mentions légales et Conditions Générales d'Utilisation</a>
             </p>
           </div>
           <div class="mx-24">
@@ -113,6 +115,7 @@ const handleLogout = () => {
   userStore.logout()
   router.push({path: '/'})
 }
+const handleHome = () => router.push({path: '/'})
 const handleCourt = () => router.push({path: '/court'})
 const handleAdminPage = (role: Roles) => {
   switch(role) {

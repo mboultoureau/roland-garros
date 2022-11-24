@@ -6,12 +6,17 @@ import bzh.ineed.rolandgarros.model.EGender;
 import bzh.ineed.rolandgarros.model.Person;
 import bzh.ineed.rolandgarros.repository.CountryRepository;
 import bzh.ineed.rolandgarros.repository.PersonRepository;
+import bzh.ineed.rolandgarros.util.CSVPlayerUtil;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -129,5 +134,27 @@ public class PersonController {
     @DeleteMapping("/persons/{id}")
     void delete(@PathVariable Long id) {
         personRepository.deleteById(id);
+    }
+
+    @PostMapping("/players/upload")
+    ResponseEntity<?> uploadPlayers(@RequestParam("file") MultipartFile file) {
+        String message = "";
+
+        if (CSVPlayerUtil.hasCSVFormat(file)) {
+            try {
+                List<Person> players = CSVPlayerUtil.csvToPlayers(file.getInputStream(), countryRepository);
+                personRepository.saveAll(players);
+
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } catch (Exception e) {
+                System.out.println("CSV upload error: " + e.getMessage());
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
+            }
+        }
+
+        message = "Please upload a csv file!";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 }

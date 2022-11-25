@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
+import { Training } from 'src/models/court';
 import { Court } from 'src/models/match';
-import { fetch } from 'src/services/court';
+import { fetch, storeTraining } from 'src/services/court';
 
 export const useCourtStore = defineStore('court', {
   state: () => ({
@@ -10,6 +11,9 @@ export const useCourtStore = defineStore('court', {
   actions: {
     async fetch(date?: string) {
       this.listCourt = await fetch(date);
+    },
+    async postTraining(trainings: Training) {
+      await storeTraining(trainings);
     },
   },
 });

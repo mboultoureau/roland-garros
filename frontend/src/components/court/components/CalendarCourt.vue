@@ -59,7 +59,7 @@ let tabE = []
 
 const hasEvent = (date: number, time: number) => {
   const evt = tabE.find((evt) => evt.date === date && evt.horaire === time)
-  if(evt) return reduceNamePlayer(evt.player.firstname, evt.player.lastname)
+  if(evt && evt.player != null) return reduceNamePlayer(evt.player.firstname, evt.player.lastname)
   else return ''
 }
 

@@ -2,7 +2,7 @@
   <div class="match-card w-96 my-2 rounded-md bg-gray-100">
     <div class="team-A flex items-center justify-between py-2 px-4">
       <div class="flex items-center">
-        <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
+        <PlayerImgFlag :team="match.teamA"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
           {{ reduceNamePlayer(match?.teamA?.personA.firstname, match?.teamA?.personA.lastname) }}
         </div>

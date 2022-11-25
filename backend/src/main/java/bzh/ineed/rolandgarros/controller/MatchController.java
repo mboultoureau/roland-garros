@@ -94,7 +94,10 @@ public class MatchController {
 
         // Remove old team
         if (actualMatch.getTeamA() != null) {
-            teamRepository.deleteById(actualMatch.getTeamA().getId());
+            Team teamToDelete = actualMatch.getTeamA();
+            actualMatch.setTeamA(null);
+            matchRepository.save(actualMatch);
+            teamRepository.delete(teamToDelete);
         }
 
         // Create new team
@@ -191,7 +194,10 @@ public class MatchController {
 
         // Remove old team
         if (actualMatch.getTeamB() != null) {
-            teamRepository.delete(actualMatch.getTeamA());
+            Team teamToDelete = actualMatch.getTeamB();
+            actualMatch.setTeamB(null);
+            matchRepository.save(actualMatch);
+            teamRepository.delete(teamToDelete);
         }
 
         // Create new team

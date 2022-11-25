@@ -13,13 +13,12 @@ export async function fetch(filter: MatchFilter) {
 
 export async function show(id: string | number) {
   try {
-    const response = await showMock(id);
-    return response.payload;
+    const response = await api.get(`/matches/${id}`);
+    return response.data;
   } catch (error) {}
 }
 
 export async function edit(matchEdit: MatchEditFilter) {
-  console.log(matchEdit);
   try {
     const response = await api.put(
       `/matches/${matchEdit.matchId || matchEdit.id}`,

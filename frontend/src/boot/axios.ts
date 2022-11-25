@@ -25,18 +25,6 @@ api.defaults.headers.common['Content-Type'] = 'application/json';
 
 export default boot(({ app, router }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
-  /*axios.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    async function (error) {
-      if (error.response.status === 401) {
-        console.log('error');
-        router.push({ path: '/login' });
-      }
-      return Promise.reject(error);
-    }
-  );*/
 
   app.config.globalProperties.$axios = axios;
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)

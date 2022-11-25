@@ -62,6 +62,9 @@ const handleCreateTournament = async () => {
   })
   await matchStore.edit(matchCopy)
   handleCloseDialog()
+  round.value = null
+  scoreTeamA.value = null
+  scoreTeamB.value = null
   loaderBtn.value = false
 }
 

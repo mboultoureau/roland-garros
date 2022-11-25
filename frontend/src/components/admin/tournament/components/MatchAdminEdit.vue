@@ -121,7 +121,6 @@ const optionsCourt = computed(() => courtStore.listCourt)
 const teamA = computed({
   get: () => props.teamA,
   set: (value) => { 
-    console.log(value)
     emit('update:teamA', value)
   }
 })

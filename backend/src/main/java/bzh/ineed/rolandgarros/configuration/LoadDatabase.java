@@ -665,7 +665,7 @@ public class LoadDatabase {
             teamB = new Team(personRepository.findByFirstnameAndLastname("Jessica", "Pegula").get(), null);
 
             affectTeamsToMatch(semiFinalMatch1, teamA, teamB, teamRepository, matchRepository);
-            affectsScoresToMatch(semiFinalMatch1, scoreRepository, new Integer[]{6, 3, 7, 4, 1}, new Integer[]{2, 7, 3, 7, 6});
+            affectsScoresToMatch(semiFinalMatch1, scoreRepository, new Integer[]{2, 7, 3, 7, 6}, new Integer[]{6, 3, 7, 4, 1});
 
             semiFinalMatch1.setWinner(teamA);
             semiFinalMatch1.setTeamA(teamA);
@@ -693,7 +693,7 @@ public class LoadDatabase {
             teamB = new Team(personRepository.findByFirstnameAndLastname("Iga", "Swiatek").get(), null);
 
             affectTeamsToMatch(quarterRound1, teamA, teamB, teamRepository, matchRepository);
-            affectsScoresToMatch(quarterRound1, scoreRepository, new Integer[]{7, 1, 6, 2, 3}, new Integer[]{3, 6, 1, 7, 7});
+            affectsScoresToMatch(quarterRound1, scoreRepository, new Integer[]{3, 6, 1, 7, 7}, new Integer[]{7, 1, 6, 2, 3});
 
             quarterRound1.setWinner(teamA);
             quarterRound1.setTeamA(teamA);
@@ -707,7 +707,7 @@ public class LoadDatabase {
             teamB = new Team(personRepository.findByFirstnameAndLastname("Maria", "Sakkari").get(), null);
 
             affectTeamsToMatch(quarterRound2, teamA, teamB, teamRepository, matchRepository);
-            affectsScoresToMatch(quarterRound2, scoreRepository, new Integer[]{7, 1, 6, 2, 3}, new Integer[]{3, 6, 1, 7, 7});
+            affectsScoresToMatch(quarterRound2, scoreRepository, new Integer[]{3, 6, 1, 7, 7}, new Integer[]{7, 1, 6, 2, 3});
 
             quarterRound2.setWinner(teamA);
             quarterRound2.setTeamA(teamA);
@@ -721,7 +721,7 @@ public class LoadDatabase {
             teamB = new Team(personRepository.findByFirstnameAndLastname("Daria", "Kasatkina").get(), null);
 
             affectTeamsToMatch(quarterRound3, teamA, teamB, teamRepository, matchRepository);
-            affectsScoresToMatch(quarterRound3, scoreRepository, new Integer[]{7, 1, 6, 2, 3}, new Integer[]{3, 6, 1, 7, 7});
+            affectsScoresToMatch(quarterRound3, scoreRepository, new Integer[]{3, 6, 1, 7, 7}, new Integer[]{7, 1, 6, 2, 3});
 
             quarterRound3.setWinner(teamA);
             quarterRound3.setTeamA(teamA);
@@ -735,7 +735,7 @@ public class LoadDatabase {
             teamB = new Team(personRepository.findByFirstnameAndLastname("Aryna", "Sabalenka").get(), null);
 
             affectTeamsToMatch(quarterRound4, teamA, teamB, teamRepository, matchRepository);
-            affectsScoresToMatch(quarterRound4, scoreRepository, new Integer[]{6, 3, 7, 4, 1}, new Integer[]{2, 7, 3, 7, 6});
+            affectsScoresToMatch(quarterRound4, scoreRepository, new Integer[]{2, 7, 3, 7, 6}, new Integer[]{6, 3, 7, 4, 1});
 
             quarterRound4.setWinner(teamA);
             quarterRound4.setTeamA(teamA);

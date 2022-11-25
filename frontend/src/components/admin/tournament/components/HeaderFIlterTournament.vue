@@ -11,8 +11,11 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Header from 'src/components/shared/Header.vue';
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import { Round, Tournament, TournamentType } from 'src/models/tournament';
+import { useMatchStore } from 'src/stores/match';
+
+const matchStore = useMatchStore()
 
 const props = defineProps<{
   tournament: Tournament
@@ -35,6 +38,8 @@ const optionsType = computed(() => {
   }
   return options
 })
+
+onMounted(() => matchStore.resetList())
 
 const optionsPhase = ref([
   {

@@ -20,6 +20,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useCourtStore } from 'src/stores/court'
 import { firstDayOfWeek } from './functions/calendar'
 import { format } from 'date-fns'
+import { watch } from 'vue'
 
 const { t } = useI18n()
 const userStore = useUserStore()
@@ -29,6 +30,11 @@ const hasRole = computed(() => userStore.isAuthenticated)
 
 const showDialog = ref(false)
 const courtSelected = ref()
+
+watch(
+  showDialog,
+  async () => await courtStore.fetch()
+)
 
 const listCourt = computed(() => courtStore.listCourt)
 

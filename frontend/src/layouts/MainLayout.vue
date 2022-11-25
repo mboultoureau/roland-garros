@@ -14,12 +14,12 @@
         <q-btn
           flat
           @click="handleTournament"
-          class="text-black mx-8 hover:font-bold">Tournois</q-btn
+          class="text-black hover:font-bold">Tournois</q-btn
         >
         <q-btn flat @click="handlePlayer" class="text-black hover:font-bold">Joueurs</q-btn
         >
-        <q-btn flat @click="handleCourt" class="text-black mx-8 hover:font-bold">Courts</q-btn
-        >
+        <q-btn flat @click="handleCourt" class="text-black hover:font-bold">Courts</q-btn>
+        <q-btn flat @click="handleStat" class="text-black hover:font-bold">Statistiques</q-btn>
 
         <q-btn v-if="isAuth" push color="primary" label="Mon compte" class="mx-8">
           <q-menu>
@@ -98,9 +98,11 @@ import { computed, onMounted, ref } from 'vue';
 import { useUserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
 import { Roles } from 'src/models/user';
+import { useMatchStore } from 'src/stores/match';
 
 const loaderPage = ref(false)
 const countryStore = useCountryStore()
+const matchStore = useMatchStore()
 const router = useRouter();
 const userStore = useUserStore()
 const route = useRoute()
@@ -117,6 +119,7 @@ const handleLogout = () => {
 }
 const handleHome = () => router.push({path: '/'})
 const handleCourt = () => router.push({path: '/court'})
+const handleStat = () => router.push({ path: '/statistics'})
 const handleAdminPage = (role: Roles) => {
   switch(role) {
     case Roles.ROLE_ADMIN: router.push({path: '/admin'})
@@ -148,6 +151,9 @@ onMounted(async () => {
 })
 
 const handlePlayer = () => router.push({ name: 'all-players' });
-const handleTournament = () => router.push({name: 'all-tournaments'})
+const handleTournament = () => {
+  matchStore.resetList()
+  router.push({name: 'all-tournaments'})
+} 
 </script>
 <style lang="scss"></style>

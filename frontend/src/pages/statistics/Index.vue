@@ -31,8 +31,5 @@ onMounted(async () => {
     const response = await api.get('/statistics')
     bestDurations.value = response.data.bestDurations
     bestPlayers.value = response.data.bestPlayers
-
-    console.log(bestDurations.value)
 })
-
 </script>

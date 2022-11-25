@@ -9,7 +9,7 @@
       </div>
           
       <div class="sets flex gap-4">
-        <!--<div class="font-bold"><q-badge color="green" rounded /></div>-->
+        <div v-if="teamAWin" class="font-bold"><q-badge color="green" rounded /></div>
         <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamA >= 6}">{{ score.scoreTeamA }}</div>
       </div>
     </div>
@@ -22,6 +22,7 @@
         </div>
       </div>
       <div class="sets flex gap-4">
+        <div v-if="teamBWin" class="font-bold"><q-badge color="green" rounded /></div>
         <div v-for="score in match?.scores" :key="score.id" class="font-bold text-tertiary" :class="{'text-secondary': score.scoreTeamB >= 6}">{{ score.scoreTeamB }}</div>
       </div>
     </div>
@@ -35,6 +36,19 @@ import PlayerImgFlag from 'src/components/shared/PlayerImgFlag.vue';
 const props = defineProps<{
   match: Match,
 }>()
+
+const ptTeamA = props.match.scores?.map((sc) => sc.scoreTeamA).reduce(
+  (accumulator, currentValue) => accumulator + currentValue,
+  0
+) || 0;
+
+const ptTeamB = props.match.scores?.map((sc) => sc.scoreTeamB).reduce(
+  (accumulator, currentValue) => accumulator + currentValue,
+  0
+) || 0;
+
+const teamAWin = ptTeamA > ptTeamB
+const teamBWin = ptTeamA < ptTeamB
 
 const { reduceNamePlayer } = useMatchCard()
 

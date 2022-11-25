@@ -656,6 +656,7 @@ public class LoadDatabase {
             finalMatch.setWinner(teamA);
             finalMatch.setTeamA(teamA);
             finalMatch.setTeamB(teamB);
+            finalMatch.setDuration(5);
 
             matchRepository.save(finalMatch);
 
@@ -670,6 +671,7 @@ public class LoadDatabase {
             semiFinalMatch1.setWinner(teamA);
             semiFinalMatch1.setTeamA(teamA);
             semiFinalMatch1.setTeamB(teamB);
+            semiFinalMatch1.setDuration(2);
 
             matchRepository.save(semiFinalMatch1);
 
@@ -684,6 +686,7 @@ public class LoadDatabase {
             semiFinalMatch2.setWinner(teamA);
             semiFinalMatch2.setTeamA(teamA);
             semiFinalMatch2.setTeamB(teamB);
+            semiFinalMatch1.setDuration(4);
 
             matchRepository.save(semiFinalMatch2);
 
@@ -698,6 +701,7 @@ public class LoadDatabase {
             quarterRound1.setWinner(teamA);
             quarterRound1.setTeamA(teamA);
             quarterRound1.setTeamB(teamB);
+            quarterRound1.setDuration(2);
 
             matchRepository.save(quarterRound1);
 
@@ -712,6 +716,7 @@ public class LoadDatabase {
             quarterRound2.setWinner(teamA);
             quarterRound2.setTeamA(teamA);
             quarterRound2.setTeamB(teamB);
+            quarterRound2.setDuration(10);
 
             matchRepository.save(quarterRound2);
 
@@ -726,6 +731,7 @@ public class LoadDatabase {
             quarterRound3.setWinner(teamA);
             quarterRound3.setTeamA(teamA);
             quarterRound3.setTeamB(teamB);
+            quarterRound3.setDuration(1);
 
             matchRepository.save(quarterRound3);
 
@@ -740,6 +746,7 @@ public class LoadDatabase {
             quarterRound4.setWinner(teamA);
             quarterRound4.setTeamA(teamA);
             quarterRound4.setTeamB(teamB);
+            quarterRound4.setDuration(7);
 
             matchRepository.save(quarterRound4);
         };

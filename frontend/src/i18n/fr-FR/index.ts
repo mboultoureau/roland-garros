@@ -94,4 +94,5 @@ export default {
   'court.index.btn.reserve': 'Réserver un entrainment',
   'court.index.no.selected': 'Aucun court sélectionné',
   'court.index.selected.court': 'Sélectionner un match',
+  'statistics.index.title': 'Statistiques'
 };

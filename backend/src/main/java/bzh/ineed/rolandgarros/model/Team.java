@@ -20,6 +20,13 @@ public class Team {
 
     @Transient String personBId;
 
+    public Team() {}
+
+    public Team(Person personA, Person personB) {
+        this.personA = personA;
+        this.personB = personB;
+    }
+
     public Long getId() {
         return id;
     }

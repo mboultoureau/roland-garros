@@ -54,6 +54,16 @@ public class LoadDatabase {
         log.info("[MATCH] " + matches.size() + " matches created with status " + eStatus + " and type " + eType);
     }
 
+    public void affectTeamsToMatch(Match match, Team teamA, Team teamB, TeamRepository teamRepository, MatchRepository matchRepository) {
+        teamA = teamRepository.save(teamA);
+        teamB = teamRepository.save(teamB);
+
+        match.setTeamA(teamA);
+        match.setTeamB(teamB);
+
+        matchRepository.save(match);
+    }
+
     @Bean
     CommandLineRunner initDatabase(
             CountryRepository countryRepository,
@@ -367,6 +377,9 @@ public class LoadDatabase {
 
             log.info("[PERSON] Preloading " + personRepository.save(coach2));
 
+            // PLAYERS
+            ArrayList<Person> players = new ArrayList<>();
+
             // Womans
             Person playerF1 = new Person("Iga", "Swiatek");
             playerF1.setGender(EGender.FEMALE);
@@ -508,17 +521,20 @@ public class LoadDatabase {
             playerM3.setRanking(3);
             playerM3.setNationality(countryRepository.findByName("Greece"));
 
-            log.info("[PERSON] Preloading " + personRepository.save(playerF1));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF2));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF3));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF4));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF5));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF6));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF7));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF8));
-            log.info("[PERSON] Preloading " + personRepository.save(playerM1));
-            log.info("[PERSON] Preloading " + personRepository.save(playerM2));
-            log.info("[PERSON] Preloading " + personRepository.save(playerM3));
+            players.add(playerF1);
+            players.add(playerF2);
+            players.add(playerF3);
+            players.add(playerF4);
+            players.add(playerF5);
+            players.add(playerF6);
+            players.add(playerF7);
+            players.add(playerF8);
+            players.add(playerM1);
+            players.add(playerM2);
+            players.add(playerM3);
+
+            personRepository.saveAll(players);
+            log.info("[PLAYER] - Players added");
 
             // ROLES
             Role roleUser = new Role(ERole.ROLE_USER);
@@ -609,6 +625,10 @@ public class LoadDatabase {
 
             // Create matches
             createMatches(tournament1, EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.SIMPLE_WOMEN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.DOUBLE_WOMAN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.DOUBLE_MEN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.MIXED, matchRepository);
             createMatches(tournamentRepository.findByYear(2023).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
             createMatches(tournamentRepository.findByYear(2021).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
             createMatches(tournamentRepository.findByYear(2020).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
@@ -617,20 +637,97 @@ public class LoadDatabase {
             createMatches(tournamentRepository.findByYear(2017).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
 
             // Fixtures for tournament 2022
-            Match finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_MEN, ERound.FINAL_ROUND).get(0);
-            Team teamA = new Team();
-            teamA.setPersonA(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
-            teamA = teamRepository.save(teamA);
 
-            Team teamB = new Team();
-            teamB.setPersonA(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
-            teamB = teamRepository.save(teamB);
+            // FINAL MATCH
+            Match finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.FINAL_ROUND).get(0);
+            Team teamA = new Team(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get(), null);
+            Team teamB = new Team(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get(), null);
+
+            affectTeamsToMatch(finalMatch, teamA, teamB, teamRepository, matchRepository);
 
             finalMatch.setWinner(teamA);
             finalMatch.setTeamA(teamA);
             finalMatch.setTeamB(teamB);
 
             matchRepository.save(finalMatch);
+
+            // SEMI-FINAL 1
+            Match semiFinalMatch1 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.SEMI_FINAL).get(0);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Jessica", "Pegula").get(), null);
+
+            affectTeamsToMatch(semiFinalMatch1, teamA, teamB, teamRepository, matchRepository);
+
+            semiFinalMatch1.setWinner(teamA);
+            semiFinalMatch1.setTeamA(teamA);
+            semiFinalMatch1.setTeamB(teamB);
+
+            matchRepository.save(semiFinalMatch1);
+
+            // SEMI-FINAL 2
+            Match semiFinalMatch2 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.SEMI_FINAL).get(1);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Caroline", "Garcia").get(), null);
+
+            affectTeamsToMatch(semiFinalMatch2, teamA, teamB, teamRepository, matchRepository);
+
+            semiFinalMatch2.setWinner(teamA);
+            semiFinalMatch2.setTeamA(teamA);
+            semiFinalMatch2.setTeamB(teamB);
+
+            matchRepository.save(semiFinalMatch2);
+
+            // QUARTER ROUND 1
+            Match quarterRound1 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(0);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Iga", "Swiatek").get(), null);
+
+            affectTeamsToMatch(quarterRound1, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound1.setWinner(teamA);
+            quarterRound1.setTeamA(teamA);
+            quarterRound1.setTeamB(teamB);
+
+            matchRepository.save(quarterRound1);
+
+            // QUARTER ROUND 2
+            Match quarterRound2 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(1);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Jessica", "Pegula").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Maria", "Sakkari").get(), null);
+
+            affectTeamsToMatch(quarterRound2, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound2.setWinner(teamA);
+            quarterRound2.setTeamA(teamA);
+            quarterRound2.setTeamB(teamB);
+
+            matchRepository.save(quarterRound2);
+
+            // QUARTER ROUND 3
+            Match quarterRound3 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(2);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Daria", "Kasatkina").get(), null);
+
+            affectTeamsToMatch(quarterRound3, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound3.setWinner(teamA);
+            quarterRound3.setTeamA(teamA);
+            quarterRound3.setTeamB(teamB);
+
+            matchRepository.save(quarterRound3);
+
+            // QUARTER ROUND 4
+            Match quarterRound4 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(3);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Caroline", "Garcia").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Aryna", "Sabalenka").get(), null);
+
+            affectTeamsToMatch(quarterRound4, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound4.setWinner(teamA);
+            quarterRound4.setTeamA(teamA);
+            quarterRound4.setTeamB(teamB);
+
+            matchRepository.save(quarterRound4);
         };
     }
 

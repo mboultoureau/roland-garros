@@ -72,6 +72,8 @@ public class ApplicationSecurity {
                 .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/roles/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/courts/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/tournaments/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/matches/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 

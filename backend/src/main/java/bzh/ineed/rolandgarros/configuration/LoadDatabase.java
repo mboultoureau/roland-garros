@@ -679,7 +679,7 @@ public class LoadDatabase {
             teamB = new Team(personRepository.findByFirstnameAndLastname("Caroline", "Garcia").get(), null);
 
             affectTeamsToMatch(semiFinalMatch2, teamA, teamB, teamRepository, matchRepository);
-            affectsScoresToMatch(semiFinalMatch2, scoreRepository, new Integer[]{7, 1, 6, 2, 3}, new Integer[]{3, 6, 1, 7, 7});
+            affectsScoresToMatch(semiFinalMatch2, scoreRepository, new Integer[]{3, 6, 1, 7, 7}, new Integer[]{7, 1, 6, 2, 3});
 
             semiFinalMatch2.setWinner(teamA);
             semiFinalMatch2.setTeamA(teamA);

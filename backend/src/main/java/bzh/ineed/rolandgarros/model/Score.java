@@ -18,6 +18,15 @@ public class Score {
     @ManyToOne
     private Match match;
 
+    public Score() {}
+
+    public Score(Integer round, Integer scoreTeamA, Integer scoreTeamB, Match match) {
+        this.round = round;
+        this.scoreTeamA = scoreTeamA;
+        this.scoreTeamB = scoreTeamB;
+        this.match = match;
+    }
+
     public Long getId() {
         return id;
     }

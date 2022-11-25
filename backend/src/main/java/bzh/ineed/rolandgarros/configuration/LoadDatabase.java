@@ -13,12 +13,56 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 @Configuration
 public class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+
+    private void createMatches(Tournament tournament, EStatus eStatus, EType eType, MatchRepository matchRepository) {
+        ArrayList<Match> matches = new ArrayList<>();
+
+        matches.add(new Match(EStatus.UNDEFINED, ERound.FINAL_ROUND, eType, tournament));
+
+        for (Integer i = 0; i < 2; i++) {
+            matches.add(new Match(EStatus.UNDEFINED, ERound.SEMI_FINAL, eType, tournament));
+        }
+
+        for (Integer i = 0; i < 4; i++) {
+            matches.add(new Match(EStatus.UNDEFINED, ERound.QUART_FINAL, eType, tournament));
+        }
+
+        for (Integer i = 0; i < 8; i++) {
+            matches.add(new Match(EStatus.UNDEFINED, ERound.SIXTEENTH_ROUND, eType, tournament));
+        }
+
+        for (Integer i = 0; i < 16; i++) {
+            matches.add(new Match(EStatus.UNDEFINED, ERound.THIRD_ROUND, eType, tournament));
+        }
+
+        for (Integer i = 0; i < 32; i++) {
+            matches.add(new Match(EStatus.UNDEFINED, ERound.SECOND_ROUND, eType, tournament));
+        }
+
+        for (Integer i = 0; i < 64; i++) {
+            matches.add(new Match(EStatus.UNDEFINED, ERound.FIRST_ROUND, eType, tournament));
+        }
+
+        matchRepository.saveAll(matches);
+        log.info("[MATCH] " + matches.size() + " matches created with status " + eStatus + " and type " + eType);
+    }
+
+    public void affectTeamsToMatch(Match match, Team teamA, Team teamB, TeamRepository teamRepository, MatchRepository matchRepository) {
+        teamA = teamRepository.save(teamA);
+        teamB = teamRepository.save(teamB);
+
+        match.setTeamA(teamA);
+        match.setTeamB(teamB);
+
+        matchRepository.save(match);
+    }
 
     @Bean
     CommandLineRunner initDatabase(
@@ -66,249 +110,255 @@ public class LoadDatabase {
             courtRepository.deleteAll();
 
             // COUNTRIES
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Afghanistan", "AF", "AFG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Albania", "AL", "ALB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Algeria", "DZ", "DZA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("American Samoa", "AS", "ASM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Andorra", "AD", "AND")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Angola", "AO", "AGO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Anguilla", "AI", "AIA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Antarctica", "AQ", "ATA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Antigua and Barbuda", "AG", "ATG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Argentina", "AR", "ARG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Armenia", "AM", "ARM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Aruba", "AW", "ABW")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Australia", "AU", "AUS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Austria", "AT", "AUT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Azerbaijan", "AZ", "AZE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bahamas", "BS", "BHS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bahrain", "BH", "BHR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bangladesh", "BD", "BGD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Barbados", "BB", "BRB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Belarus", "BY", "BLR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Belgium", "BE", "BEL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Belize", "BZ", "BLZ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Benin", "BJ", "BEN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bermuda", "BM", "BMU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bhutan", "BT", "BTN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bolivia", "BO", "BOL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bosnia and Herzegovina", "BA", "BIH")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Botswana", "BW", "BWA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bouvet Island", "BV", "BVT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Brazil", "BR", "BRA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("British Indian Ocean Territory", "IO", "IOT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Brunei Darussalam", "BN", "BRN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Brunei", "BN", "BRN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Bulgaria", "BG", "BGR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Burkina Faso", "BF", "BFA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Burundi", "BI", "BDI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cambodia", "KH", "KHM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cameroon", "CM", "CMR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Canada", "CA", "CAN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cape Verde", "CV", "CPV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cayman Islands", "KY", "CYM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Central African Republic", "CF", "CAF")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Chad", "TD", "TCD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Chile", "CL", "CHL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("China", "CN", "CHN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Christmas Island", "CX", "CXR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cocos (Keeling) Islands", "CC", "CCK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Colombia", "CO", "COL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Comoros", "KM", "COM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Congo", "CG", "COG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cook Islands", "CK", "COK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Costa Rica", "CR", "CRI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Côte d'Ivoire", "CI", "CIV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ivory Coast", "CI", "CIV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Croatia", "HR", "HRV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cuba", "CU", "CUB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Cyprus", "CY", "CYP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Czech Republic", "CZ", "CZE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Denmark", "DK", "DNK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Djibouti", "DJ", "DJI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Dominica", "DM", "DMA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Dominican Republic", "DO", "DOM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ecuador", "EC", "ECU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Egypt", "EG", "EGY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("El Salvador", "SV", "SLV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Equatorial Guinea", "GQ", "GNQ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Eritrea", "ER", "ERI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Estonia", "EE", "EST")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ethiopia", "ET", "ETH")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Falkland Islands (Malvinas)", "FK", "FLK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Faroe Islands", "FO", "FRO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Fiji", "FJ", "FJI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Finland", "FI", "FIN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("France", "FR", "FRA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("French Guiana", "GF", "GUF")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("French Polynesia", "PF", "PYF")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("French Southern Territories", "TF", "ATF")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Gabon", "GA", "GAB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Gambia", "GM", "GMB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Georgia", "GE", "GEO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Germany", "DE", "DEU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ghana", "GH", "GHA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Gibraltar", "GI", "GIB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Greece", "GR", "GRE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Greenland", "GL", "GRL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Grenada", "GD", "GRD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guadeloupe", "GP", "GLP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guam", "GU", "GUM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guatemala", "GT", "GTM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guernsey", "GG", "GGY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guinea", "GN", "GIN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guinea-Bissau", "GW", "GNB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Guyana", "GY", "GUY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Haiti", "HT", "HTI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Heard Island and McDonald Islands", "HM", "HMD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Holy See (Vatican City State)", "VA", "VAT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Honduras", "HN", "HND")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Hong Kong", "HK", "HKG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Hungary", "HU", "HUN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iceland", "IS", "ISL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("India", "IN", "IND")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Indonesia", "ID", "IDN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iran", "IR", "IRA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Iraq", "IQ", "IRQ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ireland", "IE", "IRL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Isle of Man", "IM", "IMN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Israel", "IL", "ISR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Italy", "IT", "ITA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Jamaica", "JM", "JAM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Japan", "JP", "JPN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Jersey", "JE", "JEY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Jordan", "JO", "JOR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kazakhstan", "KZ", "KAZ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kenya", "KE", "KEN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kiribati", "KI", "KIR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("South Korea", "KR", "KOR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kuwait", "KW", "KWT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Kyrgyzstan", "KG", "KGZ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Lao People's Democratic Republic", "LA", "LAO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Latvia", "LV", "LVA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Lebanon", "LB", "LBN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Lesotho", "LS", "LSO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Liberia", "LR", "LBR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Libyan Arab Jamahiriya", "LY", "LBY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Libya", "LY", "LBY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Liechtenstein", "LI", "LIE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Lithuania", "LT", "LTU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Luxembourg", "LU", "LUX")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Macao", "MO", "MAC")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Macedonia", "MK", "MKD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Madagascar", "MG", "MDG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Malawi", "MW", "MWI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Malaysia", "MY", "MYS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Maldives", "MV", "MDV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mali", "ML", "MLI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Malta", "MT", "MLT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Marshall Islands", "MH", "MHL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Martinique", "MQ", "MTQ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mauritania", "MR", "MRT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mauritius", "MU", "MUS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mayotte", "YT", "MYT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mexico", "MX", "MEX")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Monaco", "MC", "MCO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mongolia", "MN", "MNG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Montenegro", "ME", "MNE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Montserrat", "MS", "MSR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Morocco", "MA", "MAR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Mozambique", "MZ", "MOZ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Myanmar", "MM", "MMR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Burma", "MM", "MMR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Namibia", "NA", "NAM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Nauru", "NR", "NRU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Nepal", "NP", "NPL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Netherlands", "NL", "NLD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Netherlands Antilles", "AN", "ANT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("New Caledonia", "NC", "NCL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("New Zealand", "NZ", "NZL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Nicaragua", "NI", "NIC")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Niger", "NE", "NER")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Nigeria", "NG", "NGA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Niue", "NU", "NIU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Norfolk Island", "NF", "NFK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Northern Mariana Islands", "MP", "MNP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Norway", "NO", "NOR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Oman", "OM", "OMN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Pakistan", "PK", "PAK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Palau", "PW", "PLW")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Panama", "PA", "PAN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Papua New Guinea", "PG", "PNG")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Paraguay", "PY", "PRY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Peru", "PE", "PER")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Philippines", "PH", "PHL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Pitcairn", "PN", "PCN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Poland", "PL", "POL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Portugal", "PT", "PRT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Puerto Rico", "PR", "PRI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Qatar", "QA", "QAT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Réunion", "RE", "REU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Romania", "RO", "ROU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Russian Federation", "RU", "RUS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Russia", "RU", "RUS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Rwanda", "RW", "RWA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Kitts and Nevis", "KN", "KNA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Lucia", "LC", "LCA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Pierre and Miquelon", "PM", "SPM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Vincent and the Grenadines", "VC", "VCT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saint Vincent & the Grenadines", "VC", "VCT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("St. Vincent and the Grenadines", "VC", "VCT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Samoa", "WS", "WSM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("San Marino", "SM", "SMR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Sao Tome and Principe", "ST", "STP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Saudi Arabia", "SA", "SAU")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Senegal", "SN", "SEN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Serbia", "RS", "SRB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Seychelles", "SC", "SYC")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Sierra Leone", "SL", "SLE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Singapore", "SG", "SGP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Slovakia", "SK", "SVK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Slovenia", "SI", "SVN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Solomon Islands", "SB", "SLB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Somalia", "SO", "SOM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("South Africa", "ZA", "ZAF")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("South Georgia and the South Sandwich Islands", "GS", "SGS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("South Sudan", "SS", "SSD")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Spain", "ES", "ESP")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Sri Lanka", "LK", "LKA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Sudan", "SD", "SDN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Suriname", "SR", "SUR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Svalbard and Jan Mayen", "SJ", "SJM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Swaziland", "SZ", "SWZ")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Sweden", "SE", "SWE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Switzerland", "CH", "CHE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Syrian Arab Republic", "SY", "SYR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Taiwan", "TW", "TWN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tajikistan", "TJ", "TJK")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Thailand", "TH", "THA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Timor-Leste", "TL", "TLS")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Togo", "TG", "TGO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tokelau", "TK", "TKL")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tonga", "TO", "TON")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Trinidad and Tobago", "TT", "TTO")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tunisia", "TN", "TUN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Turkey", "TR", "TUR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Turkmenistan", "TM", "TKM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Turks and Caicos Islands", "TC", "TCA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Tuvalu", "TV", "TUV")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Uganda", "UG", "UGA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Ukraine", "UA", "UKR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("United Arab Emirates", "AE", "ARE")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("United Kingdom", "GB", "GBR")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("United States", "US", "USA")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("United States Minor Outlying Islands", "UM", "UMI")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Uruguay", "UY", "URY")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Uzbekistan", "UZ", "UZB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Vanuatu", "VU", "VUT")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Venezuela", "VE", "VEN")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Viet Nam", "VN", "VNM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Vietnam", "VN", "VNM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Wallis and Futuna", "WF", "WLF")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Western Sahara", "EH", "ESH")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Yemen", "YE", "YEM")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Zambia", "ZM", "ZMB")));
-            log.info("[COUNTRY] Preloading " + countryRepository.save(new Country("Zimbabwe", "ZW", "ZWE")));
+            ArrayList<Country> countries = new ArrayList<>();
+
+            countries.add(new Country("Afghanistan", "AF", "AFG"));
+            countries.add(new Country("Albania", "AL", "ALB"));
+            countries.add(new Country("Algeria", "DZ", "DZA"));
+            countries.add(new Country("American Samoa", "AS", "ASM"));
+            countries.add(new Country("Andorra", "AD", "AND"));
+            countries.add(new Country("Angola", "AO", "AGO"));
+            countries.add(new Country("Anguilla", "AI", "AIA"));
+            countries.add(new Country("Antarctica", "AQ", "ATA"));
+            countries.add(new Country("Antigua and Barbuda", "AG", "ATG"));
+            countries.add(new Country("Argentina", "AR", "ARG"));
+            countries.add(new Country("Armenia", "AM", "ARM"));
+            countries.add(new Country("Aruba", "AW", "ABW"));
+            countries.add(new Country("Australia", "AU", "AUS"));
+            countries.add(new Country("Austria", "AT", "AUT"));
+            countries.add(new Country("Azerbaijan", "AZ", "AZE"));
+            countries.add(new Country("Bahamas", "BS", "BHS"));
+            countries.add(new Country("Bahrain", "BH", "BHR"));
+            countries.add(new Country("Bangladesh", "BD", "BGD"));
+            countries.add(new Country("Barbados", "BB", "BRB"));
+            countries.add(new Country("Belarus", "BY", "BLR"));
+            countries.add(new Country("Belgium", "BE", "BEL"));
+            countries.add(new Country("Belize", "BZ", "BLZ"));
+            countries.add(new Country("Benin", "BJ", "BEN"));
+            countries.add(new Country("Bermuda", "BM", "BMU"));
+            countries.add(new Country("Bhutan", "BT", "BTN"));
+            countries.add(new Country("Bolivia", "BO", "BOL"));
+            countries.add(new Country("Bosnia and Herzegovina", "BA", "BIH"));
+            countries.add(new Country("Botswana", "BW", "BWA"));
+            countries.add(new Country("Bouvet Island", "BV", "BVT"));
+            countries.add(new Country("Brazil", "BR", "BRA"));
+            countries.add(new Country("British Indian Ocean Territory", "IO", "IOT"));
+            countries.add(new Country("Brunei Darussalam", "BN", "BRN"));
+            countries.add(new Country("Brunei", "BN", "BRN"));
+            countries.add(new Country("Bulgaria", "BG", "BGR"));
+            countries.add(new Country("Burkina Faso", "BF", "BFA"));
+            countries.add(new Country("Burundi", "BI", "BDI"));
+            countries.add(new Country("Cambodia", "KH", "KHM"));
+            countries.add(new Country("Cameroon", "CM", "CMR"));
+            countries.add(new Country("Canada", "CA", "CAN"));
+            countries.add(new Country("Cape Verde", "CV", "CPV"));
+            countries.add(new Country("Cayman Islands", "KY", "CYM"));
+            countries.add(new Country("Central African Republic", "CF", "CAF"));
+            countries.add(new Country("Chad", "TD", "TCD"));
+            countries.add(new Country("Chile", "CL", "CHL"));
+            countries.add(new Country("China", "CN", "CHN"));
+            countries.add(new Country("Christmas Island", "CX", "CXR"));
+            countries.add(new Country("Cocos (Keeling) Islands", "CC", "CCK"));
+            countries.add(new Country("Colombia", "CO", "COL"));
+            countries.add(new Country("Comoros", "KM", "COM"));
+            countries.add(new Country("Congo", "CG", "COG"));
+            countries.add(new Country("Cook Islands", "CK", "COK"));
+            countries.add(new Country("Costa Rica", "CR", "CRI"));
+            countries.add(new Country("Côte d'Ivoire", "CI", "CIV"));
+            countries.add(new Country("Ivory Coast", "CI", "CIV"));
+            countries.add(new Country("Croatia", "HR", "HRV"));
+            countries.add(new Country("Cuba", "CU", "CUB"));
+            countries.add(new Country("Cyprus", "CY", "CYP"));
+            countries.add(new Country("Czech Republic", "CZ", "CZE"));
+            countries.add(new Country("Denmark", "DK", "DNK"));
+            countries.add(new Country("Djibouti", "DJ", "DJI"));
+            countries.add(new Country("Dominica", "DM", "DMA"));
+            countries.add(new Country("Dominican Republic", "DO", "DOM"));
+            countries.add(new Country("Ecuador", "EC", "ECU"));
+            countries.add(new Country("Egypt", "EG", "EGY"));
+            countries.add(new Country("El Salvador", "SV", "SLV"));
+            countries.add(new Country("Equatorial Guinea", "GQ", "GNQ"));
+            countries.add(new Country("Eritrea", "ER", "ERI"));
+            countries.add(new Country("Estonia", "EE", "EST"));
+            countries.add(new Country("Ethiopia", "ET", "ETH"));
+            countries.add(new Country("Falkland Islands (Malvinas)", "FK", "FLK"));
+            countries.add(new Country("Faroe Islands", "FO", "FRO"));
+            countries.add(new Country("Fiji", "FJ", "FJI"));
+            countries.add(new Country("Finland", "FI", "FIN"));
+            countries.add(new Country("France", "FR", "FRA"));
+            countries.add(new Country("French Guiana", "GF", "GUF"));
+            countries.add(new Country("French Polynesia", "PF", "PYF"));
+            countries.add(new Country("French Southern Territories", "TF", "ATF"));
+            countries.add(new Country("Gabon", "GA", "GAB"));
+            countries.add(new Country("Gambia", "GM", "GMB"));
+            countries.add(new Country("Georgia", "GE", "GEO"));
+            countries.add(new Country("Germany", "DE", "DEU"));
+            countries.add(new Country("Ghana", "GH", "GHA"));
+            countries.add(new Country("Gibraltar", "GI", "GIB"));
+            countries.add(new Country("Greece", "GR", "GRE"));
+            countries.add(new Country("Greenland", "GL", "GRL"));
+            countries.add(new Country("Grenada", "GD", "GRD"));
+            countries.add(new Country("Guadeloupe", "GP", "GLP"));
+            countries.add(new Country("Guam", "GU", "GUM"));
+            countries.add(new Country("Guatemala", "GT", "GTM"));
+            countries.add(new Country("Guernsey", "GG", "GGY"));
+            countries.add(new Country("Guinea", "GN", "GIN"));
+            countries.add(new Country("Guinea-Bissau", "GW", "GNB"));
+            countries.add(new Country("Guyana", "GY", "GUY"));
+            countries.add(new Country("Haiti", "HT", "HTI"));
+            countries.add(new Country("Heard Island and McDonald Islands", "HM", "HMD"));
+            countries.add(new Country("Holy See (Vatican City State)", "VA", "VAT"));
+            countries.add(new Country("Honduras", "HN", "HND"));
+            countries.add(new Country("Hong Kong", "HK", "HKG"));
+            countries.add(new Country("Hungary", "HU", "HUN"));
+            countries.add(new Country("Iceland", "IS", "ISL"));
+            countries.add(new Country("India", "IN", "IND"));
+            countries.add(new Country("Indonesia", "ID", "IDN"));
+            countries.add(new Country("Iran", "IR", "IRA"));
+            countries.add(new Country("Iraq", "IQ", "IRQ"));
+            countries.add(new Country("Ireland", "IE", "IRL"));
+            countries.add(new Country("Isle of Man", "IM", "IMN"));
+            countries.add(new Country("Israel", "IL", "ISR"));
+            countries.add(new Country("Italy", "IT", "ITA"));
+            countries.add(new Country("Jamaica", "JM", "JAM"));
+            countries.add(new Country("Japan", "JP", "JPN"));
+            countries.add(new Country("Jersey", "JE", "JEY"));
+            countries.add(new Country("Jordan", "JO", "JOR"));
+            countries.add(new Country("Kazakhstan", "KZ", "KAZ"));
+            countries.add(new Country("Kenya", "KE", "KEN"));
+            countries.add(new Country("Kiribati", "KI", "KIR"));
+            countries.add(new Country("South Korea", "KR", "KOR"));
+            countries.add(new Country("Kuwait", "KW", "KWT"));
+            countries.add(new Country("Kyrgyzstan", "KG", "KGZ"));
+            countries.add(new Country("Lao People's Democratic Republic", "LA", "LAO"));
+            countries.add(new Country("Latvia", "LV", "LVA"));
+            countries.add(new Country("Lebanon", "LB", "LBN"));
+            countries.add(new Country("Lesotho", "LS", "LSO"));
+            countries.add(new Country("Liberia", "LR", "LBR"));
+            countries.add(new Country("Libyan Arab Jamahiriya", "LY", "LBY"));
+            countries.add(new Country("Libya", "LY", "LBY"));
+            countries.add(new Country("Liechtenstein", "LI", "LIE"));
+            countries.add(new Country("Lithuania", "LT", "LTU"));
+            countries.add(new Country("Luxembourg", "LU", "LUX"));
+            countries.add(new Country("Macao", "MO", "MAC"));
+            countries.add(new Country("Macedonia", "MK", "MKD"));
+            countries.add(new Country("Madagascar", "MG", "MDG"));
+            countries.add(new Country("Malawi", "MW", "MWI"));
+            countries.add(new Country("Malaysia", "MY", "MYS"));
+            countries.add(new Country("Maldives", "MV", "MDV"));
+            countries.add(new Country("Mali", "ML", "MLI"));
+            countries.add(new Country("Malta", "MT", "MLT"));
+            countries.add(new Country("Marshall Islands", "MH", "MHL"));
+            countries.add(new Country("Martinique", "MQ", "MTQ"));
+            countries.add(new Country("Mauritania", "MR", "MRT"));
+            countries.add(new Country("Mauritius", "MU", "MUS"));
+            countries.add(new Country("Mayotte", "YT", "MYT"));
+            countries.add(new Country("Mexico", "MX", "MEX"));
+            countries.add(new Country("Monaco", "MC", "MCO"));
+            countries.add(new Country("Mongolia", "MN", "MNG"));
+            countries.add(new Country("Montenegro", "ME", "MNE"));
+            countries.add(new Country("Montserrat", "MS", "MSR"));
+            countries.add(new Country("Morocco", "MA", "MAR"));
+            countries.add(new Country("Mozambique", "MZ", "MOZ"));
+            countries.add(new Country("Myanmar", "MM", "MMR"));
+            countries.add(new Country("Burma", "MM", "MMR"));
+            countries.add(new Country("Namibia", "NA", "NAM"));
+            countries.add(new Country("Nauru", "NR", "NRU"));
+            countries.add(new Country("Nepal", "NP", "NPL"));
+            countries.add(new Country("Netherlands", "NL", "NLD"));
+            countries.add(new Country("Netherlands Antilles", "AN", "ANT"));
+            countries.add(new Country("New Caledonia", "NC", "NCL"));
+            countries.add(new Country("New Zealand", "NZ", "NZL"));
+            countries.add(new Country("Nicaragua", "NI", "NIC"));
+            countries.add(new Country("Niger", "NE", "NER"));
+            countries.add(new Country("Nigeria", "NG", "NGA"));
+            countries.add(new Country("Niue", "NU", "NIU"));
+            countries.add(new Country("Norfolk Island", "NF", "NFK"));
+            countries.add(new Country("Northern Mariana Islands", "MP", "MNP"));
+            countries.add(new Country("Norway", "NO", "NOR"));
+            countries.add(new Country("Oman", "OM", "OMN"));
+            countries.add(new Country("Pakistan", "PK", "PAK"));
+            countries.add(new Country("Palau", "PW", "PLW"));
+            countries.add(new Country("Panama", "PA", "PAN"));
+            countries.add(new Country("Papua New Guinea", "PG", "PNG"));
+            countries.add(new Country("Paraguay", "PY", "PRY"));
+            countries.add(new Country("Peru", "PE", "PER"));
+            countries.add(new Country("Philippines", "PH", "PHL"));
+            countries.add(new Country("Pitcairn", "PN", "PCN"));
+            countries.add(new Country("Poland", "PL", "POL"));
+            countries.add(new Country("Portugal", "PT", "PRT"));
+            countries.add(new Country("Puerto Rico", "PR", "PRI"));
+            countries.add(new Country("Qatar", "QA", "QAT"));
+            countries.add(new Country("Réunion", "RE", "REU"));
+            countries.add(new Country("Romania", "RO", "ROU"));
+            countries.add(new Country("Russian Federation", "RU", "RUS"));
+            countries.add(new Country("Russia", "RU", "RUS"));
+            countries.add(new Country("Rwanda", "RW", "RWA"));
+            countries.add(new Country("Saint Kitts and Nevis", "KN", "KNA"));
+            countries.add(new Country("Saint Lucia", "LC", "LCA"));
+            countries.add(new Country("Saint Pierre and Miquelon", "PM", "SPM"));
+            countries.add(new Country("Saint Vincent and the Grenadines", "VC", "VCT"));
+            countries.add(new Country("Saint Vincent & the Grenadines", "VC", "VCT"));
+            countries.add(new Country("St. Vincent and the Grenadines", "VC", "VCT"));
+            countries.add(new Country("Samoa", "WS", "WSM"));
+            countries.add(new Country("San Marino", "SM", "SMR"));
+            countries.add(new Country("Sao Tome and Principe", "ST", "STP"));
+            countries.add(new Country("Saudi Arabia", "SA", "SAU"));
+            countries.add(new Country("Senegal", "SN", "SEN"));
+            countries.add(new Country("Serbia", "RS", "SRB"));
+            countries.add(new Country("Seychelles", "SC", "SYC"));
+            countries.add(new Country("Sierra Leone", "SL", "SLE"));
+            countries.add(new Country("Singapore", "SG", "SGP"));
+            countries.add(new Country("Slovakia", "SK", "SVK"));
+            countries.add(new Country("Slovenia", "SI", "SVN"));
+            countries.add(new Country("Solomon Islands", "SB", "SLB"));
+            countries.add(new Country("Somalia", "SO", "SOM"));
+            countries.add(new Country("South Africa", "ZA", "ZAF"));
+            countries.add(new Country("South Georgia and the South Sandwich Islands", "GS", "SGS"));
+            countries.add(new Country("South Sudan", "SS", "SSD"));
+            countries.add(new Country("Spain", "ES", "ESP"));
+            countries.add(new Country("Sri Lanka", "LK", "LKA"));
+            countries.add(new Country("Sudan", "SD", "SDN"));
+            countries.add(new Country("Suriname", "SR", "SUR"));
+            countries.add(new Country("Svalbard and Jan Mayen", "SJ", "SJM"));
+            countries.add(new Country("Swaziland", "SZ", "SWZ"));
+            countries.add(new Country("Sweden", "SE", "SWE"));
+            countries.add(new Country("Switzerland", "CH", "CHE"));
+            countries.add(new Country("Syrian Arab Republic", "SY", "SYR"));
+            countries.add(new Country("Taiwan", "TW", "TWN"));
+            countries.add(new Country("Tajikistan", "TJ", "TJK"));
+            countries.add(new Country("Thailand", "TH", "THA"));
+            countries.add(new Country("Timor-Leste", "TL", "TLS"));
+            countries.add(new Country("Togo", "TG", "TGO"));
+            countries.add(new Country("Tokelau", "TK", "TKL"));
+            countries.add(new Country("Tonga", "TO", "TON"));
+            countries.add(new Country("Trinidad and Tobago", "TT", "TTO"));
+            countries.add(new Country("Tunisia", "TN", "TUN"));
+            countries.add(new Country("Turkey", "TR", "TUR"));
+            countries.add(new Country("Turkmenistan", "TM", "TKM"));
+            countries.add(new Country("Turks and Caicos Islands", "TC", "TCA"));
+            countries.add(new Country("Tuvalu", "TV", "TUV"));
+            countries.add(new Country("Uganda", "UG", "UGA"));
+            countries.add(new Country("Ukraine", "UA", "UKR"));
+            countries.add(new Country("United Arab Emirates", "AE", "ARE"));
+            countries.add(new Country("United Kingdom", "GB", "GBR"));
+            countries.add(new Country("United States", "US", "USA"));
+            countries.add(new Country("United States Minor Outlying Islands", "UM", "UMI"));
+            countries.add(new Country("Uruguay", "UY", "URY"));
+            countries.add(new Country("Uzbekistan", "UZ", "UZB"));
+            countries.add(new Country("Vanuatu", "VU", "VUT"));
+            countries.add(new Country("Venezuela", "VE", "VEN"));
+            countries.add(new Country("Viet Nam", "VN", "VNM"));
+            countries.add(new Country("Vietnam", "VN", "VNM"));
+            countries.add(new Country("Wallis and Futuna", "WF", "WLF"));
+            countries.add(new Country("Western Sahara", "EH", "ESH"));
+            countries.add(new Country("Yemen", "YE", "YEM"));
+            countries.add(new Country("Zambia", "ZM", "ZMB"));
+            countries.add(new Country("Zimbabwe", "ZW", "ZWE"));
+
+            log.info("[COUNTRY] Loaded " + countries.size() + " countries");
+            countryRepository.saveAll(countries);
+
 
             // PERSONS
 
@@ -326,6 +376,9 @@ public class LoadDatabase {
             coach2.setIsPlayer(false);
 
             log.info("[PERSON] Preloading " + personRepository.save(coach2));
+
+            // PLAYERS
+            ArrayList<Person> players = new ArrayList<>();
 
             // Womans
             Person playerF1 = new Person("Iga", "Swiatek");
@@ -468,17 +521,20 @@ public class LoadDatabase {
             playerM3.setRanking(3);
             playerM3.setNationality(countryRepository.findByName("Greece"));
 
-            log.info("[PERSON] Preloading " + personRepository.save(playerF1));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF2));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF3));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF4));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF5));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF6));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF7));
-            log.info("[PERSON] Preloading " + personRepository.save(playerF8));
-            log.info("[PERSON] Preloading " + personRepository.save(playerM1));
-            log.info("[PERSON] Preloading " + personRepository.save(playerM2));
-            log.info("[PERSON] Preloading " + personRepository.save(playerM3));
+            players.add(playerF1);
+            players.add(playerF2);
+            players.add(playerF3);
+            players.add(playerF4);
+            players.add(playerF5);
+            players.add(playerF6);
+            players.add(playerF7);
+            players.add(playerF8);
+            players.add(playerM1);
+            players.add(playerM2);
+            players.add(playerM3);
+
+            personRepository.saveAll(players);
+            log.info("[PLAYER] - Players added");
 
             // ROLES
             Role roleUser = new Role(ERole.ROLE_USER);
@@ -558,58 +614,120 @@ public class LoadDatabase {
             // TOURNAMENTS
             TournamentController tournamentController = new TournamentController();
 
-            Tournament tournament1 = new Tournament();
-            tournament1.setYear(2022);
+            Tournament tournament1 = new Tournament(2022);
             log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(tournament1));
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(new Tournament(2023)));
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(new Tournament(2021)));
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(new Tournament(2020)));
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(new Tournament(2019)));
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(new Tournament(2018)));
+            log.info("[TOURNAMENT] Preloading " + tournamentRepository.save(new Tournament(2017)));
 
             // Create matches
-            Match finalMatch = new Match(EStatus.UNDEFINED, ERound.FINAL_ROUND, EType.SIMPLE_MEN, tournament1);
-            log.info("[MATCH] Preloading " + matchRepository.save(finalMatch));
+            createMatches(tournament1, EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.SIMPLE_WOMEN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.DOUBLE_WOMAN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.DOUBLE_MEN, matchRepository);
+            createMatches(tournament1, EStatus.UNDEFINED, EType.MIXED, matchRepository);
+            createMatches(tournamentRepository.findByYear(2023).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournamentRepository.findByYear(2021).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournamentRepository.findByYear(2020).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournamentRepository.findByYear(2019).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournamentRepository.findByYear(2018).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
+            createMatches(tournamentRepository.findByYear(2017).get(), EStatus.UNDEFINED, EType.SIMPLE_MEN, matchRepository);
 
-            for (Integer i = 0; i < 2; i++) {
-                Match semiMatch = new Match(EStatus.UNDEFINED, ERound.SEMI_FINAL, EType.SIMPLE_MEN, tournament1);
-                log.info("[MATCH] Preloading " + matchRepository.save(semiMatch));
-            }
+            // Fixtures for tournament 2022
 
-            for (Integer i = 0; i < 4; i++) {
-                Match quartMatch = new Match(EStatus.UNDEFINED, ERound.QUART_FINAL, EType.SIMPLE_MEN, tournament1);
-                log.info("[MATCH] Preloading " + matchRepository.save(quartMatch));
-            }
+            // FINAL MATCH
+            Match finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.FINAL_ROUND).get(0);
+            Team teamA = new Team(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get(), null);
+            Team teamB = new Team(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get(), null);
 
-            for (Integer i = 0; i < 8; i++) {
-                Match sixteenthMatch = new Match(EStatus.UNDEFINED, ERound.SIXTEENTH_ROUND, EType.SIMPLE_MEN, tournament1);
-                log.info("[MATCH] Preloading " + matchRepository.save(sixteenthMatch));
-            }
-
-            for (Integer i = 0; i < 16; i++) {
-                Match thirdMatch = new Match(EStatus.UNDEFINED, ERound.THIRD_ROUND, EType.SIMPLE_MEN, tournament1);
-                log.info("[MATCH] Preloading " + matchRepository.save(thirdMatch));
-            }
-
-            for (Integer i = 0; i < 32; i++) {
-                Match secondMatch = new Match(EStatus.UNDEFINED, ERound.SECOND_ROUND, EType.SIMPLE_MEN, tournament1);
-                log.info("[MATCH] Preloading " + matchRepository.save(secondMatch));
-            }
-
-            for (Integer i = 0; i < 64; i++) {
-                Match firstMatch = new Match(EStatus.UNDEFINED, ERound.FIRST_ROUND, EType.SIMPLE_MEN, tournament1);
-                log.info("[MATCH] Preloading " + matchRepository.save(firstMatch));
-            }
-
-            finalMatch = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_MEN, ERound.FINAL_ROUND).get(0);
-            Team teamA = new Team();
-            teamA.setPersonA(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get());
-            teamA = teamRepository.save(teamA);
-
-            Team teamB = new Team();
-            teamB.setPersonA(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get());
-            teamB = teamRepository.save(teamB);
+            affectTeamsToMatch(finalMatch, teamA, teamB, teamRepository, matchRepository);
 
             finalMatch.setWinner(teamA);
             finalMatch.setTeamA(teamA);
             finalMatch.setTeamB(teamB);
 
             matchRepository.save(finalMatch);
+
+            // SEMI-FINAL 1
+            Match semiFinalMatch1 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.SEMI_FINAL).get(0);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Jessica", "Pegula").get(), null);
+
+            affectTeamsToMatch(semiFinalMatch1, teamA, teamB, teamRepository, matchRepository);
+
+            semiFinalMatch1.setWinner(teamA);
+            semiFinalMatch1.setTeamA(teamA);
+            semiFinalMatch1.setTeamB(teamB);
+
+            matchRepository.save(semiFinalMatch1);
+
+            // SEMI-FINAL 2
+            Match semiFinalMatch2 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.SEMI_FINAL).get(1);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Caroline", "Garcia").get(), null);
+
+            affectTeamsToMatch(semiFinalMatch2, teamA, teamB, teamRepository, matchRepository);
+
+            semiFinalMatch2.setWinner(teamA);
+            semiFinalMatch2.setTeamA(teamA);
+            semiFinalMatch2.setTeamB(teamB);
+
+            matchRepository.save(semiFinalMatch2);
+
+            // QUARTER ROUND 1
+            Match quarterRound1 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(0);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Ons", "Jabeur").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Iga", "Swiatek").get(), null);
+
+            affectTeamsToMatch(quarterRound1, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound1.setWinner(teamA);
+            quarterRound1.setTeamA(teamA);
+            quarterRound1.setTeamB(teamB);
+
+            matchRepository.save(quarterRound1);
+
+            // QUARTER ROUND 2
+            Match quarterRound2 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(1);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Jessica", "Pegula").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Maria", "Sakkari").get(), null);
+
+            affectTeamsToMatch(quarterRound2, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound2.setWinner(teamA);
+            quarterRound2.setTeamA(teamA);
+            quarterRound2.setTeamB(teamB);
+
+            matchRepository.save(quarterRound2);
+
+            // QUARTER ROUND 3
+            Match quarterRound3 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(2);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Coco", "Gauff").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Daria", "Kasatkina").get(), null);
+
+            affectTeamsToMatch(quarterRound3, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound3.setWinner(teamA);
+            quarterRound3.setTeamA(teamA);
+            quarterRound3.setTeamB(teamB);
+
+            matchRepository.save(quarterRound3);
+
+            // QUARTER ROUND 4
+            Match quarterRound4 = matchRepository.findByTournamentIdAndTypeAndRound(tournamentRepository.findByYear(2022).get().getId(), EType.SIMPLE_WOMEN, ERound.QUART_FINAL).get(3);
+            teamA = new Team(personRepository.findByFirstnameAndLastname("Caroline", "Garcia").get(), null);
+            teamB = new Team(personRepository.findByFirstnameAndLastname("Aryna", "Sabalenka").get(), null);
+
+            affectTeamsToMatch(quarterRound4, teamA, teamB, teamRepository, matchRepository);
+
+            quarterRound4.setWinner(teamA);
+            quarterRound4.setTeamA(teamA);
+            quarterRound4.setTeamB(teamB);
+
+            matchRepository.save(quarterRound4);
         };
     }
 

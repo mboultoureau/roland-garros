@@ -21,6 +21,7 @@
       </div>
       <div class="coach px-4">
         <div>{{ t('player.show.coach') }}</div>
+        <div class="font-bold">{{ player?.coach?.firstname || ' ' }} {{ player?.coach?.lastname || '' }}</div>
       </div>
       <div class="hand px-4">
         <div>{{ t('player.show.hand') }}</div>

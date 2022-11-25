@@ -7,12 +7,12 @@
     <figure>
     <img
       class="image1 absolute -bottom-5 right-0"
-      src="https://images.prismic.io/fft-rg-site/233348c2-326d-4abb-a5b1-1b356e1fb8ed_20200116_ID_RuudCasper_US.png"
+      src="http://localhost:8000/img/casper_ruud.png"
     />
     </figure>
     <img
       class="image2 absolute bottom-0 right-56"
-      src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/929746a0-24b4-4de3-bfb4-fc035337f53f/dej1nz5-49e26e92-0b65-4c0a-835d-cdfbec6bd492.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzkyOTc0NmEwLTI0YjQtNGRlMy1iZmI0LWZjMDM1MzM3ZjUzZlwvZGVqMW56NS00OWUyNmU5Mi0wYjY1LTRjMGEtODM1ZC1jZGZiZWM2YmQ0OTIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hKLFEKQRf2s-1dtfILQhE9Z6Gc2h49K78atnkw0qCoM"
+      src="http://localhost:8000/img/rafael_nadal.png"
     />
   </div>
   <div class="bg-white marge">
@@ -41,22 +41,22 @@
   <div>
       <div class="count-items">
         <div>
-          <div id="value">0</div>
+          <div id="value">{{ nbPlayers }}</div>
           <p>Joueurs</p>
         </div>
 
         <div>
-          <div id="value1">0</div>
+          <div id="value1">{{ nbTerrains }}</div>
           <p>Terrains</p>
         </div>
 
         <div>
-          <div id="value2">0</div>
+          <div id="value2">{{ nbMatches }}</div>
           <p>Matchs</p>
         </div>
 
         <div>
-          <div id="value3">0</div>
+          <div id="value3">{{ nbDays }}</div>
           <p>Jours</p>
         </div>
 
@@ -87,14 +87,56 @@
 </div>
 </template>
 
-<script setup lang="ts"></script>
+<script>
+export default {
+  name: 'IndexPage',
+  data: () => {
+    return {
+      nbDays: 0,
+      nbMatches: 0,
+      nbPlayers: 0,
+      nbTerrains: 0
+    }
+  },
+  mounted() {
+    function animateNumber(callback, from, to, duration) {
+      let start = null,
+        animate = timestamp => {
+          start = start || timestamp;
+          let progress = Math.min((timestamp - start) / duration, 1);
+          callback(progress * (to - from) + from);
+          if(progress < 1) {
+            window.requestAnimationFrame(animate);
+          }
+        };
+      window.requestAnimationFrame(animate);
+    }
+
+    animateNumber(value => {
+      document.getElementById("value").textContent = Math.floor(value);
+    }, 0, 150, 5000);
+
+    animateNumber(value => {
+      document.getElementById("value1").textContent = Math.floor(value);
+    }, 0, 27, 5000);
+
+    animateNumber(value => {
+      document.getElementById("value2").textContent = Math.floor(value);
+    }, 0, 640, 5000);
+
+    animateNumber(value => {
+      document.getElementById("value3").textContent = Math.floor(value);
+    }, 0, 43, 5000);
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 header {
   height: calc(100vh - 96px);
-  background-image: url('https://www.tweener.fr/wp-content/uploads/2022/06/diaporama_faq-04.jpg');
+  background-image: url('http://localhost:8000/img/background.jpg');
 
-  clip-path: polygon(0% 0%, 45.9% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 70.9% 0%, 100% 100%, 0% 100%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right;
@@ -104,12 +146,32 @@ header {
   margin: 0;
   padding: 0;
 }
+
+.text_RG {
+  margin-left: 30px;
+}
+
 .image1 {
-  width: 550px;
+  height: calc(100% - 100px);
+  // max-width: 50vw;
 }
 .image2 {
-  width: 550px;
+  height: calc(100% - 100px);
+  // max-width: 50vw;
 }
+
+@media (max-width: 900px) {
+  .text_RG {
+    font-size: 5rem;
+  }
+
+  .image1, .image2 {
+    width: 300px;
+    height: auto !important;
+  }
+}
+
+
 .image3 {
   width: 250px;
 }
@@ -321,34 +383,3 @@ a {
 }
 
 </style>
-
-<script>
-function animateNumber(callback, from, to, duration) {
-  let start = null,
-    animate = timestamp => {
-      start = start || timestamp;
-      let progress = Math.min((timestamp - start) / duration, 1);
-      callback(progress * (to - from) + from);
-      if(progress < 1) {
-        window.requestAnimationFrame(animate);
-      }
-    };
-  window.requestAnimationFrame(animate);
-}
-
-animateNumber(value => {
-  document.getElementById("value").textContent = Math.floor(value);
-}, 0, 150, 5000);
-
-animateNumber(value => {
-  document.getElementById("value1").textContent = Math.floor(value);
-}, 0, 27, 5000);
-
-animateNumber(value => {
-  document.getElementById("value2").textContent = Math.floor(value);
-}, 0, 640, 5000);
-
-animateNumber(value => {
-  document.getElementById("value3").textContent = Math.floor(value);
-}, 0, 43, 5000);
-</script>

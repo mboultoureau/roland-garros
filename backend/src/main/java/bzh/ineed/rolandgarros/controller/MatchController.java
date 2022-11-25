@@ -1,6 +1,7 @@
 package bzh.ineed.rolandgarros.controller;
 
 import bzh.ineed.rolandgarros.exception.BadRequestException;
+import bzh.ineed.rolandgarros.exception.NotFoundException;
 import bzh.ineed.rolandgarros.model.*;
 import bzh.ineed.rolandgarros.model.Team;
 import bzh.ineed.rolandgarros.repository.*;
@@ -278,6 +279,12 @@ public class MatchController {
                     newMatch.setId(id);
                     return matchRepository.save(newMatch);
                 });
+    }
+
+    @GetMapping("/matches/{id}")
+    public Match getMatch(@PathVariable Long id) {
+        return matchRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Could not find match " + id));
     }
 
 }

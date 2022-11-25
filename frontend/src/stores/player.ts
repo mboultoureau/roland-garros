@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { FilterPlayer, Person } from 'src/models/person';
+import { TournamentType } from 'src/models/tournament';
 import {
   fetch,
   store,
@@ -8,6 +9,7 @@ import {
   show,
   fetchCoach,
   fetchAll,
+  getPlayersByTournament,
 } from 'src/services/player';
 
 export const usePlayerStore = defineStore('player', {
@@ -42,6 +44,9 @@ export const usePlayerStore = defineStore('player', {
     },
     async show(id: number) {
       this.player = await show(id);
+    },
+    async getPlayersByTournament(id: number, type: TournamentType) {
+      this.listPlayer = await getPlayersByTournament(id, type);
     },
   },
 });

@@ -30,6 +30,6 @@ const matchComp = computed(() => props.match)
 
 watch(
   matchComp,
-  () => { if(matchComp.value === undefined) router.push({name: 'list-match'})}
+  () => { if(matchComp.value === undefined) router.back()}
 )
 </script>

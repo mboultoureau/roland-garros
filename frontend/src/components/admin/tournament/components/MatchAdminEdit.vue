@@ -9,12 +9,11 @@
       <div class="team-a flex-1">
         <q-select 
           :multiple="double" 
-          counter
-          :max-values="double ? 2:1"
+          max-values="2"
           filled 
           :label="t('tournament.edit.match.select.team')" 
           v-model="teamA" 
-          :options="optionsPlayer" 
+          :options="optionsPlayers" 
           emit-value 
           map-options 
           option-value="id" 
@@ -35,12 +34,11 @@
       <div class="team-b flex-1">
         <q-select 
           :multiple="double" 
+          max-values="2"
           filled 
-          counter
-          :max-values="double ? 2:1"
           :label="t('tournament.edit.match.select.team')" 
           v-model="teamB"
-          :options="optionsPlayer" 
+          :options="optionsPlayers" 
           emit-value 
           map-options 
           option-value="id" 
@@ -76,6 +74,8 @@
         emit-value
       >
       </q-select>
+
+      <q-input type="number" in filled v-model="duration" label="Nombre d'heure de réservation"></q-input>
     </div>
   </div>
 </template>
@@ -83,17 +83,14 @@
 import { useMatchCard } from 'src/components/match/functions/match';
 import Header from 'src/components/shared/Header.vue';
 import InputDate from 'src/components/shared/InputDate.vue';
+import { Person } from 'src/models/person';
 import { useCourtStore } from 'src/stores/court';
-import { useMatchStore } from 'src/stores/match';
-import { usePlayerStore } from 'src/stores/player';
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n()
 
-const matchStore = useMatchStore()
 const courtStore = useCourtStore()
-const playerStore = usePlayerStore()
 
 const props = defineProps<{
   double: boolean,
@@ -102,7 +99,9 @@ const props = defineProps<{
   date: string | null,
   time: string | null,
   court: number | null,
-  showLoaderBtn: boolean
+  duration: number | null,
+  showLoaderBtn: boolean,
+  optionsPlayers: Person[] 
 }>()
 
 const emit = defineEmits<{
@@ -110,17 +109,21 @@ const emit = defineEmits<{
   (name: 'update:teamB', value: number|number[]): number|number[]
   (name: 'update:date', value: string): string
   (name: 'update:court', value: number): number
+  (name: 'update:duration', value: number): number
+  (name: 'update:time', value: number | string): number
   (name: 'submit'): void
 }>()
 
 const { reduceNamePlayer } = useMatchCard()
 
 const optionsCourt = computed(() => courtStore.listCourt)
-const optionsPlayer = computed(() => playerStore.listPlayer)
 
 const teamA = computed({
   get: () => props.teamA,
-  set: (value) => emit('update:teamA', value)
+  set: (value) => { 
+    console.log(value)
+    emit('update:teamA', value)
+  }
 })
 const teamB = computed({
   get: () => props.teamB,
@@ -134,7 +137,14 @@ const date = computed({
   get: () => props.date,
   set: (value) => emit('update:date', value)
 })
-const time = ref()
+const duration = computed({
+  get: () => props.duration,
+  set: (value) => emit('update:duration', value) 
+})
+const time = computed({
+  get: () => props.time,
+  set: (value) => emit('update:time', value)
+})
 
 const loadingBtn = ref(false)
 

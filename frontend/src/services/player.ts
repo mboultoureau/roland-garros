@@ -9,6 +9,13 @@ import {
 import { api } from 'src/boot/axios';
 import { ErrorNotify } from 'src/helpers/notify';
 
+export async function fetchAll() {
+  try {
+    const response = await api.get('/players?size=1000');
+    return response.data.content;
+  } catch (error) {}
+}
+
 export async function fetch(filter?: FilterPlayer) {
   try {
     let sortApi = '';

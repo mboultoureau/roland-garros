@@ -4,7 +4,7 @@
       <div class="flex items-center">
         <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': true}">
-          {{ reduceNamePlayer(match?.teamAId?.personA.firstname, match?.teamAId?.personA.lastname) }}
+          {{ reduceNamePlayer(match?.teamA?.personA.firstname, match?.teamA?.personA.lastname) }}
         </div>
       </div>
           
@@ -18,7 +18,7 @@
       <div class="flex items-center">
         <PlayerImgFlag :team="match.teamB"></PlayerImgFlag>
         <div class="font-bold ml-6 text-tertiary" :class="{'text-secondary': false}">
-          {{ reduceNamePlayer(match?.teamBId?.personA.firstname, match?.teamBId?.personA.lastname) }}
+          {{ reduceNamePlayer(match?.teamB?.personA.firstname, match?.teamB?.personA.lastname) }}
         </div>
       </div>
       <div class="sets flex gap-4">

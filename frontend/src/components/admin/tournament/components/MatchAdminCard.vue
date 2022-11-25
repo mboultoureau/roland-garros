@@ -18,21 +18,25 @@
     <div class="flex gap-4 justify-self-end">
       <q-btn flat icon="visibility" />
       <q-btn flat icon="edit" @click="handleEditMatch" />
-      <q-btn color="primary">+ score(s)</q-btn>
+      <q-btn color="primary" @click="handleAddScores">+ score(s)</q-btn>
     </div>
   </div>
+  <DialogAddScore :match="match" v-model:show="showDialog"></DialogAddScore>
 </template>
 <script setup lang="ts">
 import { useMatchCard } from 'src/components/match/functions/match';
 import PlayerImgFlag from 'src/components/shared/PlayerImgFlag.vue';
+import DialogAddScore from './DialogAddScore.vue';
 import { Match } from 'src/models/match';
 import { useMatchStore } from 'src/stores/match';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue'
 
 const { t } = useI18n()
 const router = useRouter()
 const matchStore = useMatchStore()
+const showDialog = ref(false)
 
 const props = defineProps<{
   match: Match
@@ -40,7 +44,9 @@ const props = defineProps<{
 
 const handleEditMatch = () => {
   matchStore.set(props.match)
-  router.push({name: 'edit-match-tournament', params: {idT: props.match?.tournamentId, idM: props.match?.id}})
+  router.push({name: 'edit-match-tournament', params: {idT: props.match?.tournament.id, idM: props.match?.id}})
 }
+
+const handleAddScores = () => showDialog.value = true
 const { reduceNamePlayer } = useMatchCard()
 </script>

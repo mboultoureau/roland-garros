@@ -52,7 +52,10 @@ const isSimpleMatch = computed(() => props.type === 'MatchCard')
 
 const tournamentSelect = ref()
 
-const handleShowMatch = (match: Match) => router.push({ name: 'show-match', params: { idT: match?.tournament?.id, idM: match.id }})
+const handleShowMatch = (match: Match) => {
+  matchStore.resetList()
+  router.push({ name: 'show-match', params: { idT: match?.tournament?.id, idM: match.id }})
+}
 
 const getNextOrPreviousRound = (round: Round): Round => {
   switch(round) {

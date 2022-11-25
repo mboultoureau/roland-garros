@@ -25,5 +25,9 @@ export const useMatchStore = defineStore('match', {
     set(match: Match) {
       this.match = match;
     },
+    resetList() {
+      this.listMatch = [];
+      this.listMatchNextOrPrevious = [];
+    },
   },
 });

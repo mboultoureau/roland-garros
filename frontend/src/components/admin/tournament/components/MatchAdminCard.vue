@@ -43,6 +43,7 @@ const props = defineProps<{
 }>()
 
 const handleEditMatch = () => {
+  matchStore.resetList()
   matchStore.set(props.match)
   router.push({name: 'edit-match-tournament', params: {idT: props.match?.tournament.id, idM: props.match?.id}})
 }

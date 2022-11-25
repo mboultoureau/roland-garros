@@ -41,22 +41,22 @@
   <div>
       <div class="count-items">
         <div>
-          <div id="value">0</div>
+          <div id="value">{{ nbPlayers }}</div>
           <p>Joueurs</p>
         </div>
 
         <div>
-          <div id="value1">0</div>
+          <div id="value1">{{ nbTerrains }}</div>
           <p>Terrains</p>
         </div>
 
         <div>
-          <div id="value2">0</div>
+          <div id="value2">{{ nbMatches }}</div>
           <p>Matchs</p>
         </div>
 
         <div>
-          <div id="value3">0</div>
+          <div id="value3">{{ nbDays }}</div>
           <p>Jours</p>
         </div>
 
@@ -86,6 +86,50 @@
   </div>
 </div>
 </template>
+
+<script>
+export default {
+  name: 'IndexPage',
+  data: () => {
+    return {
+      nbDays: 0,
+      nbMatches: 0,
+      nbPlayers: 0,
+      nbTerrains: 0
+    }
+  },
+  mounted() {
+    function animateNumber(callback, from, to, duration) {
+      let start = null,
+        animate = timestamp => {
+          start = start || timestamp;
+          let progress = Math.min((timestamp - start) / duration, 1);
+          callback(progress * (to - from) + from);
+          if(progress < 1) {
+            window.requestAnimationFrame(animate);
+          }
+        };
+      window.requestAnimationFrame(animate);
+    }
+
+    animateNumber(value => {
+      document.getElementById("value").textContent = Math.floor(value);
+    }, 0, 150, 5000);
+
+    animateNumber(value => {
+      document.getElementById("value1").textContent = Math.floor(value);
+    }, 0, 27, 5000);
+
+    animateNumber(value => {
+      document.getElementById("value2").textContent = Math.floor(value);
+    }, 0, 640, 5000);
+
+    animateNumber(value => {
+      document.getElementById("value3").textContent = Math.floor(value);
+    }, 0, 43, 5000);
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 header {
@@ -339,34 +383,3 @@ a {
 }
 
 </style>
-
-<script>
-function animateNumber(callback, from, to, duration) {
-  let start = null,
-    animate = timestamp => {
-      start = start || timestamp;
-      let progress = Math.min((timestamp - start) / duration, 1);
-      callback(progress * (to - from) + from);
-      if(progress < 1) {
-        window.requestAnimationFrame(animate);
-      }
-    };
-  window.requestAnimationFrame(animate);
-}
-
-animateNumber(value => {
-  document.getElementById("value").textContent = Math.floor(value);
-}, 0, 150, 5000);
-
-animateNumber(value => {
-  document.getElementById("value1").textContent = Math.floor(value);
-}, 0, 27, 5000);
-
-animateNumber(value => {
-  document.getElementById("value2").textContent = Math.floor(value);
-}, 0, 640, 5000);
-
-animateNumber(value => {
-  document.getElementById("value3").textContent = Math.floor(value);
-}, 0, 43, 5000);
-</script>

@@ -42,12 +42,14 @@ import ListMatchTournament from './components/ListMatchTournament.vue';
 import ScoreboardNavigation from './components/ScoreboardNavigation.vue'
 import TabListPlayer from '../player/components/TabListPlayer.vue';
 import { Gender } from 'src/models/person';
+import { usePlayerStore } from 'src/stores/player';
 
 
 const { t } = useI18n()
 
 const tournamentStore = useTournamentStore()
 const matchStore = useMatchStore()
+const playerStore = usePlayerStore()
 
 const showLoader = ref(false)
 const btnTitle = ref('players')
@@ -77,7 +79,11 @@ const handlePlayerTournaments = () => {
 }
 
 const currentTab = ref(Gender.MEN)
-// TODO: watch and fetch tournament player
+
+watch(
+  () => currentTab.value,
+  async () => await playerStore.getPlayersByTournament(tournamentSelect.value?.id, currentTab.value)
+)
 
 watch(
   matchFiltre.value,

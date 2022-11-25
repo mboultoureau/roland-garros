@@ -49,14 +49,4 @@ const playerStore = usePlayerStore()
 
 const listPlayer = computed(() => playerStore.listPlayer)
 
-/*
-watch(
-  currentTab,
-  async () => {
-    showLoader.value = true
-    await playerStore.fetch({ gender: currentTab.value })
-    showLoader.value = false
-  }
-)
-*/
 </script>

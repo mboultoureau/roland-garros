@@ -1,4 +1,5 @@
 import { FilterPlayer, Person } from 'src/models/person';
+import { TournamentType } from 'src/models/tournament';
 
 import {
   mockDelete,
@@ -108,6 +109,15 @@ export async function edit(player: Person) {
 export async function show(id: number) {
   try {
     const response = await api.get(`persons/${id}`);
+    return response.data;
+  } catch (error) {}
+}
+
+export async function getPlayersByTournament(id: number, type: TournamentType) {
+  try {
+    const response = await api.get(`tournaments/${id}/players`, {
+      params: { type },
+    });
     return response.data;
   } catch (error) {}
 }

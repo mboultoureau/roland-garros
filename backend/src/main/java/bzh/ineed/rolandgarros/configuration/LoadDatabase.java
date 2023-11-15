@@ -150,7 +150,6 @@ public class LoadDatabase {
             countries.add(new Country("Bouvet Island", "BV", "BVT"));
             countries.add(new Country("Brazil", "BR", "BRA"));
             countries.add(new Country("British Indian Ocean Territory", "IO", "IOT"));
-            countries.add(new Country("Brunei Darussalam", "BN", "BRN"));
             countries.add(new Country("Brunei", "BN", "BRN"));
             countries.add(new Country("Bulgaria", "BG", "BGR"));
             countries.add(new Country("Burkina Faso", "BF", "BFA"));
@@ -171,7 +170,6 @@ public class LoadDatabase {
             countries.add(new Country("Congo", "CG", "COG"));
             countries.add(new Country("Cook Islands", "CK", "COK"));
             countries.add(new Country("Costa Rica", "CR", "CRI"));
-            countries.add(new Country("Côte d'Ivoire", "CI", "CIV"));
             countries.add(new Country("Ivory Coast", "CI", "CIV"));
             countries.add(new Country("Croatia", "HR", "HRV"));
             countries.add(new Country("Cuba", "CU", "CUB"));
@@ -242,7 +240,6 @@ public class LoadDatabase {
             countries.add(new Country("Lebanon", "LB", "LBN"));
             countries.add(new Country("Lesotho", "LS", "LSO"));
             countries.add(new Country("Liberia", "LR", "LBR"));
-            countries.add(new Country("Libyan Arab Jamahiriya", "LY", "LBY"));
             countries.add(new Country("Libya", "LY", "LBY"));
             countries.add(new Country("Liechtenstein", "LI", "LIE"));
             countries.add(new Country("Lithuania", "LT", "LTU"));
@@ -268,7 +265,6 @@ public class LoadDatabase {
             countries.add(new Country("Morocco", "MA", "MAR"));
             countries.add(new Country("Mozambique", "MZ", "MOZ"));
             countries.add(new Country("Myanmar", "MM", "MMR"));
-            countries.add(new Country("Burma", "MM", "MMR"));
             countries.add(new Country("Namibia", "NA", "NAM"));
             countries.add(new Country("Nauru", "NR", "NRU"));
             countries.add(new Country("Nepal", "NP", "NPL"));
@@ -298,14 +294,11 @@ public class LoadDatabase {
             countries.add(new Country("Qatar", "QA", "QAT"));
             countries.add(new Country("Réunion", "RE", "REU"));
             countries.add(new Country("Romania", "RO", "ROU"));
-            countries.add(new Country("Russian Federation", "RU", "RUS"));
             countries.add(new Country("Russia", "RU", "RUS"));
             countries.add(new Country("Rwanda", "RW", "RWA"));
             countries.add(new Country("Saint Kitts and Nevis", "KN", "KNA"));
             countries.add(new Country("Saint Lucia", "LC", "LCA"));
             countries.add(new Country("Saint Pierre and Miquelon", "PM", "SPM"));
-            countries.add(new Country("Saint Vincent and the Grenadines", "VC", "VCT"));
-            countries.add(new Country("Saint Vincent & the Grenadines", "VC", "VCT"));
             countries.add(new Country("St. Vincent and the Grenadines", "VC", "VCT"));
             countries.add(new Country("Samoa", "WS", "WSM"));
             countries.add(new Country("San Marino", "SM", "SMR"));
@@ -355,7 +348,6 @@ public class LoadDatabase {
             countries.add(new Country("Uzbekistan", "UZ", "UZB"));
             countries.add(new Country("Vanuatu", "VU", "VUT"));
             countries.add(new Country("Venezuela", "VE", "VEN"));
-            countries.add(new Country("Viet Nam", "VN", "VNM"));
             countries.add(new Country("Vietnam", "VN", "VNM"));
             countries.add(new Country("Wallis and Futuna", "WF", "WLF"));
             countries.add(new Country("Western Sahara", "EH", "ESH"));

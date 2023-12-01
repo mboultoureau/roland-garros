@@ -48,7 +48,7 @@ services:
     depends_on:
       - backend
     labels:
-      - "traefik.http.routers.frontend.rule=Host(`app.localhost`)"
+      - "traefik.http.routers.frontend.rule=Host(`${FRONTEND_URL:-app.localhost}`)"
     environment:
       - BACKEND_URL=backend.localhost
 

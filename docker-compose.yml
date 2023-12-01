@@ -42,7 +42,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    command: sh -c "quasar build && quasar serve /app/dist/spa"
+    command: sh -c "npm install && quasar build && quasar serve /app/dist/spa"
     volumes:
       - ./frontend:/app
     labels:

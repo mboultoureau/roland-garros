@@ -35,7 +35,7 @@ services:
     environment:
       - DATABASE_URL=mysql
       - APP_PORT=80
-      - BACKEND_URL=backend.localhost
+      - BACKEND_URL=${BACKEND_URL:-backend.localhost}
 
   # Frontend
   frontend:
@@ -48,5 +48,5 @@ services:
     labels:
       - "traefik.http.routers.frontend.rule=Host(`${FRONTEND_URL:-app.localhost}`)"
     environment:
-      - BACKEND_URL=backend.localhost
+      - BACKEND_URL=${BACKEND_URL:-backend.localhost}
 

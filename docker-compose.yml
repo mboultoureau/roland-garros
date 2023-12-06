@@ -31,7 +31,7 @@ services:
     volumes:
       - ./backend:/app
     labels:
-      - "traefik.http.routers.backend.rule=Host(`backend.localhost`)"
+      - "traefik.http.routers.backend.rule=Host(`${BACKEND_URL:-backend.localhost}`)"
     environment:
       - DATABASE_URL=mysql
       - APP_PORT=80

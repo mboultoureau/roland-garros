@@ -7,12 +7,12 @@
     <figure>
     <img
       class="image1 absolute -bottom-5 right-0"
-      src="http://localhost:8000/img/casper_ruud.png"
+      src="http://backend.localhost/img/casper_ruud.png"
     />
     </figure>
     <img
       class="image2 absolute bottom-0 right-56"
-      src="http://localhost:8000/img/rafael_nadal.png"
+      src="http://backend.localhost/img/rafael_nadal.png"
     />
   </div>
   <div class="bg-white marge">
@@ -134,7 +134,7 @@ export default {
 <style lang="scss" scoped>
 header {
   height: calc(100vh - 96px);
-  background-image: url('http://localhost:8000/img/background.jpg');
+  background-image: url('http://backend.localhost/img/background.jpg');
 
   clip-path: polygon(0% 0%, 70.9% 0%, 100% 100%, 0% 100%);
   background-repeat: no-repeat;

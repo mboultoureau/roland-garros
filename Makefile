@@ -26,7 +26,7 @@ dev: ## Start the dev environment
 	@echo PhpMyAdmin : http://phpmyadmin.localhost
 
 front: ## Launch frontend in dev environment
-	@export BACKEND_URL=localhost:8000 && cd frontend && quasar dev
+	@export BACKEND_URL=app.localhost && cd frontend && quasar dev
 
 back: ## Launch backend in dev environment
-	@export BACKEND_URL=localhost:8000 && export APP_PORT=8000 && export DATABASE_URL=localhost && cd backend && mvn -o spring-boot:run
+	@export BACKEND_URL=backend.localhost && export APP_PORT=8000 && export DATABASE_URL=localhost && cd backend && mvn -o spring-boot:run
